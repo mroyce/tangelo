@@ -1,4 +1,10 @@
 const webpack = require('webpack');
+const path = require('path');
+
+
+const DIST = path.resolve(__dirname, 'dist');
+const SRC = path.resolve(__dirname, 'src');
+
 
 module.exports = {
   module: {
@@ -11,10 +17,13 @@ module.exports = {
     ]
   },
 
-  entry: './src/index.js',
+  entry: {
+    'z-table': SRC + '/index.js'
+  },
 
   output: {
     filename: '[name].js',
+    path: DIST,
     library: 'ZTable',
     libraryTarget: 'umd',
   },
