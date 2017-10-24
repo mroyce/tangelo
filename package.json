@@ -2,7 +2,7 @@
   "name": "z-table",
   "version": "0.0.1",
   "description": "A presentational table component built in React",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +10,10 @@
     "react",
     "table"
   ],
-  "author": "",
+  "author": "maurice.royce <maurice.royce@zanbato.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mroyce/z-table.git"
+  "repository": "https://github.com/mroyce/z-table.git",
+  "dependencies": {
+    "react": "^16.0.0"
   }
 }
