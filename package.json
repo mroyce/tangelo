@@ -1,12 +1,12 @@
 {
-  "name": "z-table",
+  "name": "tangelo",
   "version": "0.0.1",
   "description": "A presentational table component built in React",
   "license": "MIT",
-  "homepage": "https://github.com/mroyce/z-table",
+  "homepage": "https://github.com/mroyce/tangelo",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mroyce/z-table.git"
+    "url": "git+https://github.com/mroyce/tangelo.git"
   },
   "keywords": [
     "react",

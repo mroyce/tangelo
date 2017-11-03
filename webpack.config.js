@@ -18,13 +18,13 @@ module.exports = {
   },
 
   entry: {
-    'z-table': SRC + '/index.js'
+    'tangelo': SRC + '/index.js'
   },
 
   output: {
     filename: '[name].js',
     path: DIST,
-    library: 'ZTable',
+    library: 'Tangelo',
     libraryTarget: 'umd',
   },
 
