@@ -1,11 +1,8 @@
-import React from 'react';
+import Table from './Table';
+import TableColumn from './TableColumn';
 
 
-class ZTable extends React.Component {
-  render() {
-    return <div>Table</div>;
-  }
-}
-
-
-export default ZTable;
+export {
+  Table,
+  TableColumn,
+};
