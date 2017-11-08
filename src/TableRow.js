@@ -25,6 +25,7 @@ class TableRow extends React.Component {
     // TODO optimize so we only render cells that are in view
     columns.forEach((column, columnIndex) => {
       const {
+        align,
         cellRenderer,
         columnClassName,
         flexStyle,
@@ -48,6 +49,7 @@ class TableRow extends React.Component {
       this._cellCache[columnIndex] = (
         <TableCell
           key={`table_cell_${rowIndex}_${columnIndex}`}
+          align={align}
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
@@ -65,7 +67,9 @@ class TableRow extends React.Component {
 
   render() {
     return (
-      <div className={`tangelo-table__row ${this.props.className}`}>
+      <div
+        className={`Tangelo__Table__row ${this.props.className}`}
+      >
         {Object.values(this._cellCache)}
       </div>
     );
@@ -83,6 +87,11 @@ TableRow.propTypes = {
    */
   columns: PropTypes.arrayOf(
     PropTypes.shape({
+      align: PropTypes.oneOf([
+        'left',
+        'right',
+        'center',
+      ]),
       columnClassName: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.func,
@@ -93,7 +102,7 @@ TableRow.propTypes = {
       ]),
       flexStyle: PropTypes.oneOfType([
         PropTypes.shape({
-          'flex-basis': PropTypes.string,
+          flexBasis: PropTypes.string,
         }),
         PropTypes.shape({
           flex: PropTypes.string,

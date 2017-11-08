@@ -1,0 +1,64 @@
+.Tangelo__Table {
+}
+
+
+.Tangelo__Table__body {
+}
+
+
+.Tangelo__Table__header {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px;
+  border-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  font-color: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  flex-direction: row;
+  height: 40px;
+}
+
+.Tangelo__Table__header:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__Table__header:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+
+.Tangelo__Table__row {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px;
+  border-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  font-color: rgba(0, 0, 0, 0.8);
+  font-size: 16px;
+  flex-direction: row;
+  height: 48px;
+}
+
+.Tangelo__Table__row:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.Tangelo__Table__row:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__Table__row .active {
+  background-color: rgba(0, 0, 0, 0.8);
+  font-color: rgba(255, 255, 255, 0.8);
+}
+
+
+.Tangelo__Table__cell {
+  margin: 0 16px;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.Tangelo__Table__cell * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

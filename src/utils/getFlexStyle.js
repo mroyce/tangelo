@@ -8,8 +8,8 @@
 const getFlexStyle = (width, widthType) => {
   const flexString = `${width}${widthType}`;
   return widthType === '%' ?
-    { 'flex-basis': flexString } :
-    { 'flex': `0 0 ${flexString}` };
+    { flexBasis: flexString } :
+    { flex: `0 0 ${flexString}` };
 };
 
 

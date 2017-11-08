@@ -15,6 +15,15 @@ class TableColumn extends React.Component {
 
 TableColumn.propTypes = {
   /**
+   *
+   */
+  align: PropTypes.oneOf([
+    'left',
+    'right',
+    'center',
+  ]),
+
+  /**
    * The cell content that will be displayed for cells under this column
    * for each row in the table.
    *
@@ -132,6 +141,7 @@ TableColumn.propTypes = {
 };
 
 TableColumn.defaultProps = {
+  align: 'left',
   bodyCellRenderer: null, // TODO create defaultBodyCellRenderer
   columnClassName: '',
   headerCellRenderer: null, // TODO create defaultHeaderCellRenderer

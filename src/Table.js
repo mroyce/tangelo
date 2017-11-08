@@ -21,6 +21,7 @@ class Table extends React.Component {
 
     const columns = React.Children.toArray(children).map(column => {
       const {
+        align,
         columnClassName,
         headerCellRenderer,
         width,
@@ -28,6 +29,7 @@ class Table extends React.Component {
       } = column.props;
 
       return {
+        align,
         columnClassName,
         cellRenderer: headerCellRenderer,
         flexStyle: getFlexStyle(width, widthType),
@@ -56,6 +58,7 @@ class Table extends React.Component {
 
     const columns = React.Children.toArray(children).map(column => {
       const {
+        align,
         bodyCellRenderer,
         columnClassName,
         width,
@@ -63,6 +66,7 @@ class Table extends React.Component {
       } = column.props;
 
       return {
+        align,
         columnClassName,
         cellRenderer: bodyCellRenderer,
         flexStyle: getFlexStyle(width, widthType),
@@ -85,7 +89,7 @@ class Table extends React.Component {
 
   render() {
     return (
-      <div className={`tangelo-table ${this.props.className}`}>
+      <div className={`Tangelo__Table ${this.props.className}`}>
         {this.header}
         {this.body}
       </div>

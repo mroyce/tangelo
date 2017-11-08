@@ -40,7 +40,7 @@ class TableBody extends React.Component {
 
   render() {
     return (
-      <div className="tangelo-table__body">
+      <div className="Tangelo__Table__body">
         {Object.values(this._rowCache)}
       </div>
     );
@@ -53,6 +53,11 @@ TableBody.propTypes = {
    */
   columns: PropTypes.arrayOf(
     PropTypes.shape({
+      align: PropTypes.oneOf([
+        'left',
+        'right',
+        'center',
+      ]),
       columnClassName: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.func,
@@ -63,7 +68,7 @@ TableBody.propTypes = {
       ]),
       flexStyle: PropTypes.oneOfType([
         PropTypes.shape({
-          'flex-basis': PropTypes.string,
+          flexBasis: PropTypes.string,
         }),
         PropTypes.shape({
           flex: PropTypes.string,
@@ -71,6 +76,31 @@ TableBody.propTypes = {
       ]).isRequired,
     })
   ).isRequired,
+
+  /**
+   *
+   */
+  onRowClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onRowDoubleClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onRowMouseOut: PropTypes.func,
+
+  /**
+   *
+   */
+  onRowMouseOver: PropTypes.func,
+
+  /**
+   *
+   */
+  onRowRightClick: PropTypes.func,
 
   /**
    *
@@ -87,6 +117,11 @@ TableBody.propTypes = {
 };
 
 TableBody.defaultProps = {
+  onRowClick: () => {},
+  onRowDoubleClick: () => {},
+  onRowMouseOut: () => {},
+  onRowMouseOver: () => {},
+  onRowRightClick: () => {},
   rowClassName: '',
 };
 

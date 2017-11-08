@@ -24,6 +24,7 @@ class TableHeader extends React.Component {
     // TODO optimize so we only render cells that are in view
     columns.forEach((column, columnIndex) => {
       const {
+        align,
         cellRenderer,
         columnClassName,
         flexStyle,
@@ -47,6 +48,7 @@ class TableHeader extends React.Component {
       this._cellCache[columnIndex] = (
         <TableCell
           key={`table_cell_header_${columnIndex}`}
+          align={align}
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
@@ -64,7 +66,9 @@ class TableHeader extends React.Component {
 
   render() {
     return (
-      <div className={`tangelo-table__header ${this.props.className}`}>
+      <div
+        className={`Tangelo__Table__header ${this.props.className}`}
+      >
         {Object.values(this._cellCache)}
       </div>
     );
@@ -82,6 +86,11 @@ TableHeader.propTypes = {
    */
   columns: PropTypes.arrayOf(
     PropTypes.shape({
+      align: PropTypes.oneOf([
+        'left',
+        'right',
+        'center',
+      ]),
       columnClassName: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.func,
@@ -92,7 +101,7 @@ TableHeader.propTypes = {
       ]),
       flexStyle: PropTypes.oneOfType([
         PropTypes.shape({
-          'flex-basis': PropTypes.string,
+          flexBasis: PropTypes.string,
         }),
         PropTypes.shape({
           flex: PropTypes.string,

@@ -5,12 +5,15 @@ import PropTypes from 'prop-types';
 class TableCell extends React.Component {
   get interactionProps() {
     const interactionProps = {};
+
+    return interactionProps;
   }
 
   render() {
     return (
       <div
-        className={`tangelo-table__cell ${this.props.className}`}
+        className={`Tangelo__Table__cell ${this.props.className}`}
+        style={this.props.flexStyle}
         {...this.interactionProps}
       >
         {this.props.children}
@@ -20,6 +23,15 @@ class TableCell extends React.Component {
 };
 
 TableCell.propTypes = {
+  /**
+   *
+   */
+  align: PropTypes.oneOf([
+    'left',
+    'right',
+    'center',
+  ]),
+
   /**
    *
    */
@@ -34,6 +46,18 @@ TableCell.propTypes = {
    *
    */
   columnIndex: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  flexStyle: PropTypes.oneOfType([
+    PropTypes.shape({
+      'flex-basis': PropTypes.string,
+    }),
+    PropTypes.shape({
+      flex: PropTypes.string,
+    }),
+  ]).isRequired,
 };
 
 TableCell.defaultProps = {
