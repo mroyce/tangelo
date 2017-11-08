@@ -10,7 +10,7 @@ const BUILD = path.resolve(__dirname, 'build');
 
 module.exports = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'css-loader',
+        use: ['style-loader', 'css-loader'],
       },
     ]
   },

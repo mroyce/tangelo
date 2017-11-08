@@ -8,13 +8,14 @@
 
 .Tangelo__Table__header {
   background-color: rgba(0, 0, 0, 0.05);
-  border: 1px;
-  border-color: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   font-color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
   flex-direction: row;
   height: 40px;
+  text-transform: uppercase;
 }
 
 .Tangelo__Table__header:hover {
@@ -28,8 +29,7 @@
 
 .Tangelo__Table__row {
   background-color: rgba(255, 255, 255, 1);
-  border: 1px;
-  border-color: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   font-color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
@@ -45,7 +45,7 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.Tangelo__Table__row .active {
+.Tangelo__Table__row .selected {
   background-color: rgba(0, 0, 0, 0.8);
   font-color: rgba(255, 255, 255, 0.8);
 }
@@ -54,8 +54,9 @@
 .Tangelo__Table__cell {
   margin: 0 16px;
 
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .Tangelo__Table__cell * {

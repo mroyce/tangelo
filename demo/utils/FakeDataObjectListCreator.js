@@ -1,10 +1,6 @@
 import faker from 'faker';
 
 
-// Set seed for consistent data
-faker.seed(0);
-
-
 const _createFakeObjectList = (fields, numObjects) => {
   const list = [];
 
@@ -43,7 +39,6 @@ const FakeDataObjectListCreator = {
 
     return _createFakeObjectList(fields, numObjects);
   },
-
 }
 
 
