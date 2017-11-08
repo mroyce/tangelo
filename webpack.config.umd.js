@@ -18,7 +18,7 @@ module.exports = {
   },
 
   entry: {
-    'tangelo': SRC + '/index.js'
+    tangelo: SRC + '/index.js'
   },
 
   output: {
@@ -35,6 +35,12 @@ module.exports = {
       commonjs2: 'react',
       amd: 'react',
     },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'react-dom'
+    }
   },
 
   plugins: [
