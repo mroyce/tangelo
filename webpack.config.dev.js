@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 
 const DEMO = path.resolve(__dirname, 'demo');
@@ -38,8 +38,9 @@ module.exports = {
       inject: true,
       template: DEMO + '/index.html',
     }),
-    new UglifyJSPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    // TODO Use these when you publish the demo
+    // new UglifyJSPlugin(),
+    // new webpack.NoEmitOnErrorsPlugin(),
   ],
 
   devServer: {
