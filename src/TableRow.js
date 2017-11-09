@@ -115,10 +115,16 @@ TableRow.propTypes = {
    *
    */
   rowIndex: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  selected: PropTypes.bool,
 };
 
 TableRow.defaultProps = {
   className: '',
+  selected: false,
 };
 
 TableRow.displayName = 'TangeloTableRow';

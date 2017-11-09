@@ -29,8 +29,9 @@ class DemoApp extends React.Component {
       <img
         src={this.state.data[rowIndex].thumbnail}
         alt={this.state.data[rowIndex].firstName}
-        height={32}
-        width={32}
+        className="user-profile-image"
+        height={24}
+        width={24}
       />
     );
   }
@@ -66,7 +67,7 @@ class DemoApp extends React.Component {
       >
         <TableColumn
           bodyCellRenderer={this.thumbnailCellRenderer}
-          width={48}
+          width={24}
           widthType="px"
         />
         <TableColumn

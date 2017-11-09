@@ -10,9 +10,14 @@ class TableCell extends React.Component {
   }
 
   render() {
+    // TODO use classNames package
+    let className = 'Tangelo__Table__cell';
+    className += this.props.className ? ` ${this.props.className}` : '';
+    className += this.props.children ? '' : ' Tangelo__Table__cell--empty';
+
     return (
       <div
-        className={`Tangelo__Table__cell ${this.props.className}`}
+        className={className}
         style={this.props.flexStyle}
         {...this.interactionProps}
       >
