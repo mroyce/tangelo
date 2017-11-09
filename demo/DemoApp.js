@@ -12,8 +12,9 @@ class DemoApp extends React.Component {
     super();
 
     this.state = {
-      numRows: DEFAULT_NUM_ROWS,
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
+      firstNameColor: {},
+      rowCount: DEFAULT_NUM_ROWS,
     };
 
     this.thumbnailCellRenderer = this.thumbnailCellRenderer.bind(this);
@@ -22,6 +23,8 @@ class DemoApp extends React.Component {
     this.addressCellRenderer = this.addressCellRenderer.bind(this);
     this.emailCellRenderer = this.emailCellRenderer.bind(this);
     this.birthDateCellRenderer = this.birthDateCellRenderer.bind(this);
+
+    this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
   }
 
   thumbnailCellRenderer({ columnIndex, rowIndex }) {
@@ -37,7 +40,12 @@ class DemoApp extends React.Component {
   }
 
   firstNameCellRenderer({ columnIndex, rowIndex }) {
-    return this.state.data[rowIndex].firstName;
+    const firstName = this.state.data[rowIndex].firstName;
+    const color = this.state.firstNameColor[rowIndex];
+
+    return color ? (
+      <b style={{ color }}>{firstName}</b>
+    ) : firstName;
   }
 
   lastNameCellRenderer({ columnIndex, rowIndex }) {
@@ -60,10 +68,25 @@ class DemoApp extends React.Component {
     return new Date(this.state.data[rowIndex].birthDate).toDateString();
   }
 
+  onFirstNameCellClick({ event, columnIndex, rowIndex }) {
+    this.setState((prevState) => {
+      const { firstNameColor } = prevState;
+
+      const options = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+      let hexString = '#';
+      for (let i = 0; i < 6; i++) {
+        hexString += options[Math.floor(Math.random() * options.length)];
+      }
+      firstNameColor[rowIndex] = hexString;
+
+      return { firstNameColor };
+    });
+  }
+
   render() {
     return (
       <Table
-        rowCount={this.state.numRows}
+        rowCount={this.state.rowCount}
       >
         <TableColumn
           bodyCellRenderer={this.thumbnailCellRenderer}
@@ -73,6 +96,7 @@ class DemoApp extends React.Component {
         <TableColumn
           bodyCellRenderer={this.firstNameCellRenderer}
           headerCellRenderer="First Name"
+          onCellClick={this.onFirstNameCellClick}
           width={120}
           widthType="px"
         />
