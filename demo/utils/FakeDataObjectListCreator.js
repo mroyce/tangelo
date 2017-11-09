@@ -5,16 +5,10 @@ const _createFakeObjectList = (fields, numObjects) => {
   const list = [];
 
   for (let index = 0; index < numObjects; index++) {
-    // TODO do this in a less shitty way
-    const o = {};
-    for (const key in fields) {
-      o[key] = fields[key]();
-    }
-
     list.push(
       Object.assign(
         { id: index },
-        o
+        ...Object.entries(fields).map(field => ({ [field[0]]: field[1]() }))
       )
     );
   }
