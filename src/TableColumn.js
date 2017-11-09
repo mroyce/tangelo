@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import noop from './utils/noop';
+
 
 class TableColumn extends React.Component {
   render() {
+    console.log('TableColumn.render');
     if (process.env.NODE_ENV !== 'production') {
       throw new Error(
         '<TableColumn /> should never render'
@@ -146,11 +149,11 @@ TableColumn.defaultProps = {
   columnClassName: '',
   headerCellRenderer: null, // TODO create defaultHeaderCellRenderer
   minWidth: null,
-  onCellClick: () => {},
-  onCellDoubleClick: () => {},
-  onCellMouseOut: () => {},
-  onCellMouseOver: () => {},
-  onCellRightClick: () => {},
+  onCellClick: noop,
+  onCellDoubleClick: noop,
+  onCellMouseOut: noop,
+  onCellMouseOver: noop,
+  onCellRightClick: noop,
   widthType: '%',
 };
 

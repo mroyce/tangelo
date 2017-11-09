@@ -24,6 +24,11 @@ class Table extends React.Component {
         align,
         columnClassName,
         headerCellRenderer,
+        onCellClick,
+        onCellDoubleClick,
+        onCellMouseOut,
+        onCellMouseOver,
+        onCellRightClick,
         width,
         widthType,
       } = column.props;
@@ -33,6 +38,11 @@ class Table extends React.Component {
         columnClassName,
         cellRenderer: headerCellRenderer,
         flexStyle: getFlexStyle(width, widthType),
+        onCellClick,
+        onCellDoubleClick,
+        onCellMouseOut,
+        onCellMouseOver,
+        onCellRightClick,
       };
     });
 
@@ -61,6 +71,11 @@ class Table extends React.Component {
         align,
         bodyCellRenderer,
         columnClassName,
+        onCellClick,
+        onCellDoubleClick,
+        onCellMouseOut,
+        onCellMouseOver,
+        onCellRightClick,
         width,
         widthType,
       } = column.props;
@@ -70,6 +85,11 @@ class Table extends React.Component {
         columnClassName,
         cellRenderer: bodyCellRenderer,
         flexStyle: getFlexStyle(width, widthType),
+        onCellClick,
+        onCellDoubleClick,
+        onCellMouseOut,
+        onCellMouseOver,
+        onCellRightClick,
       };
     });
 
@@ -88,6 +108,7 @@ class Table extends React.Component {
   }
 
   render() {
+    console.log('Table.render');
     return (
       <div className={`Tangelo__Table ${this.props.className}`}>
         {this.header}
@@ -194,11 +215,11 @@ Table.defaultProps = {
   disableHeader: false,
   emptyTableRenderer: null,
   headerClassName: '',
-  onRowClick: () => {},
-  onRowDoubleClick: () => {},
-  onRowMouseOut: () => {},
-  onRowMouseOver: () => {},
-  onRowRightClick: () => {},
+  onRowClick: null,
+  onRowDoubleClick: null,
+  onRowMouseOut: null,
+  onRowMouseOver: null,
+  onRowRightClick: null,
   rowClassName: '',
 };
 

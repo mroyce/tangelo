@@ -52,11 +52,12 @@ class TableHeader extends React.Component {
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
-          onCellClick={onCellClick}
-          onCellDoubleClick={onCellDoubleClick}
-          onCellMouseOut={onCellMouseOut}
-          onCellMouseOver={onCellMouseOver}
-          onCellRightClick={onCellRightClick}
+          onClick={onCellClick}
+          onDoubleClick={onCellDoubleClick}
+          onMouseOut={onCellMouseOut}
+          onMouseOver={onCellMouseOver}
+          onRightClick={onCellRightClick}
+          rowIndex={-1}
         > 
           {cellContent}
         </TableCell>
@@ -65,6 +66,7 @@ class TableHeader extends React.Component {
   }
 
   render() {
+    console.log('TableHeader.render');
     return (
       <div
         className={`Tangelo__Table__header ${this.props.className}`}
@@ -83,6 +85,7 @@ TableHeader.propTypes = {
 
   /**
    *
+   * TODO create types for columns
    */
   columns: PropTypes.arrayOf(
     PropTypes.shape({
@@ -106,7 +109,12 @@ TableHeader.propTypes = {
         PropTypes.shape({
           flex: PropTypes.string,
         }),
-      ]).isRequired,
+      ]),
+      onCellClick: PropTypes.func,
+      onCellDoubleClick: PropTypes.func,
+      onCellMouseOut: PropTypes.func,
+      onCellMouseOver: PropTypes.func,
+      onCellRightClick: PropTypes.func,
     })
   ).isRequired,
 };

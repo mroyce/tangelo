@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import getEventHandlerProps from './utils/getEventHandlerProps';
 import TableCell from './TableCell';
 
 
+// TODO possibly convert this to a function like react-virtualized-table
 class TableRow extends React.Component {
   constructor() {
     super();
@@ -13,14 +15,21 @@ class TableRow extends React.Component {
   }
 
   componentWillMount() {
-    this._constructCells();
+    this._constructCells(this.props);
   }
 
-  _constructCells() {
+  componentWillUpdate(nextProps) {
+    // consider checking if each cell should update
+    this._cellCache = {};
+    this._constructCells(nextProps);
+  }
+
+  _constructCells(props) {
     const {
       columns,
       rowIndex,
-    } = this.props;
+      rowProps,
+    } = props;
 
     // TODO optimize so we only render cells that are in view
     columns.forEach((column, columnIndex) => {
@@ -38,12 +47,12 @@ class TableRow extends React.Component {
 
       const className = 
         typeof columnClassName === 'function' ?
-          columnClassName({ columnIndex, rowIndex }) :
+          columnClassName({ rowProps, columnIndex, rowIndex }) :
           columnClassName;
 
       const cellContent =
         typeof cellRenderer === 'function' ?
-          cellRenderer({ columnIndex, rowIndex }) :
+          cellRenderer({ rowProps, columnIndex, rowIndex }) :
           cellRenderer;
 
       this._cellCache[columnIndex] = (
@@ -53,11 +62,12 @@ class TableRow extends React.Component {
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
-          onCellClick={onCellClick}
-          onCellDoubleClick={onCellDoubleClick}
-          onCellMouseOut={onCellMouseOut}
-          onCellMouseOver={onCellMouseOver}
-          onCellRightClick={onCellRightClick}
+          onClick={onCellClick}
+          onDoubleClick={onCellDoubleClick}
+          onMouseOut={onCellMouseOut}
+          onMouseOver={onCellMouseOver}
+          onRightClick={onCellRightClick}
+          rowIndex={rowIndex}
         >
           {cellContent}
         </TableCell>
@@ -66,9 +76,16 @@ class TableRow extends React.Component {
   }
 
   render() {
+    console.log('TableRow.render');
+
+    const {
+      rowIndex,
+    } = this.props;
+
     return (
       <div
         className={`Tangelo__Table__row ${this.props.className}`}
+        {...getEventHandlerProps(this, { rowIndex })}
       >
         {Object.values(this._cellCache)}
       </div>
@@ -114,6 +131,37 @@ TableRow.propTypes = {
   /**
    *
    */
+  onClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onDoubleClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onMouseOut: PropTypes.func,
+
+  /**
+   *
+   */
+  onMouseOver: PropTypes.func,
+
+  /**
+   *
+   */
+  onRightClick: PropTypes.func,
+
+  /**
+   *
+   * TODO better proptype validation
+   */
+  rowProps: PropTypes.object.isRequired,
+
+  /**
+   *
+   */
   rowIndex: PropTypes.number.isRequired,
 
   /**
@@ -124,6 +172,11 @@ TableRow.propTypes = {
 
 TableRow.defaultProps = {
   className: '',
+  onClick: null,
+  onDoubleClick: null,
+  onMouseOut: null,
+  onMouseOver: null,
+  onRightClick: null,
   selected: false,
 };
 
