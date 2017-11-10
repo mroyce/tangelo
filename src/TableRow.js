@@ -28,7 +28,6 @@ class TableRow extends React.Component {
     const {
       columns,
       rowIndex,
-      rowProps,
     } = props;
 
     // TODO optimize so we only render cells that are in view
@@ -47,12 +46,12 @@ class TableRow extends React.Component {
 
       const className = 
         typeof columnClassName === 'function' ?
-          columnClassName({ rowProps, columnIndex, rowIndex }) :
+          columnClassName({ columnIndex, rowIndex }) :
           columnClassName;
 
       const cellContent =
         typeof cellRenderer === 'function' ?
-          cellRenderer({ rowProps, columnIndex, rowIndex }) :
+          cellRenderer({ columnIndex, rowIndex }) :
           cellRenderer;
 
       this._cellCache[columnIndex] = (
@@ -152,12 +151,6 @@ TableRow.propTypes = {
    *
    */
   onRightClick: PropTypes.func,
-
-  /**
-   *
-   * TODO better proptype validation
-   */
-  rowProps: PropTypes.object.isRequired,
 
   /**
    *

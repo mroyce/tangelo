@@ -5,8 +5,12 @@ import noop from '../utils/noop';
 
 
 const getEventHandlerProps = (Component, parameters = {}) => {
-  const createEventHandler = handler =>
-    event => (handler || noop)(Object.assign({ event }, parameters));
+  const createEventHandler = (handler) => event => {
+    handler({ event, ...parameters });
+    if (handler !== noop) {
+      event.stopPropagation();
+    }
+  };
 
   const {
     onClick,
@@ -16,6 +20,7 @@ const getEventHandlerProps = (Component, parameters = {}) => {
     onRightClick,
   } = Component.props;
 
+  // TODO don't even add handler prop if it's a noop
   return {
     onClick: createEventHandler(onClick),
     onDoubleClick: createEventHandler(onDoubleClick),

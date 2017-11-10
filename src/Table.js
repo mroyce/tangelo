@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import getFlexStyle from './utils/getFlexStyle';
+import noop from './utils/noop';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
 import TableHeader from './TableHeader';
@@ -215,11 +216,11 @@ Table.defaultProps = {
   disableHeader: false,
   emptyTableRenderer: null,
   headerClassName: '',
-  onRowClick: null,
-  onRowDoubleClick: null,
-  onRowMouseOut: null,
-  onRowMouseOver: null,
-  onRowRightClick: null,
+  onRowClick: noop,
+  onRowDoubleClick: noop,
+  onRowMouseOut: noop,
+  onRowMouseOver: noop,
+  onRowRightClick: noop,
   rowClassName: '',
 };
 

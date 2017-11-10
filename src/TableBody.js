@@ -115,7 +115,7 @@ TableBody.propTypes = {
         PropTypes.shape({
           flex: PropTypes.string,
         }),
-      ]).isRequired,
+      ]),
     })
   ).isRequired,
 
