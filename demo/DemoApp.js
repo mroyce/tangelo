@@ -17,6 +17,9 @@ class DemoApp extends React.Component {
       rowCount: DEFAULT_NUM_ROWS,
     };
 
+    this.getRowProps = this.getRowProps.bind(this);
+    this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
+
     this.thumbnailCellRenderer = this.thumbnailCellRenderer.bind(this);
     this.firstNameCellRenderer = this.firstNameCellRenderer.bind(this);
     this.lastNameCellRenderer = this.lastNameCellRenderer.bind(this);
@@ -25,6 +28,17 @@ class DemoApp extends React.Component {
     this.birthDateCellRenderer = this.birthDateCellRenderer.bind(this);
 
     this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
+  }
+
+  getRowProps({ rowIndex }) {
+    return {
+      data: this.state.data[rowIndex],
+      firstNameColor: this.state.firstNameColor[rowIndex],
+    }
+  }
+
+  shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
+    return currentRowProps.firstNameColor !== nextRowProps.firstNameColor;
   }
 
   thumbnailCellRenderer({ columnIndex, rowIndex }) {
@@ -86,7 +100,9 @@ class DemoApp extends React.Component {
   render() {
     return (
       <Table
+        getRowProps={this.getRowProps}
         rowCount={this.state.rowCount}
+        shouldRowUpdate={this.shouldRowUpdate}
       >
         <TableColumn
           bodyCellRenderer={this.thumbnailCellRenderer}

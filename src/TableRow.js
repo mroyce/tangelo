@@ -19,8 +19,7 @@ class TableRow extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    // consider checking if each cell should update
-    this._cellCache = {};
+    // TODO consider only updating some cells like we do for rows in `TableBody`
     this._constructCells(nextProps);
   }
 
@@ -156,6 +155,11 @@ TableRow.propTypes = {
    *
    */
   rowIndex: PropTypes.number.isRequired,
+
+  /**
+   * TODO better propType validation
+   */
+  rowProps: PropTypes.object,
 
   /**
    *
