@@ -1,3 +1,17 @@
+body {
+  height: calc(100vh - 32px);
+  margin: 16px;
+}
+
+.config-container {
+  height: calc(30% - 32px);
+  margin-bottom: 32px;
+}
+
+.table-container {
+  height: calc(70% - 16px);
+}
+
 .user-profile-image {
   border-radius: 4px;
 }

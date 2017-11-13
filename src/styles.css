@@ -2,13 +2,9 @@
  * Table
  */
 .Tangelo__Table {
-}
-
-
-/**
- * TableBody
- */
-.Tangelo__Table__body {
+  height: 100%;
+  position: relative;
+  width: 100%;
 }
 
 
@@ -16,7 +12,7 @@
  * TableHeader
  */
 .Tangelo__Table__header {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.05); /* TODO can't use alpha for fixed header because it makes background opaque */
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
@@ -26,6 +22,12 @@
   height: 40px;
   line-height: 40px;
   text-transform: uppercase;
+
+  /* Fixed Header */
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
 }
 
 .Tangelo__Table__header:hover {
@@ -34,6 +36,18 @@
 
 .Tangelo__Table__header:active {
   background-color: rgba(0, 0, 0, 0.15);
+}
+
+
+/**
+ * TableBody
+ */
+.Tangelo__Table__body {
+  /* Fixed Header */
+  height: calc(100% - 42px); /* .Tangelo__Table__header height + border */
+  overflow-y: auto;
+  padding-top: 42px; /* .Tangelo__Table__header height + border */
+  width: 100%;
 }
 
 
@@ -72,6 +86,7 @@
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0 16px;
 
+  /* Text Ellipsis */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -82,9 +97,11 @@
 }
 
 .Tangelo__Table__cell * {
+  vertical-align: middle;
+
+  /* Text Ellipsis */
   overflow: hidden;
   text-overflow: ellipsis;
-  vertical-align: middle;
 }
 
 .Tangelo__Table__cell--empty {

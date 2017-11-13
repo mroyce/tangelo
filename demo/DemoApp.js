@@ -14,7 +14,6 @@ class DemoApp extends React.Component {
     this.state = {
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
       firstNameColor: {},
-      rowCount: DEFAULT_NUM_ROWS,
     };
 
     this.getRowProps = this.getRowProps.bind(this);
@@ -98,50 +97,55 @@ class DemoApp extends React.Component {
   }
 
   render() {
-    return (
-      <Table
-        getRowProps={this.getRowProps}
-        rowCount={this.state.rowCount}
-        shouldRowUpdate={this.shouldRowUpdate}
-      >
-        <TableColumn
-          bodyCellRenderer={this.thumbnailCellRenderer}
-          width={24}
-          widthType="px"
-        />
-        <TableColumn
-          bodyCellRenderer={this.firstNameCellRenderer}
-          headerCellRenderer="First Name"
-          onCellClick={this.onFirstNameCellClick}
-          width={120}
-          widthType="px"
-        />
-        <TableColumn
-          bodyCellRenderer={this.lastNameCellRenderer}
-          headerCellRenderer="Last Name"
-          width={120}
-          widthType="px"
-        />
-        <TableColumn
-          bodyCellRenderer={this.addressCellRenderer}
-          headerCellRenderer="Address"
-          width={30}
-          widthType="%"
-        />
-        <TableColumn
-          bodyCellRenderer={this.emailCellRenderer}
-          headerCellRenderer="Email"
-          width={40}
-          widthType="%"
-        />
-        <TableColumn
-          bodyCellRenderer={this.birthDateCellRenderer}
-          headerCellRenderer="Birth Date"
-          width={30}
-          widthType="%"
-        />
-      </Table>
-    );
+    return ([
+      <div className="config-container">
+        <h1>Tangelo</h1>
+      </div>,
+      <div className="table-container">
+        <Table
+          getRowProps={this.getRowProps}
+          rowCount={this.state.data.length}
+          shouldRowUpdate={this.shouldRowUpdate}
+        >
+          <TableColumn
+            bodyCellRenderer={this.thumbnailCellRenderer}
+            width={24}
+            widthType="px"
+          />
+          <TableColumn
+            bodyCellRenderer={this.firstNameCellRenderer}
+            headerCellRenderer="First Name"
+            onCellClick={this.onFirstNameCellClick}
+            width={120}
+            widthType="px"
+          />
+          <TableColumn
+            bodyCellRenderer={this.lastNameCellRenderer}
+            headerCellRenderer="Last Name"
+            width={120}
+            widthType="px"
+          />
+          <TableColumn
+            bodyCellRenderer={this.addressCellRenderer}
+            headerCellRenderer="Address"
+            width={30}
+            widthType="%"
+          />
+          <TableColumn
+            bodyCellRenderer={this.emailCellRenderer}
+            headerCellRenderer="Email"
+            width={40}
+            widthType="%"
+          />
+          <TableColumn
+            bodyCellRenderer={this.birthDateCellRenderer}
+            headerCellRenderer="Birth Date"
+            width={30}
+            widthType="%"
+          />
+        </Table>
+      </div>,
+    ]);
   }
 };
 
