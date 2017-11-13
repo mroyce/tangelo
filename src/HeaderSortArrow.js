@@ -6,9 +6,9 @@ import { SortDirection } from './constants';
 
 const HeaderSortArrow = ({ sortDirection }) => {
   // TODO Get SVG from K2
-  if (sortDirection === SortDirection.DESC) {
+  if (sortDirection === SortDirection.ASC) {
     return 'V';
-  } else if (sortDirection === SortDirection.ASC) {
+  } else if (sortDirection === SortDirection.DESC) {
     return '^';
   }
   return null;
