@@ -29,6 +29,8 @@ class DemoApp extends React.Component {
     this.emailCellRenderer = this.emailCellRenderer.bind(this);
     this.birthDateCellRenderer = this.birthDateCellRenderer.bind(this);
 
+    this.sortByBirthDate = this.sortByBirthDate.bind(this);
+
     this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
   }
 
@@ -99,6 +101,14 @@ class DemoApp extends React.Component {
     return new Date(this.state.data[rowIndex].birthDate).toDateString();
   }
 
+  /**********************************
+   * Table Body Cell Sort Functions *
+   **********************************/
+
+  sortByBirthDate(aRowProps, bRowProps) {
+    return new Date(aRowProps.person.birthDate) - new Date(bRowProps.person.birthDate);
+  }
+
   /***********************************
    * Table Body Cell Action Handlers *
    ***********************************/
@@ -157,6 +167,7 @@ class DemoApp extends React.Component {
             key="last name"
             bodyCellRenderer={this.lastNameCellRenderer}
             headerCellRenderer="Last Name"
+            sortBy="person.lastName"
             width={120}
             widthType="px"
           />
@@ -164,6 +175,7 @@ class DemoApp extends React.Component {
             key="address"
             bodyCellRenderer={this.addressCellRenderer}
             headerCellRenderer="Address"
+            sortBy="person.address"
             width={30}
             widthType="%"
           />
@@ -171,6 +183,7 @@ class DemoApp extends React.Component {
             key="email"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
+            sortBy="person.email"
             width={40}
             widthType="%"
           />
@@ -178,6 +191,7 @@ class DemoApp extends React.Component {
             key="birth date"
             bodyCellRenderer={this.birthDateCellRenderer}
             headerCellRenderer="Birth Date"
+            sortBy={this.sortByBirthDate}
             width={30}
             widthType="%"
           />

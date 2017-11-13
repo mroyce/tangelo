@@ -11,6 +11,9 @@ class TableBody extends React.Component {
 
     // <number: rowIndex, Element: <TableRow />>
     this._rowCache = {};
+
+    // <number: rowOrder, number: rowIndex>
+    this._rowOrderCache = {};
   }
 
   componentWillMount() {
@@ -22,6 +25,8 @@ class TableBody extends React.Component {
       getRowProps,
       rowCount,
       shouldRowUpdate,
+      sortDirection,
+      sortingCriteria,
     } = nextProps;
 
     // TODO only check rows that are in view
@@ -34,6 +39,63 @@ class TableBody extends React.Component {
       if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
+    }
+
+    if (sortingCriteria !== this.props.sortingCriteria ||
+            sortDirection !== this.props.sortDirection) {
+      this._orderRows(sortingCriteria, sortDirection);
+    }
+  }
+
+  get sortedRows() {
+    const sorted = [];
+
+    for (const index in this._rowOrderCache) {
+      sorted[index] = this._rowCache[this._rowOrderCache[index]];
+    }
+
+    return sorted;
+  }
+
+  _orderRows(sortingCriteria, sortDirection) {
+    const rows = Object.values(this._rowCache).splice(0);
+    let sorted;
+
+    if (typeof sortingCriteria === 'function') {
+      sorted = rows.sort((a, b) => {
+        return sortingCriteria(a.props.rowProps, b.props.rowProps);
+      });
+    } else if (typeof sortingCriteria === 'string') {
+      const sortingCriteriaFieldArray = sortingCriteria.split('.');
+      sorted = rows.sort((a, b) => {
+        let aVal = a.props.rowProps;
+        let bVal = b.props.rowProps;
+
+        for (let index = 0; index < sortingCriteriaFieldArray.length; index++) {
+          const key = sortingCriteriaFieldArray[index];
+          aVal = aVal[key];
+          bVal = bVal[key];
+        }
+
+        if (aVal > bVal) {
+          return 1;
+        }
+        if (aVal < bVal) {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      // This shouldn't happen, maybe throw an error?
+      sorted = rows;
+    }
+
+    if (sortDirection === SortDirection.DESC) {
+      sorted.reverse();
+    }
+
+    for (let index = 0; index < sorted.length; index++) {
+      this._rowOrderCache[index] = sorted[index].props.rowIndex;
     }
   }
 
@@ -78,13 +140,14 @@ class TableBody extends React.Component {
     // TODO optimize so we only render rows that are in view
     for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
+      this._rowOrderCache[rowIndex] = rowIndex;
     }
   }
 
   render() {
     return (
       <div className="Tangelo__Table__body">
-        {Object.values(this._rowCache)}
+        {this.sortedRows}
       </div>
     );
   }
