@@ -12,7 +12,7 @@
  * TableHeader
  */
 .Tangelo__Table__header {
-  background-color: rgba(0, 0, 0, 0.05); /* TODO can't use alpha for fixed header because it makes background opaque */
+  background-color: rgba(0, 0, 0, 0.05);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
@@ -38,6 +38,12 @@
   background-color: rgba(0, 0, 0, 0.15);
 }
 
+.Tangelo__Table__header-space {
+  /* Used so fixed header takes up space */
+  /* Also allows header background color to be opaque */
+  height: 42px; /* .Tangelo__Table__header height + border */
+}
+
 
 /**
  * TableBody
@@ -46,7 +52,6 @@
   /* Fixed Header */
   height: calc(100% - 42px); /* .Tangelo__Table__header height + border */
   overflow-y: auto;
-  padding-top: 42px; /* .Tangelo__Table__header height + border */
   width: 100%;
 }
 

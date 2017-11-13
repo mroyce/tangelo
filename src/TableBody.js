@@ -9,6 +9,7 @@ class TableBody extends React.Component {
     super();
 
     // <number: rowIndex, Element: <TableRow />>
+    // TODO change to <rowKey, Element>?
     this._rowCache = {};
   }
 
@@ -80,8 +81,6 @@ class TableBody extends React.Component {
 
   render() {
     console.log('TableBody.render');
-    console.log(this._rowCache);
-    console.log(Object.values(this._rowCache));
     return (
       <div className="Tangelo__Table__body">
         {Object.values(this._rowCache)}
