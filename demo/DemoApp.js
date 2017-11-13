@@ -45,7 +45,7 @@ class DemoApp extends React.Component {
    ***************/
   getRowProps({ rowIndex }) {
     return {
-      data: this.state.data[rowIndex],
+      person: this.state.data[rowIndex],
       firstNameColor: this.state.firstNameColor[rowIndex],
     }
   }
@@ -149,6 +149,7 @@ class DemoApp extends React.Component {
             bodyCellRenderer={this.firstNameCellRenderer}
             headerCellRenderer="First Name"
             onCellClick={this.onFirstNameCellClick}
+            sortBy="person.firstName"
             width={120}
             widthType="px"
           />

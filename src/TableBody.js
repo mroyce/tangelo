@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { SortDirection } from './constants';
 import TableRow from './TableRow';
 
 
@@ -10,9 +11,6 @@ class TableBody extends React.Component {
 
     // <number: rowIndex, Element: <TableRow />>
     this._rowCache = {};
-
-    // <number: order, number: rowIndex>
-    this._rowOrderCache = {};
   }
 
   componentWillMount() {
@@ -32,6 +30,7 @@ class TableBody extends React.Component {
       const currentRowProps = this._rowCache[rowIndex].props.rowProps;
       const nextRowProps = getRowProps({ rowIndex });
 
+      // TODO don't check this function if it's the default () => true
       if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
@@ -166,6 +165,31 @@ TableBody.propTypes = {
    *
    */
   rowCount: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  shouldRowUpdate: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  sortDirection: PropTypes.oneOf([
+    SortDirection.ASC,
+    SortDirection.DESC,
+  ]),
+
+  /**
+   *
+   */
+  sortingCriteria: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+};
+
+TableBody.defaultProps = {
+  sortingCriteria: null,
 };
 
 TableBody.displayName = 'TangeloTableBody';
