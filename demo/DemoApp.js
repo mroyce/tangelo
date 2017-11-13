@@ -119,14 +119,20 @@ class DemoApp extends React.Component {
 
   render() {
     return ([
-      <div className="config-container">
+      <div
+        key="config"
+        className="config-container"
+      >
         <div>
           <label>Num Rows:</label>
           <input type="text" value={this.state.numRows} onChange={this.handleNumRowsChange} />
         </div>
       </div>,
 
-      <div className="table-container">
+      <div
+        key="table"
+        className="table-container"
+      >
         <Table
           getRowProps={this.getRowProps}
           rowCount={this.state.numRows}
