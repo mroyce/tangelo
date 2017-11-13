@@ -9,5 +9,5 @@ import DemoApp from './DemoApp';
 
 ReactDOM.render(
   <DemoApp />,
-  document.getElementById('react-root')
+  document.body,
 );
