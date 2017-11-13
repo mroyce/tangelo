@@ -16,31 +16,28 @@ class TableBody extends React.Component {
     this._constructRows();
   }
 
-  /*
   componentWillUpdate(nextProps) {
     const {
-      currentRowPropsArray: rowPropsArray,
-    } = this.props;
-
-    const {
-      nextRowPropsArray: rowPropsArray,
+      getRowProps,
+      rowCount,
       shouldRowUpdate,
     } = nextProps;
 
-    for (let rowIndex = 0; rowIndex < rowPropsArray.length; rowIndex++) {
-      const currentRowProps = currentRowPropsArray[rowIndex];
-      const nextRowProps = nextRowPropsArray[rowIndex];
-
-      if (shouldRowUpdate(currentRowProps, nextRowProps)) {
+    // TODO only check rows that are in view
+    for (const rowIndexString in this._rowCache) {
+      const rowIndex = Number(rowIndexString);
+      const currentRowProps = this._rowCache[rowIndex].props.rowProps;
+      const nextRowProps = getRowProps({ rowIndex });
+      if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
     }
   }
-  */
 
   _constructRow(rowIndex, props) {
     const {
       columns,
+      getRowProps,
       onRowClick,
       onRowDoubleClick,
       onRowMouseOut,
@@ -51,6 +48,7 @@ class TableBody extends React.Component {
     } = props;
 
     const className = typeof rowClassName === 'function' ? rowClassName({ rowIndex }) : rowClassName;
+    const rowProps = getRowProps({ rowIndex });
 
     return (
       <TableRow
@@ -64,6 +62,7 @@ class TableBody extends React.Component {
         onRightClick={onRowRightClick}
         rowCount={rowCount}
         rowIndex={rowIndex}
+        rowProps={rowProps}
       />
     );
   }
@@ -81,6 +80,8 @@ class TableBody extends React.Component {
 
   render() {
     console.log('TableBody.render');
+    console.log(this._rowCache);
+    console.log(Object.values(this._rowCache));
     return (
       <div className="Tangelo__Table__body">
         {Object.values(this._rowCache)}
@@ -118,6 +119,14 @@ TableBody.propTypes = {
       ]),
     })
   ).isRequired,
+
+  /**
+   *
+   * {
+   *   rowIndex,
+   * }
+   */
+  getRowProps: PropTypes.func.isRequired,
 
   /**
    *

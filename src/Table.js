@@ -58,6 +58,7 @@ class Table extends React.Component {
   get body() {
     const {
       children,
+      getRowProps,
       onRowClick,
       onRowDoubleClick,
       onRowMouseOut,
@@ -65,6 +66,7 @@ class Table extends React.Component {
       onRowRightClick,
       rowClassName,
       rowCount,
+      shouldRowUpdate,
     } = this.props;
 
     const columns = React.Children.toArray(children).map(column => {
@@ -97,6 +99,7 @@ class Table extends React.Component {
     return (
       <TableBody
         columns={columns}
+        getRowProps={getRowProps}
         onRowClick={onRowClick}
         onRowDoubleClick={onRowDoubleClick}
         onRowMouseOut={onRowMouseOut}
@@ -104,6 +107,7 @@ class Table extends React.Component {
         onRowRightClick={onRowRightClick}
         rowClassName={rowClassName}
         rowCount={rowCount}
+        shouldRowUpdate={shouldRowUpdate}
       />
     );
   }
@@ -148,6 +152,14 @@ Table.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
+
+  /**
+   *
+   * {
+   *   rowIndex,
+   * }
+   */
+  getRowProps: PropTypes.func,
 
   /**
    *
@@ -209,12 +221,22 @@ Table.propTypes = {
    *
    */
   rowCount: PropTypes.number.isRequired,
+
+  /**
+   * {
+   *   rowProps,
+   *   nextRowProps,
+   *   rowIndex,
+   * }
+   */
+  shouldRowUpdate: PropTypes.func,
 };
 
 Table.defaultProps = {
   className: '',
   disableHeader: false,
   emptyTableRenderer: null,
+  getRowProps: () => null,
   headerClassName: '',
   onRowClick: noop,
   onRowDoubleClick: noop,
@@ -222,6 +244,7 @@ Table.defaultProps = {
   onRowMouseOver: noop,
   onRowRightClick: noop,
   rowClassName: '',
+  shouldRowUpdate: () => true,
 };
 
 Table.displayName = 'TangeloTable';

@@ -14,8 +14,10 @@ class DemoApp extends React.Component {
     this.state = {
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
       firstNameColor: {},
-      rowCount: DEFAULT_NUM_ROWS,
     };
+
+    this.getRowProps = this.getRowProps.bind(this);
+    this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
 
     this.thumbnailCellRenderer = this.thumbnailCellRenderer.bind(this);
     this.firstNameCellRenderer = this.firstNameCellRenderer.bind(this);
@@ -25,6 +27,17 @@ class DemoApp extends React.Component {
     this.birthDateCellRenderer = this.birthDateCellRenderer.bind(this);
 
     this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
+  }
+
+  getRowProps({ rowIndex }) {
+    return {
+      data: this.state.data[rowIndex],
+      firstNameColor: this.state.firstNameColor[rowIndex],
+    }
+  }
+
+  shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
+    return currentRowProps.firstNameColor !== nextRowProps.firstNameColor;
   }
 
   thumbnailCellRenderer({ columnIndex, rowIndex }) {
@@ -90,7 +103,9 @@ class DemoApp extends React.Component {
       </div>,
       <div className="table-container">
         <Table
-          rowCount={this.state.rowCount}
+          getRowProps={this.getRowProps}
+          rowCount={this.state.data.length}
+          shouldRowUpdate={this.shouldRowUpdate}
         >
           <TableColumn
             bodyCellRenderer={this.thumbnailCellRenderer}
