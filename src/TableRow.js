@@ -74,15 +74,14 @@ class TableRow extends React.Component {
   }
 
   render() {
-    console.log('TableRow.render');
-
     const {
+      className,
       rowIndex,
     } = this.props;
 
     return (
       <div
-        className={`Tangelo__Table__row ${this.props.className}`}
+        className={`Tangelo__Table__row ${className}`}
         {...getEventHandlerProps(this, { rowIndex })}
       >
         {Object.values(this._cellCache)}

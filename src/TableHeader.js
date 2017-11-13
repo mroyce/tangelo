@@ -66,14 +66,18 @@ class TableHeader extends React.Component {
   }
 
   render() {
-    console.log('TableHeader.render');
     return ([
       <div
+        key="header-content"
         className={`Tangelo__Table__header ${this.props.className}`}
       >
         {Object.values(this._cellCache)}
       </div>,
-      <div className="Tangelo__Table__header-space" />,
+
+      <div
+        key="header-space"
+        className="Tangelo__Table__header-space"
+      />,
     ]);
   }
 };

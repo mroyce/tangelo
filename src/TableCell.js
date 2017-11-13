@@ -7,25 +7,26 @@ import getEventHandlerProps from './utils/getEventHandlerProps';
 // TODO possibly convert this to a function like react-virtualized-table
 class TableCell extends React.Component {
   render() {
-    console.log('TableCell.render');
-
     const {
+      children,
+      className,
       columnIndex,
+      flexStyle,
       rowIndex,
     } = this.props;
 
     // TODO use classNames package
-    let className = 'Tangelo__Table__cell';
-    className += this.props.className ? ` ${this.props.className}` : '';
-    className += this.props.children ? '' : ' Tangelo__Table__cell--empty';
+    let constructedClassName = 'Tangelo__Table__cell';
+    constructedClassName += className ? ` ${className}` : '';
+    constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
 
     return (
       <div
-        className={className}
-        style={this.props.flexStyle}
+        className={constructedClassName}
+        style={flexStyle}
         {...getEventHandlerProps(this, { columnIndex, rowIndex })}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

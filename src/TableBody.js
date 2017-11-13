@@ -9,8 +9,10 @@ class TableBody extends React.Component {
     super();
 
     // <number: rowIndex, Element: <TableRow />>
-    // TODO change to <rowKey, Element>?
     this._rowCache = {};
+
+    // <number: order, number: rowIndex>
+    this._rowOrderCache = {};
   }
 
   componentWillMount() {
@@ -29,6 +31,7 @@ class TableBody extends React.Component {
       const rowIndex = Number(rowIndexString);
       const currentRowProps = this._rowCache[rowIndex].props.rowProps;
       const nextRowProps = getRowProps({ rowIndex });
+
       if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
@@ -80,7 +83,6 @@ class TableBody extends React.Component {
   }
 
   render() {
-    console.log('TableBody.render');
     return (
       <div className="Tangelo__Table__body">
         {Object.values(this._rowCache)}

@@ -113,7 +113,6 @@ class Table extends React.Component {
   }
 
   render() {
-    console.log('Table.render');
     return (
       <div className={`Tangelo__Table ${this.props.className}`}>
         {this.header}
