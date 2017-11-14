@@ -14,7 +14,7 @@ class TableRowSorter extends React.Component {
   }
 
   componentWillMount() {
-    for (let index = 0; index < this.props.children.length; index++) {
+    for (let index = 0; index < React.Children.toArray(this.props.children).length; index++) {
       this._rowOrderCache[index] = index;
     }
   }
@@ -77,7 +77,7 @@ class TableRowSorter extends React.Component {
     const sorted = [];
 
     for (const index in this._rowOrderCache) {
-      sorted[index] = this.props.children[this._rowOrderCache[index]];
+      sorted[index] = React.Children.toArray(this.props.children)[this._rowOrderCache[index]];
     }
 
     return sorted;
@@ -86,7 +86,7 @@ class TableRowSorter extends React.Component {
 
 TableRowSorter.propTypes = {
   /**
-   *
+   * Children of `<TableRowSorter />` should be `<TableRow />`.
    */
   children: props => {
     React.Children.toArray(props.children).forEach(child => {
