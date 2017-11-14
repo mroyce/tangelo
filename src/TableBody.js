@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { SortDirection } from './constants';
 import TableRow from './TableRow';
+import TableRowSorter from './TableRowSorter';
 
 
 class TableBody extends React.Component {
@@ -10,9 +12,6 @@ class TableBody extends React.Component {
 
     // <number: rowIndex, Element: <TableRow />>
     this._rowCache = {};
-
-    // <number: order, number: rowIndex>
-    this._rowOrderCache = {};
   }
 
   componentWillMount() {
@@ -24,6 +23,8 @@ class TableBody extends React.Component {
       getRowProps,
       rowCount,
       shouldRowUpdate,
+      sortDirection,
+      sortingCriteria,
     } = nextProps;
 
     // TODO only check rows that are in view
@@ -32,6 +33,7 @@ class TableBody extends React.Component {
       const currentRowProps = this._rowCache[rowIndex].props.rowProps;
       const nextRowProps = getRowProps({ rowIndex });
 
+      // TODO don't check this function if it's the default () => true
       if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
@@ -83,9 +85,19 @@ class TableBody extends React.Component {
   }
 
   render() {
+    const {
+      sortDirection,
+      sortingCriteria,
+    } = this.props;
+
     return (
       <div className="Tangelo__Table__body">
-        {Object.values(this._rowCache)}
+        <TableRowSorter
+          sortDirection={sortDirection}
+          sortingCriteria={sortingCriteria}
+        >
+          {Object.values(this._rowCache)}
+        </TableRowSorter>
       </div>
     );
   }
@@ -166,6 +178,31 @@ TableBody.propTypes = {
    *
    */
   rowCount: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  shouldRowUpdate: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  sortDirection: PropTypes.oneOf([
+    SortDirection.ASC,
+    SortDirection.DESC,
+  ]),
+
+  /**
+   *
+   */
+  sortingCriteria: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+};
+
+TableBody.defaultProps = {
+  sortingCriteria: null,
 };
 
 TableBody.displayName = 'TangeloTableBody';

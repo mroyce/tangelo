@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { SortDirection } from './constants';
+import HeaderSortArrow from './HeaderSortArrow';
 import TableCell from './TableCell';
 
 
@@ -13,13 +15,23 @@ class TableHeader extends React.Component {
   }
 
   componentWillMount() {
-    this._constructCells();
+    this._constructCells(this.props);
   }
 
-  _constructCells() {
+  componentWillUpdate(nextProps) {
+    if (this.props.sortingCriteria !== nextProps.sortingCriteria ||
+            this.props.sortDirection !== nextProps.sortDirection) {
+      this._constructCells(nextProps);
+    }
+  }
+
+  _constructCells(props) {
     const {
       columns,
-    } = this.props;
+      handleHeaderSortClick,
+      sortDirection,
+      sortingCriteria,
+    } = props;
 
     // TODO optimize so we only render cells that are in view
     columns.forEach((column, columnIndex) => {
@@ -33,6 +45,7 @@ class TableHeader extends React.Component {
         onCellMouseOut,
         onCellMouseOver,
         onCellRightClick,
+        sortBy,
       } = column;
       
       const className = 
@@ -44,6 +57,15 @@ class TableHeader extends React.Component {
         typeof cellRenderer === 'function' ?
           cellRenderer({ columnIndex }) :
           cellRenderer;
+
+      // TODO better function composition
+      let onClick = onCellClick;
+      if (sortBy) {
+        onClick = event => {
+          onCellClick({ event, columnIndex, rowIndex: -1 });
+          handleHeaderSortClick(sortBy);
+        }
+      }
       
       this._cellCache[columnIndex] = (
         <TableCell
@@ -52,7 +74,7 @@ class TableHeader extends React.Component {
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
-          onClick={onCellClick}
+          onClick={onClick}
           onDoubleClick={onCellDoubleClick}
           onMouseOut={onCellMouseOut}
           onMouseOver={onCellMouseOver}
@@ -60,6 +82,9 @@ class TableHeader extends React.Component {
           rowIndex={-1}
         > 
           {cellContent}
+          {sortBy && sortingCriteria === sortBy &&
+            <HeaderSortArrow sortDirection={sortDirection} />
+          }
         </TableCell>
       );
     });
@@ -122,10 +147,33 @@ TableHeader.propTypes = {
       onCellRightClick: PropTypes.func,
     })
   ).isRequired,
+
+  /**
+   *
+   */
+  handleHeaderSortClick: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  sortDirection: PropTypes.oneOf([
+    SortDirection.ASC,
+    SortDirection.DESC,
+  ]),
+
+  /**
+   *
+   */
+  sortingCriteria: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
 };
 
 TableHeader.defaultProps = {
   className: '',
+  sortDirectio: null,
+  sortingCriteria: null,
 };
 
 TableHeader.displayName = 'TangeloTableHeader';

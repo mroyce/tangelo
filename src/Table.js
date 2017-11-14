@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { SortDirection } from './constants';
 import getFlexStyle from './utils/getFlexStyle';
 import noop from './utils/noop';
 import TableBody from './TableBody';
@@ -9,7 +10,48 @@ import TableHeader from './TableHeader';
 
 
 class Table extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      sortDirection: null,
+      sortingCriteria: null,
+    };
+
+    this.handleHeaderSortClick = this.handleHeaderSortClick.bind(this);
+  }
+
+  handleHeaderSortClick(sortingCriteria) {
+    this.setState((prevState) => {
+      let sortDirection;
+
+      if (prevState.sortingCriteria === sortingCriteria) {
+        if (prevState.sortDirection === SortDirection.ASC) {
+          sortDirection = SortDirection.DESC;
+        } else if (prevState.sortDirection === SortDirection.DESC) {
+          sortingCriteria = null;
+        }
+      } else {
+        sortDirection = SortDirection.ASC;
+      }
+
+      return {
+        sortDirection,
+        sortingCriteria,
+      };
+    });
+  }
+
   get header() {
+    const {
+      handleHeaderSortClick,
+    } = this;
+
+    const {
+      sortDirection,
+      sortingCriteria,
+    } = this.state;
+
     const {
       children,
       disableHeader,
@@ -30,6 +72,7 @@ class Table extends React.Component {
         onCellMouseOut,
         onCellMouseOver,
         onCellRightClick,
+        sortBy,
         width,
         widthType,
       } = column.props;
@@ -44,6 +87,7 @@ class Table extends React.Component {
         onCellMouseOut,
         onCellMouseOver,
         onCellRightClick,
+        sortBy,
       };
     });
 
@@ -51,11 +95,19 @@ class Table extends React.Component {
       <TableHeader
         className={headerClassName}
         columns={columns}
+        handleHeaderSortClick={handleHeaderSortClick}
+        sortDirection={sortDirection}
+        sortingCriteria={sortingCriteria}
       />
     );
   }
 
   get body() {
+    const {
+      sortDirection,
+      sortingCriteria,
+    } = this.state;
+
     const {
       children,
       getRowProps,
@@ -108,6 +160,8 @@ class Table extends React.Component {
         rowClassName={rowClassName}
         rowCount={rowCount}
         shouldRowUpdate={shouldRowUpdate}
+        sortDirection={sortDirection}
+        sortingCriteria={sortingCriteria}
       />
     );
   }

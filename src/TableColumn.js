@@ -130,6 +130,14 @@ TableColumn.propTypes = {
   onCellRightClick: PropTypes.func,
 
   /**
+   *
+   */
+  sortBy: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+
+  /**
    * The width of the cells in this column in pixels or percentage.
    */
   width: PropTypes.number.isRequired,
@@ -154,6 +162,7 @@ TableColumn.defaultProps = {
   onCellMouseOut: noop,
   onCellMouseOver: noop,
   onCellRightClick: noop,
+  sortBy: null,
   widthType: '%',
 };
 
