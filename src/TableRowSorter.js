@@ -5,82 +5,83 @@ import { SortDirection } from './constants';
 import TableRow from './TableRow';
 
 
+/**
+ * Wrapper responsible for sorting rows in <TableBody />.
+ * Rows are sorted based on `sortingCriteria` and `sortDirection`.
+ * 
+ * `sortingCriteria` can be either a `function` or a `string`.
+ */
 class TableRowSorter extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    // <number: rowOrder, number: rowIndex>
-    this._rowOrderCache = {};
-  }
-
-  componentWillMount() {
-    for (let index = 0; index < React.Children.toArray(this.props.children).length; index++) {
-      this._rowOrderCache[index] = index;
-    }
+    // original copy of unordered rows
+    this._unorderedRows = React.Children.toArray(props.children);
+    // Map sortingCriteria -> rows sorted by given sortingCriteria
+    this._orderedRowsMap = {};
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-        sortDirection,
-        sortingCriteria,
-    } = nextProps;
-
-    if (this.props.sortingCriteria !== sortingCriteria ||
-            this.props.sortDirection !== sortDirection) {
-      this._orderRows(sortingCriteria, sortDirection);
+    if (nextProps.sortingCriteria &&
+        this.props.sortingCriteria !== nextProps.sortingCriteria) {
+      this._constructSortedRows(nextProps.sortingCriteria);
     }
   }
 
-  _orderRows(sortingCriteria, sortDirection) {
-    const rows = this.props.children;
-    let sorted;
-
-    if (typeof sortingCriteria === 'function') {
-      sorted = rows.sort((a, b) => {
-        return sortingCriteria(a.props.rowProps, b.props.rowProps);
-      });
-    } else if (typeof sortingCriteria === 'string') {
-      const sortingCriteriaFieldArray = sortingCriteria.split('.');
-      sorted = rows.sort((a, b) => {
-        let aVal = a.props.rowProps;
-        let bVal = b.props.rowProps;
-
-        for (let index = 0; index < sortingCriteriaFieldArray.length; index++) {
-          const key = sortingCriteriaFieldArray[index];
-          aVal = aVal[key];
-          bVal = bVal[key];
-        }
-
-        if (aVal > bVal) {
-          return 1;
-        }
-        if (aVal < bVal) {
-          return -1;
-        }
-        return 0;
-      });
-    } else {
-      // This shouldn't happen, maybe throw an error?
-      sorted = rows;
+  _constructSortedRows(sortingCriteria) {
+    // Check if we've cached a sorted array
+    if (this._orderedRowsMap[sortingCriteria]) {
+      // TODO check if array has to be resorted (new rowProp values, additions, deletions)
+      return;
     }
 
-    if (sortDirection === SortDirection.DESC) {
-      sorted.reverse();
+    // Otherwise sort the original array and store the sorted array
+    let sorted = this._unorderedRows.slice(0);
+    switch(typeof sortingCriteria) {
+      case 'function':
+        sorted = sorted.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
+        break;
+      case 'string':
+        const sortingCriteriaFieldNames = sortingCriteria.split('.');
+        sorted = sorted.sort((a, b) => {
+          let aVal = a.props.rowProps;
+          let bVal = b.props.rowProps;
+
+          for (let index = 0; index < sortingCriteriaFieldNames.length; index++) {
+            const key = sortingCriteriaFieldNames[index];
+            aVal = aVal[key];
+            bVal = bVal[key];
+          }
+
+          if (aVal > bVal) {
+            return 1;
+          }
+          if (aVal < bVal) {
+            return -1;
+          }
+          return 0;
+        });
+        break;
+      default:
+        // This shouldn't happen
+        throw new Error(
+          `'sortingCriteria' should be of type 'function' or 'string',` +
+          `received a ${typeof sortingCriteria}`
+        );
     }
 
-    for (let index = 0; index < sorted.length; index++) {
-      this._rowOrderCache[index] = sorted[index].props.rowIndex;
-    }
+    this._orderedRowsMap[sortingCriteria] = sorted;
   }
 
   render() {
-    const sorted = [];
-
-    for (const index in this._rowOrderCache) {
-      sorted[index] = React.Children.toArray(this.props.children)[this._rowOrderCache[index]];
+    switch(this.props.sortDirection) {
+      case SortDirection.ASC:
+        return this._orderedRowsMap[this.props.sortingCriteria];
+      case SortDirection.DESC:
+        return this._orderedRowsMap[this.props.sortingCriteria].slice().reverse();
+      default:
+        return this._unorderedRows;
     }
-
-    return sorted;
   }
 }
 
