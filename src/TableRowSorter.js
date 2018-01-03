@@ -15,9 +15,19 @@ class TableRowSorter extends React.Component {
   constructor(props) {
     super(props);
 
-    // original copy of unordered rows
+    /*
+     * Original copy of unordered rows
+     *
+     * @type {React.Element[]}
+     */
     this._unorderedRows = React.Children.toArray(props.children);
-    // Map sortingCriteria -> rows sorted by given sortingCriteria
+
+    /*
+     * Key: sortingCriteria string
+     * Value: array of rows sorted by the given sortingCriteria key
+     *
+     * @type {Object<string, React.Element[]>}
+     */
     this._orderedRowsMap = {};
   }
 
@@ -36,14 +46,14 @@ class TableRowSorter extends React.Component {
     }
 
     // Otherwise sort the original array and store the sorted array
-    let sorted = this._unorderedRows.slice(0);
+    const unorderedRows = this._unorderedRows.slice();
     switch(typeof sortingCriteria) {
       case 'function':
-        sorted = sorted.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
+        this._orderedRowsMap[sortingCriteria] = unorderedRows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
         break;
       case 'string':
         const sortingCriteriaFieldNames = sortingCriteria.split('.');
-        sorted = sorted.sort((a, b) => {
+        this._orderedRowsMap[sortingCriteria] = unorderedRows.sort((a, b) => {
           let aVal = a.props.rowProps;
           let bVal = b.props.rowProps;
 
@@ -69,8 +79,6 @@ class TableRowSorter extends React.Component {
           `received a ${typeof sortingCriteria}`
         );
     }
-
-    this._orderedRowsMap[sortingCriteria] = sorted;
   }
 
   render() {
