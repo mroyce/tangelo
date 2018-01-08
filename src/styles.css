@@ -2,6 +2,7 @@
  * Table
  */
 .Tangelo__Table {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
   position: relative;
   width: 100%;
@@ -23,7 +24,9 @@
   line-height: 40px;
   text-transform: uppercase;
 
-  /* Fixed Header */
+  /*
+   * Fixed Header
+   */
   position: absolute;
   right: 0;
   top: 0;
@@ -39,9 +42,16 @@
 }
 
 .Tangelo__Table__header-space {
-  /* Used so fixed header takes up space */
-  /* Also allows header background color to be opaque */
-  height: 42px; /* .Tangelo__Table__header height + border */
+  /*
+   * Fixed Header
+   *
+   * Used so fixed header takes up space
+   * Also allows header background color to be opaque
+   *
+   * .Tangelo__Table__header height (40) +
+   * .Tangelo__Table__header border (2)
+   */
+  height: 42px;
 }
 
 
@@ -49,10 +59,15 @@
  * TableBody
  */
 .Tangelo__Table__body {
-  /* Fixed Header */
-  height: calc(100% - 42px); /* .Tangelo__Table__header height + border */
+  /*
+   * Fixed Header
+   *
+   * .Tangelo__Table__header-space height (42)
+   */
+  height: calc(100% - 42px);
   overflow-y: auto;
-  width: 100%;
+  /* TODO do we need this? */
+  /* width: 100%; */
 }
 
 
@@ -91,25 +106,32 @@
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0 16px;
 
-  /* Text Ellipsis */
+  /*
+   * Text Ellipsis
+   */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.Tangelo__Table__cell:first-child {
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+/*
+.Tangelo__Table__cell:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
+*/
 
 .Tangelo__Table__cell * {
   vertical-align: middle;
 
-  /* Text Ellipsis */
+  /*
+   * Text Ellipsis
+   */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.Tangelo__Table__cell--empty {
+.Tangelo__Table__cell--empty,
+.Tangelo__Table__cell--hide-right-border {
   border-right: none;
   margin-right: 1px;
 }
