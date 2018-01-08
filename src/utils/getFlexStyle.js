@@ -5,12 +5,9 @@
  * @param {string} widthType
  * @returns {Object}
  */
-const getFlexStyle = (width, widthType) => {
+export default (width, widthType) => {
   const flexString = `${width}${widthType}`;
   return widthType === '%' ?
     { flexBasis: flexString } :
     { flex: `0 0 ${flexString}` };
 };
-
-
-export default getFlexStyle;

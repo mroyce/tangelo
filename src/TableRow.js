@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import getEventHandlerProps from './utils/getEventHandlerProps';
+import pickProps from './utils/pickProps';
 import TableCell from './TableCell';
 
 
@@ -39,42 +40,31 @@ class TableRow extends React.Component {
 
     // TODO optimize so we only render cells that are in view
     columns.forEach((column, columnIndex) => {
-      const {
-        align,
-        cellRenderer,
-        columnClassName,
-        flexStyle,
-        hideRightBorder,
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
-      } = column;
-
       const className = 
-        typeof columnClassName === 'function' ?
-          columnClassName({ columnIndex, rowIndex }) :
-          columnClassName;
+        typeof column.columnClassName === 'function' ?
+        column.columnClassName({ columnIndex, rowIndex }) :
+        column.columnClassName;
 
       const cellContent =
-        typeof cellRenderer === 'function' ?
-          cellRenderer({ columnIndex, rowIndex }) :
-          cellRenderer;
+        typeof column.cellRenderer === 'function' ?
+        column.cellRenderer({ columnIndex, rowIndex }) :
+        column.cellRenderer;
 
       this._cellCache[columnIndex] = (
         <TableCell
+          {...pickProps(column, [
+            'align',
+            'flexStyle',
+            'hideRightBorder',
+          ])}
           key={`table_cell_${rowIndex}_${columnIndex}`}
-          align={align}
           className={className}
           columnIndex={columnIndex}
-          flexStyle={flexStyle}
-          hideRightBorder={hideRightBorder}
-          onClick={onCellClick}
-          onDoubleClick={onCellDoubleClick}
-          onMouseOut={onCellMouseOut}
-          onMouseOver={onCellMouseOver}
-          onRightClick={onCellRightClick}
+          onClick={column.onCellClick}
+          onDoubleClick={column.onCellDoubleClick}
+          onMouseOut={column.onCellMouseOut}
+          onMouseOver={column.onCellMouseOver}
+          onRightClick={column.onCellRightClick}
           rowIndex={rowIndex}
         >
           {cellContent}

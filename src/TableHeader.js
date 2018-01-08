@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
+import pickProps from './utils/pickProps';
 import HeaderSortArrow from './HeaderSortArrow';
 import TableCell from './TableCell';
 
@@ -26,64 +27,46 @@ class TableHeader extends React.Component {
   }
 
   _constructCells(props) {
-    const {
-      columns,
-      handleHeaderSortClick,
-      sortDirection,
-      sortingCriteria,
-    } = props;
-
     // TODO optimize so we only render cells that are in view
-    columns.forEach((column, columnIndex) => {
-      const {
-        align,
-        cellRenderer,
-        columnClassName,
-        flexStyle,
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
-        sortBy,
-      } = column;
-      
+    props.columns.forEach((column, columnIndex) => {
       const className = 
-        typeof columnClassName === 'function' ?
-        columnClassName({ columnIndex }) :
-        columnClassName;
+        typeof column.columnClassName === 'function' ?
+        column.columnClassName({ columnIndex }) :
+        column.columnClassName;
       
       const cellContent =
-        typeof cellRenderer === 'function' ?
-        cellRenderer({ columnIndex }) :
-        cellRenderer;
+        typeof column.cellRenderer === 'function' ?
+        column.cellRenderer({ columnIndex }) :
+        column.cellRenderer;
 
       // TODO better function composition
-      let onClick = onCellClick;
-      if (sortBy) {
+      let onClick = column.onCellClick;
+      if (column.sortBy) {
         onClick = event => {
-          onCellClick({ event, columnIndex, rowIndex: -1 });
-          handleHeaderSortClick(sortBy);
+          column.onCellClick({ event, columnIndex, rowIndex: -1 });
+          props.handleHeaderSortClick(column.sortBy);
         }
       }
       
       this._cellCache[columnIndex] = (
         <TableCell
+          {...pickProps(column, [
+            'align',
+            'flexStyle',
+          ])}
           key={`table_cell_header_${columnIndex}`}
-          align={align}
           className={className}
           columnIndex={columnIndex}
-          flexStyle={flexStyle}
           onClick={onClick}
-          onDoubleClick={onCellDoubleClick}
-          onMouseOut={onCellMouseOut}
-          onMouseOver={onCellMouseOver}
-          onRightClick={onCellRightClick}
+          onDoubleClick={column.onCellDoubleClick}
+          onMouseOut={column.onCellMouseOut}
+          onMouseOver={column.onCellMouseOver}
+          onRightClick={column.onCellRightClick}
           rowIndex={-1}
         > 
           {cellContent}
-          {sortBy && sortingCriteria === sortBy &&
-            <HeaderSortArrow sortDirection={sortDirection} />
+          {column.sortBy && props.sortingCriteria === column.sortBy &&
+            <HeaderSortArrow sortDirection={props.sortDirection} />
           }
         </TableCell>
       );
@@ -91,7 +74,7 @@ class TableHeader extends React.Component {
   }
 
   render() {
-    return ([
+    return [
       <div
         key="header-content"
         className={`Tangelo__Table__header ${this.props.className}`}
@@ -103,7 +86,7 @@ class TableHeader extends React.Component {
         key="header-space"
         className="Tangelo__Table__header-space"
       />,
-    ]);
+    ];
   }
 };
 

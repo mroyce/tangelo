@@ -5,7 +5,7 @@
  * @param {String} wrapperName If this is a wrapped component
  * @returns {String} The constructed displayName for the given component
  */
-const getDisplayName = (Component, wrapperName = '') => {
+export default (Component, wrapperName = '') => {
   const componentDisplayName = Component.displayName || Component.name || 'Component';
 
   if (wrapperName) {
@@ -13,6 +13,3 @@ const getDisplayName = (Component, wrapperName = '') => {
   }
   return componentDisplayName;
 };
-
-
-export default getDisplayName;

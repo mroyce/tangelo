@@ -1,9 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import noop from '../utils/noop';
-
-
 /**
  * @param {React.Component} component
  * @param {Object} [parameters={}]

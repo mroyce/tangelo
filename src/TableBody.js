@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
+import pickProps from './utils/pickProps';
 import TableRow from './TableRow';
 import RowSorterWrapper from './RowSorterWrapper';
 
@@ -45,62 +46,46 @@ class TableBody extends React.Component {
   }
 
   _constructRow(rowIndex, props) {
-    const {
-      columns,
-      getRowProps,
-      onRowClick,
-      onRowDoubleClick,
-      onRowMouseOut,
-      onRowMouseOver,
-      onRowRightClick,
-      rowClassName,
-      rowCount,
-      shouldRowUpdate,
-    } = props;
+    const className =
+      typeof props.rowClassName === 'function' ?
+      props.rowClassName({ rowIndex }) :
+      props.rowClassName;
 
-    const className = typeof rowClassName === 'function' ? rowClassName({ rowIndex }) : rowClassName;
-    const rowProps = getRowProps({ rowIndex });
+    const rowProps = props.getRowProps({ rowIndex });
 
     return (
       <TableRow
+        {...pickProps(props, [
+          'columns',
+          'rowCount',
+          'shouldRowUpdate',
+        ])}
         key={`table_row_${rowIndex}`}
-        columns={columns}
         className={className}
-        onClick={onRowClick}
-        onDoubleClick={onRowDoubleClick}
-        onMouseOut={onRowMouseOut}
-        onMouseOver={onRowMouseOver}
-        onRightClick={onRowRightClick}
-        rowCount={rowCount}
+        onClick={props.onRowClick}
+        onDoubleClick={props.onRowDoubleClick}
+        onMouseOut={props.onRowMouseOut}
+        onMouseOver={props.onRowMouseOver}
+        onRightClick={props.onRowRightClick}
         rowIndex={rowIndex}
         rowProps={rowProps}
-        shouldRowUpdate={shouldRowUpdate}
       />
     );
   }
 
   _constructRows() {
-    const {
-      rowCount,
-    } = this.props;
-
     // TODO optimize so we only render rows that are in view
-    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
       this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
     }
   }
 
   render() {
-    const {
-      sortDirection,
-      sortingCriteria,
-    } = this.props;
-
     return (
       <div className="Tangelo__Table__body">
         <RowSorterWrapper
-          sortDirection={sortDirection}
-          sortingCriteria={sortingCriteria}
+          sortDirection={this.props.sortDirection}
+          sortingCriteria={this.props.sortingCriteria}
         >
           {Object.values(this._rowCache)}
         </RowSorterWrapper>

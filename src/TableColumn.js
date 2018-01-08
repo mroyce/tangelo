@@ -133,7 +133,11 @@ TableColumn.propTypes = {
   onCellRightClick: PropTypes.func,
 
   /**
-   *
+   * The sorting criteria for this column. Can either be a string or a function.
+   * If the criteria is a string, we use the string as the key for the property
+   * in ``rowProps`` and compare against that value.
+   * If the criteria is a function, the function will be used as a comparator
+   * and will receive ``rowProps`` as a parameter.
    */
   sortBy: PropTypes.oneOfType([
     PropTypes.string,
