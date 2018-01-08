@@ -20,7 +20,7 @@ class TableHeader extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (this.props.sortingCriteria !== nextProps.sortingCriteria ||
-            this.props.sortDirection !== nextProps.sortDirection) {
+        this.props.sortDirection !== nextProps.sortDirection) {
       this._constructCells(nextProps);
     }
   }
@@ -50,13 +50,13 @@ class TableHeader extends React.Component {
       
       const className = 
         typeof columnClassName === 'function' ?
-          columnClassName({ columnIndex }) :
-          columnClassName;
+        columnClassName({ columnIndex }) :
+        columnClassName;
       
       const cellContent =
         typeof cellRenderer === 'function' ?
-          cellRenderer({ columnIndex }) :
-          cellRenderer;
+        cellRenderer({ columnIndex }) :
+        cellRenderer;
 
       // TODO better function composition
       let onClick = onCellClick;

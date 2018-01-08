@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
 import TableRow from './TableRow';
-import TableRowSorter from './TableRowSorter';
+import RowSorterWrapper from './RowSorterWrapper';
 
 
 class TableBody extends React.Component {
   constructor() {
     super();
 
-    // <number: rowIndex, Element: <TableRow />>
+    /*
+     * Mapping from row number to <TableRow /> element
+     *
+     * @type {Object<number, React.Element>}
+     */
     this._rowCache = {};
   }
 
@@ -51,6 +55,7 @@ class TableBody extends React.Component {
       onRowRightClick,
       rowClassName,
       rowCount,
+      shouldRowUpdate,
     } = props;
 
     const className = typeof rowClassName === 'function' ? rowClassName({ rowIndex }) : rowClassName;
@@ -69,6 +74,7 @@ class TableBody extends React.Component {
         rowCount={rowCount}
         rowIndex={rowIndex}
         rowProps={rowProps}
+        shouldRowUpdate={shouldRowUpdate}
       />
     );
   }
@@ -92,12 +98,12 @@ class TableBody extends React.Component {
 
     return (
       <div className="Tangelo__Table__body">
-        <TableRowSorter
+        <RowSorterWrapper
           sortDirection={sortDirection}
           sortingCriteria={sortingCriteria}
         >
           {Object.values(this._rowCache)}
-        </TableRowSorter>
+        </RowSorterWrapper>
       </div>
     );
   }
@@ -202,6 +208,7 @@ TableBody.propTypes = {
 };
 
 TableBody.defaultProps = {
+  sortDirection: null,
   sortingCriteria: null,
 };
 

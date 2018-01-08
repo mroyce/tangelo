@@ -12,13 +12,21 @@ class TableCell extends React.Component {
       className,
       columnIndex,
       flexStyle,
+      hideRightBorder,
       rowIndex,
     } = this.props;
 
     // TODO use classNames package
     let constructedClassName = 'Tangelo__Table__cell';
     constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
+    constructedClassName += hideRightBorder ? ' Tangelo__Table__cell--hide-right-border' : '';
+
+    // TODO find better way of checking if cell is empty
+    if (Array.isArray(children)) {
+      constructedClassName += children.some(c => c) ? '' : ' Tangelo__Table__cell--empty';
+    } else {
+      constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
+    }
 
     return (
       <div
@@ -70,6 +78,11 @@ TableCell.propTypes = {
   ]).isRequired,
 
   /**
+   * True if you want to hide the right border from this cell.
+   */
+  hideRightBorder: PropTypes.bool,
+
+  /**
    *
    */
   onClick: PropTypes.func,
@@ -103,6 +116,7 @@ TableCell.propTypes = {
 TableCell.defaultProps = {
   children: null,
   className: '',
+  hideRightBorder: false,
   onClick: null,
   onDoubleClick: null,
   onMouseOut: null,

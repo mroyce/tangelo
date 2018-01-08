@@ -6,7 +6,6 @@ import noop from './utils/noop';
 
 class TableColumn extends React.Component {
   render() {
-    console.log('TableColumn.render');
     if (process.env.NODE_ENV !== 'production') {
       throw new Error(
         '<TableColumn /> should never render'
@@ -18,7 +17,7 @@ class TableColumn extends React.Component {
 
 TableColumn.propTypes = {
   /**
-   *
+   * Alignment of content for cells in this column.
    */
   align: PropTypes.oneOf([
     'left',
@@ -27,8 +26,7 @@ TableColumn.propTypes = {
   ]),
 
   /**
-   * The cell content that will be displayed for cells under this column
-   * for each row in the table.
+   * The content that will be displayed for table body cells in this column.
    *
    * Accepts the following parameters:
    * {
@@ -42,7 +40,7 @@ TableColumn.propTypes = {
   ]),
 
   /**
-   * ``className`` that will be applied to every cell in this column.
+   * ``className`` that will be applied to cells in this column.
    *
    * Accepts the following parameters:
    * {
@@ -56,7 +54,7 @@ TableColumn.propTypes = {
   ]),
 
   /**
-   * The cell component that will be displayed in the header for this column.
+   * The content that will be displayed for table header cells in this column.
    *
    * Accepts the following parameters:
    * {
@@ -67,6 +65,11 @@ TableColumn.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
+
+  /**
+   * If True, doesn't display a dividing line between this column and the column to the right.
+   */
+  hideRightBorder: PropTypes.bool,
 
   /**
    * For resizable columns (i.e. those using '%' width), provide a minimum width
@@ -156,6 +159,7 @@ TableColumn.defaultProps = {
   bodyCellRenderer: null, // TODO create defaultBodyCellRenderer
   columnClassName: '',
   headerCellRenderer: null, // TODO create defaultHeaderCellRenderer
+  hideRightBorder: false,
   minWidth: null,
   onCellClick: noop,
   onCellDoubleClick: noop,

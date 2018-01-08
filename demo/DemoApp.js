@@ -19,9 +19,11 @@ class DemoApp extends React.Component {
 
     this.handleNumRowsChange = this.handleNumRowsChange.bind(this);
 
+    // <Table /> props
     this.getRowProps = this.getRowProps.bind(this);
     this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
 
+    // Cell Renderers
     this.thumbnailCellRenderer = this.thumbnailCellRenderer.bind(this);
     this.firstNameCellRenderer = this.firstNameCellRenderer.bind(this);
     this.lastNameCellRenderer = this.lastNameCellRenderer.bind(this);
@@ -29,8 +31,10 @@ class DemoApp extends React.Component {
     this.emailCellRenderer = this.emailCellRenderer.bind(this);
     this.birthDateCellRenderer = this.birthDateCellRenderer.bind(this);
 
+    // Sort Functions
     this.sortByBirthDate = this.sortByBirthDate.bind(this);
 
+    // Action Handlers
     this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
   }
 
@@ -151,6 +155,7 @@ class DemoApp extends React.Component {
           <TableColumn
             key="thumbnail"
             bodyCellRenderer={this.thumbnailCellRenderer}
+            hideRightBorder
             width={24}
             widthType="px"
           />

@@ -11,7 +11,7 @@ import TableRow from './TableRow';
  * 
  * `sortingCriteria` can be either a `function` or a `string`.
  */
-class TableRowSorter extends React.Component {
+class RowSorterWrapper extends React.Component {
   constructor(props) {
     super(props);
 
@@ -93,14 +93,14 @@ class TableRowSorter extends React.Component {
   }
 }
 
-TableRowSorter.propTypes = {
+RowSorterWrapper.propTypes = {
   /**
-   * Children of `<TableRowSorter />` should be `<TableRow />`.
+   * Children of `<RowSorterWrapper />` should be `<TableRow />`.
    */
   children: props => {
     React.Children.toArray(props.children).forEach(child => {
       if (child.type !== TableRow) {
-        return new Error('`TableRowSorter` only accepts children of type `TableRow`');
+        return new Error('`RowSorterWrapper` only accepts children of type `TableRow`');
       }
     });
   },
@@ -122,10 +122,10 @@ TableRowSorter.propTypes = {
   ]),
 }
 
-TableRowSorter.defaultProps = {
+RowSorterWrapper.defaultProps = {
   sortDirection: null,
   sortingCriteria: null,
 }
 
 
-export default TableRowSorter;
+export default RowSorterWrapper;

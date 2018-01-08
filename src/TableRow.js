@@ -23,6 +23,14 @@ class TableRow extends React.Component {
     this._constructCells(nextProps);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.shouldRowUpdate({
+      curentProps: this.props,
+      nextProps,
+      rowIndex: this.props.rowIndex,
+    });
+  }
+
   _constructCells(props) {
     const {
       columns,
@@ -36,6 +44,7 @@ class TableRow extends React.Component {
         cellRenderer,
         columnClassName,
         flexStyle,
+        hideRightBorder,
         onCellClick,
         onCellDoubleClick,
         onCellMouseOut,
@@ -60,6 +69,7 @@ class TableRow extends React.Component {
           className={className}
           columnIndex={columnIndex}
           flexStyle={flexStyle}
+          hideRightBorder={hideRightBorder}
           onClick={onCellClick}
           onDoubleClick={onCellDoubleClick}
           onMouseOut={onCellMouseOut}

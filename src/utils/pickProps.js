@@ -11,7 +11,7 @@ import React from 'react';
 export default (object, propNames) => {
   const props = React.isValidElement(object) ? object.props : object;
   return propNames.reduce((o, k) => {
-    o[k] = object[k];
+    o[k] = props[k];
     return o;
   }, {});
 };
