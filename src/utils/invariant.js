@@ -6,7 +6,7 @@
  *                            invariant call.
  * @param {string} errorMsg The contents to populate any resulting error with.
  */
-const invariant = (condition, errorMsg = null) => {
+export default (condition, errorMsg = null) => {
   if (process.env.NODE_ENV !== 'production') {
     if (!condition) {
       const errorMessage = errorMsg || 'You should supply a message here to be most useful';
@@ -17,6 +17,3 @@ const invariant = (condition, errorMsg = null) => {
     }
   }
 };
-
-
-export default invariant;

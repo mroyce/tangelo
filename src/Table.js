@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { SortDirection } from './constants';
 import getFlexStyle from './utils/getFlexStyle';
 import noop from './utils/noop';
+import pickProps from './utils/pickProps';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
 import TableHeader from './TableHeader';
@@ -23,147 +24,104 @@ class Table extends React.Component {
 
   handleHeaderSortClick(sortingCriteria) {
     this.setState((prevState) => {
-      let sortDirection;
+      let newSortDirection = prevState.sortDirection;
+      let newSortingCriteria = sortingCriteria;
 
       if (prevState.sortingCriteria === sortingCriteria) {
         if (prevState.sortDirection === SortDirection.ASC) {
-          sortDirection = SortDirection.DESC;
+          // ASC -> DESC
+          newSortDirection = SortDirection.DESC;
         } else if (prevState.sortDirection === SortDirection.DESC) {
-          sortingCriteria = null;
+          // DESC -> None
+          newSortDirection = null;
+          newSortingCriteria = null;
         }
       } else {
-        sortDirection = SortDirection.ASC;
+        // None -> ASC
+        newSortDirection = SortDirection.ASC;
       }
 
       return {
-        sortDirection,
-        sortingCriteria,
+        sortDirection: newSortDirection,
+        sortingCriteria: newSortingCriteria,
       };
     });
   }
 
   get header() {
-    const {
-      handleHeaderSortClick,
-    } = this;
-
-    const {
-      sortDirection,
-      sortingCriteria,
-    } = this.state;
-
-    const {
-      children,
-      disableHeader,
-      headerClassName,
-    } = this.props;
-
-    if (disableHeader) {
+    if (this.props.disableHeader) {
       return null;
     }
 
-    const columns = React.Children.toArray(children).map(column => {
-      const {
-        align,
-        columnClassName,
-        headerCellRenderer,
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
-        sortBy,
-        width,
-        widthType,
-      } = column.props;
-
+    const columns = this.columns.map(column => {
       return {
-        align,
-        columnClassName,
-        cellRenderer: headerCellRenderer,
-        flexStyle: getFlexStyle(width, widthType),
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
-        sortBy,
+        ...pickProps(column, [
+          'align',
+          'columnClassName',
+          'hideRightBorder',
+          'onCellClick',
+          'onCellDoubleClick',
+          'onCellMouseOut',
+          'onCellMouseOver',
+          'onCellRightClick',
+          'sortBy',
+        ]),
+        cellRenderer: column.props.headerCellRenderer,
+        flexStyle: getFlexStyle(column.props.width, column.props.widthType),
       };
     });
 
     return (
       <TableHeader
-        className={headerClassName}
+        className={this.props.headerClassName}
         columns={columns}
-        handleHeaderSortClick={handleHeaderSortClick}
-        sortDirection={sortDirection}
-        sortingCriteria={sortingCriteria}
+        handleHeaderSortClick={this.handleHeaderSortClick}
+        sortDirection={this.state.sortDirection}
+        sortingCriteria={this.state.sortingCriteria}
       />
     );
   }
 
   get body() {
-    const {
-      sortDirection,
-      sortingCriteria,
-    } = this.state;
-
-    const {
-      children,
-      getRowProps,
-      onRowClick,
-      onRowDoubleClick,
-      onRowMouseOut,
-      onRowMouseOver,
-      onRowRightClick,
-      rowClassName,
-      rowCount,
-      shouldRowUpdate,
-    } = this.props;
-
-    const columns = React.Children.toArray(children).map(column => {
-      const {
-        align,
-        bodyCellRenderer,
-        columnClassName,
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
-        width,
-        widthType,
-      } = column.props;
-
+    const columns = this.columns.map(column => {
       return {
-        align,
-        columnClassName,
-        cellRenderer: bodyCellRenderer,
-        flexStyle: getFlexStyle(width, widthType),
-        onCellClick,
-        onCellDoubleClick,
-        onCellMouseOut,
-        onCellMouseOver,
-        onCellRightClick,
+        ...pickProps(column, [
+          'align',
+          'columnClassName',
+          'hideRightBorder',
+          'onCellClick',
+          'onCellDoubleClick',
+          'onCellMouseOut',
+          'onCellMouseOver',
+          'onCellRightClick',
+        ]),
+        cellRenderer: column.props.bodyCellRenderer,
+        flexStyle: getFlexStyle(column.props.width, column.props.widthType),
       };
     });
 
     return (
       <TableBody
+        {...pickProps(this.props, [
+          'getRowProps',
+          'onRowClick',
+          'onRowDoubleClick',
+          'onRowMouseOut',
+          'onRowMouseOver',
+          'onRowRightClick',
+          'rowClassName',
+          'rowCount',
+          'shouldRowUpdate',
+        ])}
         columns={columns}
-        getRowProps={getRowProps}
-        onRowClick={onRowClick}
-        onRowDoubleClick={onRowDoubleClick}
-        onRowMouseOut={onRowMouseOut}
-        onRowMouseOver={onRowMouseOver}
-        onRowRightClick={onRowRightClick}
-        rowClassName={rowClassName}
-        rowCount={rowCount}
-        shouldRowUpdate={shouldRowUpdate}
-        sortDirection={sortDirection}
-        sortingCriteria={sortingCriteria}
+        sortDirection={this.state.sortDirection}
+        sortingCriteria={this.state.sortingCriteria}
       />
     );
+  }
+
+  get columns() {
+    return React.Children.toArray(this.props.children);
   }
 
   render() {
