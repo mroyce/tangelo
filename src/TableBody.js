@@ -12,7 +12,8 @@ class TableBody extends React.Component {
     super();
 
     /*
-     * Mapping from row number to <TableRow /> element
+     * Key: rowIndex
+     * Value: <TableRow /> element
      *
      * @type {Object<number, React.Element>}
      */

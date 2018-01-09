@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
+import getNestedValue from './utils/getNestedValue';
 import TableRow from './TableRow';
 
 
@@ -10,6 +11,10 @@ import TableRow from './TableRow';
  * Rows are sorted based on `sortingCriteria` and `sortDirection`.
  * 
  * `sortingCriteria` can be either a `function` or a `string`.
+ *
+ * TODO incorporate this logic into <TableBody /> and remove this component?
+ * Is there a better way of modularizing this so `props.children` is available
+ * for different contexts? (e.g. only rendering rows that are in the viewport)
  */
 class RowSorterWrapper extends React.Component {
   constructor(props) {
@@ -17,7 +22,7 @@ class RowSorterWrapper extends React.Component {
 
     /*
      * Key: <TableRow /> key
-     * Value: corresponding row
+     * Value: corresponding <TableRow /> element
      *
      * @type {Object<string, React.Element>}
      */
@@ -65,16 +70,9 @@ class RowSorterWrapper extends React.Component {
         sorted = unorderedRows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
         break;
       case 'string':
-        const sortingCriteriaFieldNames = sortingCriteria.split('.');
         sorted = unorderedRows.sort((a, b) => {
-          let aVal = a.props.rowProps;
-          let bVal = b.props.rowProps;
-
-          for (let index = 0; index < sortingCriteriaFieldNames.length; index++) {
-            const key = sortingCriteriaFieldNames[index];
-            aVal = aVal[key];
-            bVal = bVal[key];
-          }
+          const aVal = getNestedValue(a.props.rowProps, sortingCriteria);
+          const bVal = getNestedValue(b.props.rowProps, sortingCriteria);
 
           if (aVal > bVal) {
             return 1;
