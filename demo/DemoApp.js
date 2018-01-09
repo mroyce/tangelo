@@ -4,7 +4,7 @@ import { Table, TableColumn } from '../src';
 import FakeDataObjectListCreator from './utils/FakeDataObjectListCreator';
 
 
-const DEFAULT_NUM_ROWS = 100;
+const DEFAULT_NUM_ROWS = 200;
 
 
 class DemoApp extends React.Component {

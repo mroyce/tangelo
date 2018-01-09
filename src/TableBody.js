@@ -24,22 +24,14 @@ class TableBody extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    const {
-      getRowProps,
-      rowCount,
-      shouldRowUpdate,
-      sortDirection,
-      sortingCriteria,
-    } = nextProps;
-
     // TODO only check rows that are in view
     for (const rowIndexString in this._rowCache) {
       const rowIndex = Number(rowIndexString);
       const currentRowProps = this._rowCache[rowIndex].props.rowProps;
-      const nextRowProps = getRowProps({ rowIndex });
+      const nextRowProps = nextProps.getRowProps({ rowIndex });
 
       // TODO don't check this function if it's the default () => true
-      if (shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
+      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
     }
@@ -57,7 +49,6 @@ class TableBody extends React.Component {
       <TableRow
         {...pickProps(props, [
           'columns',
-          'rowCount',
           'shouldRowUpdate',
         ])}
         key={`table_row_${rowIndex}`}
