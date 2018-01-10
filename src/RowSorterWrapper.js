@@ -53,6 +53,23 @@ class RowSorterWrapper extends React.Component {
     }
   }
 
+  /*
+  componentWillUpdate(nextProps) {
+    // TODO only check rows that are in view
+    for (const rowKey in this._unorderedRowsMap) {
+      const row = this._unorderedRowsMap[rowKey];
+      const rowIndex = row.props.rowIndex;
+      const currentRowProps = row.props.rowProps;
+      const nextRowProps = nextProps.getRowProps({ rowIndex });
+
+      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
+        // TODO we need the `_constructRow` function from <TableBody />
+        this._unorderedRowsMap[rowKey] = this._constructRow(rowIndex, nextProps);
+      }
+    }
+  }
+  */
+
   _constructSortedRows(sortingCriteria) {
     // Check if we have already sorted this array
     const sortingCriteriaKey = this._getSortingCriteriaKey(sortingCriteria);

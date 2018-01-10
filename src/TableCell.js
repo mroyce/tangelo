@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import getEventHandlerProps from './utils/getEventHandlerProps';
+import isEmpty from './utils/isEmpty';
+import noop from './utils/noop';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
@@ -28,11 +30,30 @@ class TableCell extends React.Component {
       constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
     }
 
+    const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
+    if (!isEmpty(eventHandlerProps)) {
+      constructedClassName += ' Tangelo__Table__cell--highlightable';
+      const {
+        onMouseOut = noop,
+        onMouseOver = noop,
+      } = eventHandlerProps;
+
+      eventHandlerProps.onMouseOut = event => {
+        onMouseOut(event);
+        this.props.handleChildCellMouseOut();
+      };
+
+      eventHandlerProps.onMouseOver = event => {
+        onMouseOver(event);
+        this.props.handleChildCellMouseOver();
+      };
+    }
+
     return (
       <div
         className={constructedClassName}
         style={flexStyle}
-        {...getEventHandlerProps(this, { columnIndex, rowIndex })}
+        {...eventHandlerProps}
       >
         {children}
       </div>

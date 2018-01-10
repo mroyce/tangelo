@@ -7,12 +7,22 @@ import TableCell from './TableCell';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
+// TODO make <TableHeader /> render an instance of <TableRow /> so we don't
+// have this duplicate code
 class TableRow extends React.Component {
   constructor() {
     super();
 
     // <number: columnIndex, Element: <TableCell />>
     this._cellCache = {};
+
+    this.state = {
+      // If a child cell is highlighted, we shouldn't highlight the row
+      isChildCellHighlighted: false,
+    };
+
+    this.handleChildCellMouseOver = this.handleChildCellMouseOver.bind(this);
+    this.handleChildCellMouseOut = this.handleChildCellMouseOut.bind(this);
   }
 
   componentWillMount() {
@@ -24,12 +34,22 @@ class TableRow extends React.Component {
     this._constructCells(nextProps);
   }
 
+  /*
   shouldComponentUpdate(nextProps) {
     return nextProps.shouldRowUpdate({
-      curentProps: this.props,
-      nextProps,
+      currentRowProps: this.props.rowProps,
+      nextRowProps: nextProps.rowProps,
       rowIndex: this.props.rowIndex,
     });
+  }
+  */
+
+  handleChildCellMouseOver() {
+    this.setState({ isChildCellHighlighted: true });
+  }
+
+  handleChildCellMouseOut() {
+    this.setState({ isChildCellHighlighted: false });
   }
 
   _constructCells(props) {
@@ -60,6 +80,8 @@ class TableRow extends React.Component {
           key={`table_cell_${rowIndex}_${columnIndex}`}
           className={className}
           columnIndex={columnIndex}
+          handleChildCellMouseOver={this.handleChildCellMouseOver}
+          handleChildCellMouseOut={this.handleChildCellMouseOut}
           onClick={column.onCellClick}
           onDoubleClick={column.onCellDoubleClick}
           onMouseOut={column.onCellMouseOut}
@@ -79,9 +101,18 @@ class TableRow extends React.Component {
       rowIndex,
     } = this.props;
 
+    const {
+      isChildCellHighlighted,
+    } = this.state;
+
+    // TODO use classNames package
+    let constructedClassName = 'Tangelo__Table__row';
+    constructedClassName += className ? ` ${className}` : '';
+    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__row--highlight-disabled' : '';
+
     return (
       <div
-        className={`Tangelo__Table__row ${className}`}
+        className={constructedClassName}
         {...getEventHandlerProps(this, { rowIndex })}
       >
         {Object.values(this._cellCache)}

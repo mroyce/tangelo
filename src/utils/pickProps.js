@@ -2,7 +2,7 @@ import React from 'react';
 
 
 /**
- * Picks specified props from a React Element or Prop Object.
+ * Picks specified props from a React Element or Object.
  *
  * @param {(React.Element|Object)} object The element/props to pick from
  * @param {string[]} propNames A list of prop name keys we wish to pick

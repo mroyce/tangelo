@@ -7,12 +7,22 @@ import HeaderSortArrow from './HeaderSortArrow';
 import TableCell from './TableCell';
 
 
+// TODO make <TableHeader /> render an instance of <TableRow /> so we don't
+// have this duplicate code
 class TableHeader extends React.Component {
   constructor() {
     super();
 
     // <number: columnIndex, Element: <TableCell />>
     this._cellCache = {};
+
+    this.state = {
+      // If a child cell is highlighted, we shouldn't highlight the row
+      isChildCellHighlighted: false,
+    };
+
+    this.handleChildCellMouseOver = this.handleChildCellMouseOver.bind(this);
+    this.handleChildCellMouseOut = this.handleChildCellMouseOut.bind(this);
   }
 
   componentWillMount() {
@@ -24,6 +34,14 @@ class TableHeader extends React.Component {
         this.props.sortDirection !== nextProps.sortDirection) {
       this._constructCells(nextProps);
     }
+  }
+
+  handleChildCellMouseOver() {
+    this.setState({ isChildCellHighlighted: true });
+  }
+
+  handleChildCellMouseOut() {
+    this.setState({ isChildCellHighlighted: false });
   }
 
   _constructCells(props) {
@@ -57,6 +75,8 @@ class TableHeader extends React.Component {
           key={`table_cell_header_${columnIndex}`}
           className={className}
           columnIndex={columnIndex}
+          handleChildCellMouseOver={this.handleChildCellMouseOver}
+          handleChildCellMouseOut={this.handleChildCellMouseOut}
           onClick={onClick}
           onDoubleClick={column.onCellDoubleClick}
           onMouseOut={column.onCellMouseOut}
@@ -74,10 +94,23 @@ class TableHeader extends React.Component {
   }
 
   render() {
+    const {
+      className,
+    } = this.props;
+
+    const {
+      isChildCellHighlighted,
+    } = this.state;
+
+    // TODO use classNames package
+    let constructedClassName = 'Tangelo__Table__header';
+    constructedClassName += className ? ` ${className}` : '';
+    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__header--highlight-disabled' : '';
+
     return [
       <div
         key="header-content"
-        className={`Tangelo__Table__header ${this.props.className}`}
+        className={constructedClassName}
       >
         {Object.values(this._cellCache)}
       </div>,

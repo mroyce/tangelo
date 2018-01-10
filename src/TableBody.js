@@ -24,20 +24,6 @@ class TableBody extends React.Component {
     this._constructRows();
   }
 
-  componentWillUpdate(nextProps) {
-    // TODO only check rows that are in view
-    for (const rowIndexString in this._rowCache) {
-      const rowIndex = Number(rowIndexString);
-      const currentRowProps = this._rowCache[rowIndex].props.rowProps;
-      const nextRowProps = nextProps.getRowProps({ rowIndex });
-
-      // TODO don't check this function if it's the default () => true
-      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
-        this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
-      }
-    }
-  }
-
   _constructRow(rowIndex, props) {
     const className =
       typeof props.rowClassName === 'function' ?
@@ -76,6 +62,7 @@ class TableBody extends React.Component {
     return (
       <div className="Tangelo__Table__body">
         <RowSorterWrapper
+          getRowProps={this.props.getRowProps}
           sortDirection={this.props.sortDirection}
           sortingCriteria={this.props.sortingCriteria}
         >

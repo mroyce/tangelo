@@ -33,12 +33,14 @@
   width: 100%;
 }
 
-.Tangelo__Table__header:hover {
+.Tangelo__Table__header:hover:not(.Tangelo__Table__header--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
-.Tangelo__Table__header:active {
+.Tangelo__Table__header:active:not(.Tangelo__Table__header--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
 
 .Tangelo__Table__header-space {
@@ -85,14 +87,17 @@
   line-height: 48px;
 }
 
-.Tangelo__Table__row:hover {
+.Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
-.Tangelo__Table__row:active {
+.Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
+/* TODO not implemented yet */
 .Tangelo__Table__row--selected {
   background-color: rgba(0, 0, 0, 0.8);
   font-color: rgba(255, 255, 255, 0.8);
@@ -112,6 +117,16 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.Tangelo__Table__cell--highlightable:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.Tangelo__Table__cell--highlightable:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 /*

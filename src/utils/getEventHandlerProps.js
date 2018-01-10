@@ -1,3 +1,5 @@
+import noop from './noop';
+
 /**
  * @param {React.Component} component
  * @param {Object} [parameters={}]
@@ -19,23 +21,23 @@ export default (component, parameters = {}) => {
 
   const eventHandlerProps = {};
 
-  if (onClick) {
+  if (onClick && onClick !== noop) {
     eventHandlerProps.onClick = createEventHandler(onClick);
   }
 
-  if (onDoubleClick) {
+  if (onDoubleClick && onDoubleClick !== noop) {
     eventHandlerProps.onDoubleClick = createEventHandler(onDoubleClick);
   }
 
-  if (onMouseOut) {
+  if (onMouseOut && onMouseOut !== noop) {
     eventHandlerProps.onMouseOut = createEventHandler(onMouseOut);
   }
 
-  if (onMouseOver) {
+  if (onMouseOver && onMouseOver !== noop) {
     eventHandlerProps.onMouseOver = createEventHandler(onMouseOver);
   }
 
-  if (onRightClick) {
+  if (onRightClick && onRightClick !== noop) {
     eventHandlerProps.onContextMenu = createEventHandler(onRightClick);
   }
 
