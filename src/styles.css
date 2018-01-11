@@ -1,6 +1,6 @@
-/**
- * Table
- */
+/*********
+ * Table *
+ *********/
 .Tangelo__Table {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
@@ -9,9 +9,9 @@
 }
 
 
-/**
- * TableHeader
- */
+/***************
+ * TableHeader *
+ ***************/
 .Tangelo__Table__header {
   background-color: rgba(0, 0, 0, 0.05);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -57,9 +57,9 @@
 }
 
 
-/**
- * TableBody
- */
+/*************
+ * TableBody *
+ *************/
 .Tangelo__Table__body {
   /*
    * Fixed Header
@@ -73,9 +73,9 @@
 }
 
 
-/**
- * TableRow
- */
+/************
+ * TableRow *
+ ************/
 .Tangelo__Table__row {
   background-color: rgba(255, 255, 255, 1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -104,12 +104,13 @@
 }
 
 
-/**
- * TableCell
- */
+/*************
+ * TableCell *
+ *************/
 .Tangelo__Table__cell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0 16px;
+  /* position: relative; */
 
   /*
    * Text Ellipsis
@@ -129,24 +130,25 @@
   cursor: pointer;
 }
 
-/*
-.Tangelo__Table__cell:last-child {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-*/
-
-.Tangelo__Table__cell * {
+.Tangelo__Table__cell *  {
   vertical-align: middle;
-
-  /*
-   * Text Ellipsis
-   */
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .Tangelo__Table__cell--empty,
 .Tangelo__Table__cell--hide-right-border {
   border-right: none;
   margin-right: 1px;
+}
+
+.Tangelo__Cell__tooltip {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  text-align: center;
 }

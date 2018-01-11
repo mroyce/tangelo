@@ -4,10 +4,39 @@ import PropTypes from 'prop-types';
 import getEventHandlerProps from './utils/getEventHandlerProps';
 import isEmpty from './utils/isEmpty';
 import noop from './utils/noop';
+import pipe from './utils/pipe';
+import CellTooltip from './CellTooltip';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableCell extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isTooltipVisible: false,
+    };
+
+    this.handleShowTooltip = this.handleShowTooltip.bind(this);
+    this.handleHideTooltip = this.handleHideTooltip.bind(this);
+  }
+
+  handleShowTooltip() {
+    if (!this.state.isTooltipVisible && this.isContentTruncated) {
+      this.setState({ isTooltipVisible: true });
+    }
+  }
+
+  handleHideTooltip() {
+    if (this.state.isTooltipVisible) {
+      this.setState({ isTooltipVisible: false });
+    }
+  }
+
+  get isContentTruncated() {
+    return this.self.scrollWidth > this.self.clientWidth;
+  }
+
   render() {
     const {
       children,
@@ -30,32 +59,27 @@ class TableCell extends React.Component {
       constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
     }
 
+    // Handle highlighting individual cells
     const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
     if (!isEmpty(eventHandlerProps)) {
       constructedClassName += ' Tangelo__Table__cell--highlightable';
-      const {
-        onMouseOut = noop,
-        onMouseOver = noop,
-      } = eventHandlerProps;
-
-      eventHandlerProps.onMouseOut = event => {
-        onMouseOut(event);
-        this.props.handleChildCellMouseOut();
-      };
-
-      eventHandlerProps.onMouseOver = event => {
-        onMouseOver(event);
-        this.props.handleChildCellMouseOver();
-      };
+      eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
+      eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
     }
+
+    // Handle showing/hiding tooltip
+    eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.handleShowTooltip);
+    eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.handleHideTooltip);
 
     return (
       <div
         className={constructedClassName}
+        ref={ref => { this.self = ref; }}
         style={flexStyle}
         {...eventHandlerProps}
       >
         {children}
+        {this.state.isTooltipVisible && <CellTooltip>{children}</ CellTooltip>}
       </div>
     );
   }

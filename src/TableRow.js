@@ -34,16 +34,6 @@ class TableRow extends React.Component {
     this._constructCells(nextProps);
   }
 
-  /*
-  shouldComponentUpdate(nextProps) {
-    return nextProps.shouldRowUpdate({
-      currentRowProps: this.props.rowProps,
-      nextRowProps: nextProps.rowProps,
-      rowIndex: this.props.rowIndex,
-    });
-  }
-  */
-
   handleChildCellMouseOver() {
     this.setState({ isChildCellHighlighted: true });
   }
