@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
 import pickProps from './utils/pickProps';
-import TableRow from './TableRow';
+import TableBodyRow from './TableBodyRow';
 import RowSorterWrapper from './RowSorterWrapper';
 
 
@@ -21,7 +21,10 @@ class TableBody extends React.Component {
   }
 
   componentWillMount() {
-    this._constructRows();
+    // TODO optimize so we only render rows that are in view
+    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
+      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
+    }
   }
 
   _constructRow(rowIndex, props) {
@@ -33,7 +36,7 @@ class TableBody extends React.Component {
     const rowProps = props.getRowProps({ rowIndex });
 
     return (
-      <TableRow
+      <TableBodyRow
         {...pickProps(props, [
           'columns',
           'shouldRowUpdate',
@@ -49,13 +52,6 @@ class TableBody extends React.Component {
         rowProps={rowProps}
       />
     );
-  }
-
-  _constructRows() {
-    // TODO optimize so we only render rows that are in view
-    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
-      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
-    }
   }
 
   render() {
