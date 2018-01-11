@@ -2,118 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SortDirection } from './constants';
-import pickProps from './utils/pickProps';
-import HeaderSortArrow from './HeaderSortArrow';
-import TableCell from './TableCell';
+import pipe from './utils/pipe';
+// import HeaderSortArrow from './HeaderSortArrow';
+import TableRow from './TableRow';
 
 
-// TODO make <TableHeader /> render an instance of <TableRow /> so we don't
-// have this duplicate code
 class TableHeader extends React.Component {
-  constructor() {
-    super();
-
-    // <number: columnIndex, Element: <TableCell />>
-    this._cellCache = {};
-
-    this.state = {
-      // If a child cell is highlighted, we shouldn't highlight the row
-      isChildCellHighlighted: false,
-    };
-
-    this.handleChildCellMouseOver = this.handleChildCellMouseOver.bind(this);
-    this.handleChildCellMouseOut = this.handleChildCellMouseOut.bind(this);
-  }
-
-  componentWillMount() {
-    this._constructCells(this.props);
-  }
-
-  componentWillUpdate(nextProps) {
-    if (this.props.sortingCriteria !== nextProps.sortingCriteria ||
-        this.props.sortDirection !== nextProps.sortDirection) {
-      this._constructCells(nextProps);
-    }
-  }
-
-  handleChildCellMouseOver() {
-    this.setState({ isChildCellHighlighted: true });
-  }
-
-  handleChildCellMouseOut() {
-    this.setState({ isChildCellHighlighted: false });
-  }
-
-  _constructCells(props) {
-    // TODO optimize so we only render cells that are in view
-    props.columns.forEach((column, columnIndex) => {
-      const className = 
-        typeof column.columnClassName === 'function' ?
-        column.columnClassName({ columnIndex }) :
-        column.columnClassName;
-      
-      const cellContent =
-        typeof column.cellRenderer === 'function' ?
-        column.cellRenderer({ columnIndex }) :
-        column.cellRenderer;
-
-      // TODO better function composition
-      let onClick = column.onCellClick;
+  get columns() {
+    return this.props.columns.map(column => {
       if (column.sortBy) {
-        onClick = event => {
-          column.onCellClick({ event, columnIndex, rowIndex: -1 });
-          props.handleHeaderSortClick(column.sortBy);
-        }
+        column.onCellClick = pipe(column.onCellClick, () => this.props.handleHeaderSortClick(column.sortBy));
       }
-      
-      this._cellCache[columnIndex] = (
-        <TableCell
-          {...pickProps(column, [
-            'align',
-            'flexStyle',
-          ])}
-          key={`table_cell_header_${columnIndex}`}
-          className={className}
-          columnIndex={columnIndex}
-          handleChildCellMouseOver={this.handleChildCellMouseOver}
-          handleChildCellMouseOut={this.handleChildCellMouseOut}
-          onClick={onClick}
-          onDoubleClick={column.onCellDoubleClick}
-          onMouseOut={column.onCellMouseOut}
-          onMouseOver={column.onCellMouseOver}
-          onRightClick={column.onCellRightClick}
-          rowIndex={-1}
-        > 
-          {cellContent}
-          {column.sortBy && props.sortingCriteria === column.sortBy &&
-            <HeaderSortArrow sortDirection={props.sortDirection} />
-          }
-        </TableCell>
-      );
+
+      // TODO include <SortArrow /> once we have icon slots
+
+      return column;
     });
   }
 
   render() {
-    const {
-      className,
-    } = this.props;
-
-    const {
-      isChildCellHighlighted,
-    } = this.state;
-
     // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__header';
-    constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__header--highlight-disabled' : '';
+    let constructedClassName = 'Tangelo__Table__header-row';
+    constructedClassName += this.props.className ? ` ${this.props.className}` : '';
 
     return [
-      <div
-        key="header-content"
+      <TableRow
+        key="Table__Row__Header"
         className={constructedClassName}
-      >
-        {Object.values(this._cellCache)}
-      </div>,
+        columns={this.columns}
+        rowIndex={-1}
+      />,
 
       <div
         key="header-space"

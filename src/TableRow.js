@@ -7,8 +7,6 @@ import TableCell from './TableCell';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
-// TODO make <TableHeader /> render an instance of <TableRow /> so we don't
-// have this duplicate code
 class TableRow extends React.Component {
   constructor() {
     super();
@@ -33,16 +31,6 @@ class TableRow extends React.Component {
     // TODO consider only updating some cells like we do for rows in `TableBody`
     this._constructCells(nextProps);
   }
-
-  /*
-  shouldComponentUpdate(nextProps) {
-    return nextProps.shouldRowUpdate({
-      currentRowProps: this.props.rowProps,
-      nextRowProps: nextProps.rowProps,
-      rowIndex: this.props.rowIndex,
-    });
-  }
-  */
 
   handleChildCellMouseOver() {
     this.setState({ isChildCellHighlighted: true });
@@ -185,16 +173,6 @@ TableRow.propTypes = {
    *
    */
   rowIndex: PropTypes.number.isRequired,
-
-  /**
-   * TODO better propType validation
-   */
-  rowProps: PropTypes.object,
-
-  /**
-   *
-   */
-  selected: PropTypes.bool,
 };
 
 TableRow.defaultProps = {
