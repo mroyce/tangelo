@@ -21,6 +21,7 @@ class DemoApp extends React.Component {
 
     // <Table /> props
     this.getRowProps = this.getRowProps.bind(this);
+    this.rowClassName = this.rowClassName.bind(this);
     this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
 
     // Cell Renderers
@@ -54,6 +55,14 @@ class DemoApp extends React.Component {
       person: this.state.data[rowIndex],
       firstNameColor: this.state.firstNameColor[rowIndex],
     }
+  }
+
+  rowClassName({ rowIndex }) {
+    let className = '';
+
+    className += rowIndex % 2 ? 'row-odd' : 'row-even';
+
+    return className;
   }
 
   shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
@@ -149,6 +158,7 @@ class DemoApp extends React.Component {
       >
         <Table
           getRowProps={this.getRowProps}
+          rowClassName={this.rowClassName}
           rowCount={this.state.numRows}
           shouldRowUpdate={this.shouldRowUpdate}
         >
@@ -180,7 +190,6 @@ class DemoApp extends React.Component {
             key="address"
             bodyCellRenderer={this.addressCellRenderer}
             headerCellRenderer="Address"
-            sortBy="person.address"
             width={30}
             widthType="%"
           />

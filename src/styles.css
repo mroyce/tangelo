@@ -10,16 +10,28 @@
 
 
 /***************
- * TableHeader *
+ * TableRow *
  ***************/
-.Tangelo__Table__header {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+.Tangelo__Table__row {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: row;
+}
+
+.Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled),
+.Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
+  cursor: pointer;
+}
+
+
+/******************
+ * TableHeaderRow *
+ ******************/
+.Tangelo__Table__header-row {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
-  flex-direction: row;
   height: 40px;
   line-height: 40px;
   text-transform: uppercase;
@@ -33,14 +45,12 @@
   width: 100%;
 }
 
-.Tangelo__Table__header:hover:not(.Tangelo__Table__header--highlight-disabled) {
+.Tangelo__Table__header-row:hover:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 }
 
-.Tangelo__Table__header:active:not(.Tangelo__Table__header--highlight-disabled) {
+.Tangelo__Table__header-row:active:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.15);
-  cursor: pointer;
 }
 
 .Tangelo__Table__header-space {
@@ -73,32 +83,27 @@
 }
 
 
-/************
- * TableRow *
- ************/
-.Tangelo__Table__row {
+/****************
+ * TableBodyRow *
+ ****************/
+.Tangelo__Table__body-row {
   background-color: rgba(255, 255, 255, 1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
   color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
-  flex-direction: row;
   height: 48px;
   line-height: 48px;
 }
 
-.Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled) {
+.Tangelo__Table__body-row:hover:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.05);
-  cursor: pointer;
 }
 
-.Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
+.Tangelo__Table__body-row:active:not(.Tangelo__Table__row--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 }
 
 /* TODO not implemented yet */
-.Tangelo__Table__row--selected {
+.Tangelo__Table__body-row--selected {
   background-color: rgba(0, 0, 0, 0.8);
   font-color: rgba(255, 255, 255, 0.8);
 }

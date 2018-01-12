@@ -7,8 +7,6 @@ import TableCell from './TableCell';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
-// TODO make <TableHeader /> render an instance of <TableRow /> so we don't
-// have this duplicate code
 class TableRow extends React.Component {
   constructor() {
     super();
@@ -175,16 +173,6 @@ TableRow.propTypes = {
    *
    */
   rowIndex: PropTypes.number.isRequired,
-
-  /**
-   * TODO better propType validation
-   */
-  rowProps: PropTypes.object,
-
-  /**
-   *
-   */
-  selected: PropTypes.bool,
 };
 
 TableRow.defaultProps = {
