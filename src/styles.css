@@ -18,10 +18,12 @@
   flex-direction: row;
 }
 
+/*
 .Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled),
 .Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
   cursor: pointer;
 }
+*/
 
 
 /**
@@ -133,12 +135,6 @@
   background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-
-/*
-.Tangelo__Table__cell:last-child {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-*/
 
 .Tangelo__Table__cell * {
   vertical-align: middle;
