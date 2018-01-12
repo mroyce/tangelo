@@ -7,7 +7,7 @@ import noop from './utils/noop';
 import pickProps from './utils/pickProps';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
-import TableHeader from './TableHeader';
+import TableHeaderRow from './TableHeaderRow';
 
 
 class Table extends React.Component {
@@ -72,7 +72,7 @@ class Table extends React.Component {
     });
 
     return (
-      <TableHeader
+      <TableHeaderRow
         className={this.props.headerClassName}
         columns={columns}
         handleHeaderSortClick={this.handleHeaderSortClick}
