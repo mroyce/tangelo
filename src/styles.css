@@ -9,19 +9,22 @@
 }
 
 
-/***************
+/************
  * TableRow *
- ***************/
+ ************/
 .Tangelo__Table__row {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
+/*
 .Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled),
 .Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
   cursor: pointer;
 }
+*/
 
 
 /******************
@@ -135,7 +138,7 @@
   cursor: pointer;
 }
 
-.Tangelo__Table__cell *  {
+.Tangelo__Table__cell * {
   vertical-align: middle;
 }
 
@@ -153,7 +156,7 @@
   font-weight: 500;
   padding: 8px;
   position: absolute;
-  bottom: 20px;
+  bottom: 50px;
   left: 0;
   text-align: center;
 }

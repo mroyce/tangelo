@@ -7,7 +7,7 @@ import pipe from './utils/pipe';
 import TableRow from './TableRow';
 
 
-class TableHeader extends React.Component {
+class TableHeaderRow extends React.Component {
   get columns() {
     return this.props.columns.map(column => {
       if (column.sortBy) {
@@ -41,7 +41,7 @@ class TableHeader extends React.Component {
   }
 };
 
-TableHeader.propTypes = {
+TableHeaderRow.propTypes = {
   /**
    *
    */
@@ -104,13 +104,13 @@ TableHeader.propTypes = {
   ]),
 };
 
-TableHeader.defaultProps = {
+TableHeaderRow.defaultProps = {
   className: '',
   sortDirectio: null,
   sortingCriteria: null,
 };
 
-TableHeader.displayName = 'TangeloTableHeader';
+TableHeaderRow.displayName = 'TangeloTableHeaderRow';
 
 
-export default TableHeader;
+export default TableHeaderRow;

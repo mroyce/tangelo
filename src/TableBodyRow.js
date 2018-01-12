@@ -126,7 +126,7 @@ TableBodyRow.defaultProps = {
   selected: false,
 };
 
-TableBodyRow.displayName = 'TangeloTableRow';
+TableBodyRow.displayName = 'TangeloTableBodyRow';
 
 
 export default TableBodyRow;
