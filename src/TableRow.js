@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import getEventHandlerProps from './utils/getEventHandlerProps';
+import isEmpty from './utils/isEmpty';
 import pickProps from './utils/pickProps';
 import TableCell from './TableCell';
 
@@ -70,6 +71,7 @@ class TableRow extends React.Component {
           columnIndex={columnIndex}
           handleChildCellMouseOver={this.handleChildCellMouseOver}
           handleChildCellMouseOut={this.handleChildCellMouseOut}
+          icons={column.icons}
           onClick={column.onCellClick}
           onDoubleClick={column.onCellDoubleClick}
           onMouseOut={column.onCellMouseOut}
@@ -141,6 +143,7 @@ TableRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]).isRequired,
+      icons: PropTypes.arrayOf(PropTypes.element),
     })
   ).isRequired,
 

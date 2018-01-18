@@ -8,6 +8,18 @@ import noop from './utils/noop';
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableCell extends React.Component {
+  get icons() {
+    return isEmpty(this.props.icons) ? null : (
+      <div className="Tangelo__Table__cell-icon-section">
+        {this.props.icons.map((icon, idx) => (
+          <div key={idx} className="Tangelo__Table__cell-icon-wrapper">
+            {icon}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   render() {
     const {
       children,
@@ -56,6 +68,7 @@ class TableCell extends React.Component {
         {...eventHandlerProps}
       >
         {children}
+        {this.icons}
       </div>
     );
   }
@@ -102,6 +115,11 @@ TableCell.propTypes = {
    * True if you want to hide the right border from this cell.
    */
   hideRightBorder: PropTypes.bool,
+
+  /**
+   *
+   */
+  icons: PropTypes.arrayOf(PropTypes.element),
 
   /**
    *

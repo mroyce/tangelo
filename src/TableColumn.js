@@ -72,6 +72,12 @@ TableColumn.propTypes = {
   hideRightBorder: PropTypes.bool,
 
   /**
+   * An array of SVG elements which will be displayed in the bottom-right-hand corner
+   * of the cell. All SVGs will be scaled to 16x16 pixels.
+   */
+  icons: PropTypes.arrayOf(PropTypes.element),
+
+  /**
    * For resizable columns (i.e. those using '%' width), provide a minimum width
    * in pixels, at which point horizontal scrolling is enabled.
    */
@@ -164,6 +170,7 @@ TableColumn.defaultProps = {
   columnClassName: '',
   headerCellRenderer: null, // TODO create defaultHeaderCellRenderer
   hideRightBorder: false,
+  icons: [],
   minWidth: null,
   onCellClick: noop,
   onCellDoubleClick: noop,

@@ -96,6 +96,7 @@ TableBody.propTypes = {
           flex: PropTypes.string,
         }),
       ]),
+      icons: PropTypes.arrayOf(PropTypes.element),
     })
   ).isRequired,
 

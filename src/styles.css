@@ -151,3 +151,12 @@
   border-right: none;
   margin-right: 1px;
 }
+
+.Tangelo__Table__cell-icons-section {
+  position: absolute;
+}
+
+.Tangelo__Table__cell-icon-wrapper > svg {
+  height: 16px;
+  width: 16px;
+}

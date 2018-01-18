@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Table, TableColumn } from '../src';
 import FakeDataObjectListCreator from './utils/FakeDataObjectListCreator';
+import { MailIcon } from './SVGs';
 
 
-const DEFAULT_NUM_ROWS = 200;
+const DEFAULT_NUM_ROWS = 1000;
 
 
 class DemoApp extends React.Component {
@@ -197,6 +198,7 @@ class DemoApp extends React.Component {
             key="email"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
+            icons={[<MailIcon />]}
             sortBy="person.email"
             width={40}
             widthType="%"
