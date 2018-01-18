@@ -86,7 +86,7 @@ class TableCell extends React.Component {
       >
         <div
           className="Tangelo__Table__cell--content"
-           ref={ref => {this.content = ref; }}
+          ref={ref => {this.content = ref; }}
         >
           {children}
         </div>
