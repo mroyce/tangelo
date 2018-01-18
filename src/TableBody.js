@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SortDirection } from './constants';
-import pickProps from './utils/pickProps';
-import TableBodyRow from './TableBodyRow';
 import RowSorterWrapper from './RowSorterWrapper';
+import TableBodyRow from './TableBodyRow';
+import { SortDirection } from './constants';
+import { pickProps } from './utils';
 
 
 class TableBody extends React.Component {

@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import getEventHandlerProps from './utils/getEventHandlerProps';
-import isEmpty from './utils/isEmpty';
-import noop from './utils/noop';
-import pipe from './utils/pipe';
+import {
+  getEventHandlerProps,
+  isEmpty,
+  noop,
+  pipe,
+} from './utils';
 
 
 // TODO possibly convert this to a function like react-virtualized-table

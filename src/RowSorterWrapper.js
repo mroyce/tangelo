@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SortDirection } from './constants';
-import getNestedValue from './utils/getNestedValue';
 import TableRow from './TableRow';
+import { SortDirection } from './constants';
+import { getNestedValue } from './utils';
 
 
 /**

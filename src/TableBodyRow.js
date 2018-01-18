@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getEventHandlerProps from './utils/getEventHandlerProps';
-import pickProps from './utils/pickProps';
 import TableRow from './TableRow';
 
 
