@@ -1,6 +1,6 @@
-/**
- * Table
- */
+/*********
+ * Table *
+ *********/
 .Tangelo__Table {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
@@ -9,13 +9,15 @@
 }
 
 
-/**
- * TableRow
- */
+/************
+ * TableRow *
+ ************/
 .Tangelo__Table__row {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
+  /* TODO do we need this? */
+  /* position: relative; */
 }
 
 /*
@@ -26,9 +28,9 @@
 */
 
 
-/**
- * TableHeaderRow
- */
+/******************
+ * TableHeaderRow *
+ ******************/
 .Tangelo__Table__header-row {
   background-color: rgba(0, 0, 0, 0.05);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -69,9 +71,9 @@
 }
 
 
-/**
- * TableBody
- */
+/*************
+ * TableBody *
+ *************/
 .Tangelo__Table__body {
   /*
    * Fixed Header
@@ -85,9 +87,9 @@
 }
 
 
-/**
- * TableBodyRow
- */
+/****************
+ * TableBodyRow *
+ ****************/
 .Tangelo__Table__body-row {
   background-color: rgba(255, 255, 255, 1);
   color: rgba(0, 0, 0, 0.8);
@@ -111,13 +113,17 @@
 }
 
 
-/**
- * TableCell
- */
+/*************
+ * TableCell *
+ *************/
 .Tangelo__Table__cell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 0;
   padding: 0 16px;
+  position: relative;
+}
 
+.Tangelo__Table__cell--content {
   /*
    * Text Ellipsis
    */
@@ -138,16 +144,25 @@
 
 .Tangelo__Table__cell * {
   vertical-align: middle;
-
-  /*
-   * Text Ellipsis
-   */
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .Tangelo__Table__cell--empty,
 .Tangelo__Table__cell--hide-right-border {
   border-right: none;
   margin-right: 1px;
+}
+
+.Tangelo__Cell__tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  bottom: calc(100% + 8px);
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  font-weight: 500;
+  left: 8px;
+  line-height: 12px;
+  padding: 12px 8px;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
 }
