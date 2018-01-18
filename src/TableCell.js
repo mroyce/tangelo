@@ -1,11 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import getEventHandlerProps from './utils/getEventHandlerProps';
 import isEmpty from './utils/isEmpty';
 import noop from './utils/noop';
 import pipe from './utils/pipe';
-import CellTooltip from './CellTooltip';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
@@ -15,6 +15,7 @@ class TableCell extends React.Component {
 
     this.state = {
       isTooltipVisible: false,
+      tooltipText: '',
     };
 
     this.handleShowTooltip = this.handleShowTooltip.bind(this);
@@ -23,18 +24,24 @@ class TableCell extends React.Component {
 
   handleShowTooltip() {
     if (!this.state.isTooltipVisible && this.isContentTruncated) {
-      this.setState({ isTooltipVisible: true });
+      this.setState({
+        isTooltipVisible: true,
+        tooltipText: this.content.innerText,
+      });
     }
   }
 
   handleHideTooltip() {
     if (this.state.isTooltipVisible) {
-      this.setState({ isTooltipVisible: false });
+      this.setState({
+        isTooltipVisible: false,
+        tooltipText: '',
+      });
     }
   }
 
   get isContentTruncated() {
-    return this.self.scrollWidth > this.self.clientWidth;
+    return this.content.scrollWidth > this.content.clientWidth;
   }
 
   render() {
@@ -74,12 +81,20 @@ class TableCell extends React.Component {
     return (
       <div
         className={constructedClassName}
-        ref={ref => { this.self = ref; }}
         style={flexStyle}
         {...eventHandlerProps}
       >
-        {children}
-        {this.state.isTooltipVisible && <CellTooltip>{children}</ CellTooltip>}
+        <div
+          className="Tangelo__Table__cell--content"
+           ref={ref => {this.content = ref; }}
+        >
+          {children}
+        </div>
+        {this.state.isTooltipVisible && (
+          <div className="Tangelo__Cell__tooltip">
+            {this.state.tooltipText}
+          </div>
+        )}
       </div>
     );
   }

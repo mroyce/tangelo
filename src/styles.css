@@ -16,7 +16,8 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  position: relative;
+  /* TODO do we need this? */
+  /* position: relative; */
 }
 
 /*
@@ -117,9 +118,12 @@
  *************/
 .Tangelo__Table__cell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 0;
   padding: 0 16px;
-  /* position: relative; */
+  position: relative;
+}
 
+.Tangelo__Table__cell--content {
   /*
    * Text Ellipsis
    */
@@ -149,14 +153,16 @@
 }
 
 .Tangelo__Cell__tooltip {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
+  bottom: calc(100% + 8px);
   color: rgba(255, 255, 255, 1);
   font-size: 12px;
   font-weight: 500;
-  padding: 8px;
+  left: 8px;
+  line-height: 12px;
+  padding: 12px 8px;
   position: absolute;
-  bottom: 50px;
-  left: 0;
   text-align: center;
+  white-space: nowrap;
 }
