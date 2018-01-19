@@ -1,8 +1,2 @@
-import Table from './Table';
-import TableColumn from './TableColumn';
-
-
-export {
-  Table,
-  TableColumn,
-};
+export { default as Table } from './Table';
+export { default as TableColumn } from './TableColumn';
