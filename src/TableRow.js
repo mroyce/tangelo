@@ -72,6 +72,7 @@ class TableRow extends React.Component {
           columnIndex={columnIndex}
           handleChildCellMouseOver={this.handleChildCellMouseOver}
           handleChildCellMouseOut={this.handleChildCellMouseOut}
+          icons={column.icons}
           onClick={column.onCellClick}
           onDoubleClick={column.onCellDoubleClick}
           onMouseOut={column.onCellMouseOut}
@@ -143,6 +144,7 @@ TableRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]).isRequired,
+      icons: PropTypes.arrayOf(PropTypes.element),
     })
   ).isRequired,
 

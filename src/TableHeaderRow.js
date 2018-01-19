@@ -74,6 +74,7 @@ TableHeaderRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]),
+      icons: PropTypes.arrayOf(PropTypes.element),
       onCellClick: PropTypes.func,
       onCellDoubleClick: PropTypes.func,
       onCellMouseOut: PropTypes.func,

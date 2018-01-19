@@ -107,10 +107,12 @@
 }
 
 /* TODO not implemented yet */
+/*
 .Tangelo__Table__body-row--selected {
   background-color: rgba(0, 0, 0, 0.8);
   font-color: rgba(255, 255, 255, 0.8);
 }
+*/
 
 
 /*************
@@ -118,7 +120,7 @@
  *************/
 .Tangelo__Table__cell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
-  min-width: 0;
+  min-width: 0; /* for flex-basis % */
   padding: 0 16px;
   position: relative;
 }
@@ -150,6 +152,26 @@
 .Tangelo__Table__cell--hide-right-border {
   border-right: none;
   margin-right: 1px;
+}
+
+.Tangelo__Table__cell--icons-section {
+  bottom: 4px;
+  height: 16px;
+  position: absolute;
+  right: 4px;
+}
+
+.Tangelo__Table__cell--icon-wrapper {
+  /*
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  */
+
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: top;
+  width: 16px;
 }
 
 .Tangelo__Cell__tooltip {

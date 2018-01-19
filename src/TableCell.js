@@ -46,6 +46,18 @@ class TableCell extends React.Component {
     return this.content.scrollWidth > this.content.clientWidth;
   }
 
+  get icons() {
+    return isEmpty(this.props.icons) ? null : (
+      <div className="Tangelo__Table__cell--icons-section">
+        {this.props.icons.map((icon, idx) => (
+          <div key={idx} className="Tangelo__Table__cell--icon-wrapper">
+            {icon}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   render() {
     const {
       children,
@@ -91,6 +103,7 @@ class TableCell extends React.Component {
           ref={ref => {this.content = ref; }}
         >
           {children}
+          {this.icons}
         </div>
         {this.state.isTooltipVisible && (
           <div className="Tangelo__Cell__tooltip">
@@ -143,6 +156,11 @@ TableCell.propTypes = {
    * True if you want to hide the right border from this cell.
    */
   hideRightBorder: PropTypes.bool,
+
+  /**
+   *
+   */
+  icons: PropTypes.arrayOf(PropTypes.element),
 
   /**
    *
