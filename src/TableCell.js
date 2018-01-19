@@ -48,9 +48,9 @@ class TableCell extends React.Component {
 
   get icons() {
     return isEmpty(this.props.icons) ? null : (
-      <div className="Tangelo__Table__cell--icons-section">
+      <div className="Tangelo__Table__Cell__Icons-Section">
         {this.props.icons.map((icon, idx) => (
-          <div key={idx} className="Tangelo__Table__cell--icon-wrapper">
+          <div key={idx} className="Tangelo__Table__Cell__Icon-Wrapper">
             {icon}
           </div>
         ))}
@@ -69,21 +69,21 @@ class TableCell extends React.Component {
     } = this.props;
 
     // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__cell';
+    let constructedClassName = 'Tangelo__Table__Cell';
     constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += hideRightBorder ? ' Tangelo__Table__cell--hide-right-border' : '';
+    constructedClassName += hideRightBorder ? ' Tangelo__Table__Cell--hide-right-border' : '';
 
     // TODO find better way of checking if cell is empty
     if (Array.isArray(children)) {
-      constructedClassName += children.some(c => c) ? '' : ' Tangelo__Table__cell--empty';
+      constructedClassName += children.some(c => c) ? '' : ' Tangelo__Table__Cell--empty';
     } else {
-      constructedClassName += children ? '' : ' Tangelo__Table__cell--empty';
+      constructedClassName += children ? '' : ' Tangelo__Table__Cell--empty';
     }
 
     // Handle highlighting individual cells
     const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
     if (!isEmpty(eventHandlerProps)) {
-      constructedClassName += ' Tangelo__Table__cell--highlightable';
+      constructedClassName += ' Tangelo__Table__Cell--highlightable';
       eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
       eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
     }
@@ -99,14 +99,14 @@ class TableCell extends React.Component {
         {...eventHandlerProps}
       >
         <div
-          className="Tangelo__Table__cell--content"
+          className="Tangelo__Table__Cell__Content"
           ref={ref => {this.content = ref; }}
         >
           {children}
           {this.icons}
         </div>
         {this.state.isTooltipVisible && (
-          <div className="Tangelo__Cell__tooltip">
+          <div className="Tangelo__Table__Cell__Tooltip">
             {this.state.tooltipText}
           </div>
         )}

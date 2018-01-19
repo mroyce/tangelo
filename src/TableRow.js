@@ -97,9 +97,9 @@ class TableRow extends React.Component {
     } = this.state;
 
     // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__row';
+    let constructedClassName = 'Tangelo__Table__Row';
     constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__row--highlight-disabled' : '';
+    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__Row--highlight-disabled' : '';
 
     return (
       <div

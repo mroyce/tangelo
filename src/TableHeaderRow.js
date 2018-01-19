@@ -22,12 +22,12 @@ class TableHeaderRow extends React.Component {
 
   render() {
     // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__header-row';
+    let constructedClassName = 'Tangelo__Table__Row--header';
     constructedClassName += this.props.className ? ` ${this.props.className}` : '';
 
     return [
       <TableRow
-        key="Table__Row__Header"
+        key="Table__Table__Row--header"
         className={constructedClassName}
         columns={this.columns}
         rowIndex={-1}
@@ -35,7 +35,7 @@ class TableHeaderRow extends React.Component {
 
       <div
         key="header-space"
-        className="Tangelo__Table__header-space"
+        className="Tangelo__Table__Header-Row-Space"
       />,
     ];
   }
@@ -74,7 +74,6 @@ TableHeaderRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]),
-      icons: PropTypes.arrayOf(PropTypes.element),
       onCellClick: PropTypes.func,
       onCellDoubleClick: PropTypes.func,
       onCellMouseOut: PropTypes.func,

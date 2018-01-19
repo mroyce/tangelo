@@ -24,7 +24,7 @@ class TableBodyRow extends React.Component {
     } = this.props;
 
     // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__body-row';
+    let constructedClassName = 'Tangelo__Table__Row--body';
     constructedClassName += className ? ` ${className}` : '';
 
     return (

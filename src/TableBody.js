@@ -56,7 +56,7 @@ class TableBody extends React.Component {
 
   render() {
     return (
-      <div className="Tangelo__Table__body">
+      <div className="Tangelo__Table__Body">
         <RowSorterWrapper
           getRowProps={this.props.getRowProps}
           sortDirection={this.props.sortDirection}
