@@ -5,7 +5,8 @@ import FakeDataObjectListCreator from './utils/FakeDataObjectListCreator';
 import { MailIcon } from './SVGs';
 
 
-const DEFAULT_NUM_ROWS = 1000;
+// TODO increase this to 10000 once we render rows in view
+const DEFAULT_NUM_ROWS = 200;
 
 
 class DemoApp extends React.Component {
@@ -198,7 +199,7 @@ class DemoApp extends React.Component {
             key="email"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
-            icons={[<MailIcon />]}
+            icons={[<MailIcon />, <MailIcon />]}
             sortBy="person.email"
             width={40}
             widthType="%"

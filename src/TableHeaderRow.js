@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SortDirection } from './constants';
-import pipe from './utils/pipe';
 // import HeaderSortArrow from './HeaderSortArrow';
 import TableRow from './TableRow';
+import { SortDirection } from './constants';
+import { pipe } from './utils';
 
 
 class TableHeaderRow extends React.Component {

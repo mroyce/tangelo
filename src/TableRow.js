@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getEventHandlerProps from './utils/getEventHandlerProps';
-import isEmpty from './utils/isEmpty';
-import pickProps from './utils/pickProps';
 import TableCell from './TableCell';
+import {
+  getEventHandlerProps,
+  pickProps,
+} from './utils';
 
 
 // TODO possibly convert this to a function like react-virtualized-table

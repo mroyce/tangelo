@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SortDirection } from './constants';
-import getFlexStyle from './utils/getFlexStyle';
-import noop from './utils/noop';
-import pickProps from './utils/pickProps';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
 import TableHeaderRow from './TableHeaderRow';
+import { SortDirection } from './constants';
+import {
+  getFlexStyle,
+  noop,
+  pickProps,
+} from './utils';
 
 
 class Table extends React.Component {
