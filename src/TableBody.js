@@ -20,6 +20,17 @@ class TableBody extends React.Component {
     this._rowCache = {};
   }
 
+  get tableStyle() {
+    const {
+      rowCount,
+      rowHeight,
+    } = this.props;
+
+    return {
+      height: `${rowCount * (rowHeight + 1)}px`,
+    };
+  }
+
   componentWillMount() {
     // TODO optimize so we only render rows that are in view
     for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
@@ -39,6 +50,7 @@ class TableBody extends React.Component {
       <TableBodyRow
         {...pickProps(props, [
           'columns',
+          'rowHeight',
           'shouldRowUpdate',
         ])}
         key={`table_row_${rowIndex}`}
@@ -57,13 +69,15 @@ class TableBody extends React.Component {
   render() {
     return (
       <div className="Tangelo__Table__Body">
-        <RowSorterWrapper
-          getRowProps={this.props.getRowProps}
-          sortDirection={this.props.sortDirection}
-          sortingCriteria={this.props.sortingCriteria}
-        >
-          {Object.values(this._rowCache)}
-        </RowSorterWrapper>
+        <div style={this.tableStyle}>
+          <RowSorterWrapper
+            getRowProps={this.props.getRowProps}
+            sortDirection={this.props.sortDirection}
+            sortingCriteria={this.props.sortingCriteria}
+          >
+            {Object.values(this._rowCache)}
+          </RowSorterWrapper>
+        </div>
       </div>
     );
   }
@@ -145,6 +159,13 @@ TableBody.propTypes = {
    *
    */
   rowCount: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  rowHeight: PropTypes.oneOfType([
+    PropTypes.number,
+  ]),
 
   /**
    *

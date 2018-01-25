@@ -16,8 +16,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  /* TODO do we need this? */
-  /* position: relative; */
 }
 
 /*
@@ -36,8 +34,6 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
-  height: 40px;
-  line-height: 40px;
   text-transform: uppercase;
 
   /*
@@ -57,33 +53,17 @@
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.Tangelo__Table__Header-Row-Space {
-  /*
-   * Fixed Header
-   *
-   * Used so fixed header takes up space
-   * Also allows header background color to be opaque
-   *
-   * .Tangelo__Table__Row--header height (40) +
-   * .Tangelo__Table__Row--header border (2)
-   */
-  height: 42px;
-}
-
 
 /*************
  * TableBody *
  *************/
 .Tangelo__Table__Body {
   /*
-   * Fixed Header
-   *
-   * .Tangelo__Table__Header-Row-Space height (42)
+   * TODO this should be calc(100% - Npx)
+   * but setting the height inline isn't working
    */
-  height: calc(100% - 42px);
+  height: 100%;
   overflow-y: auto;
-  /* TODO do we need this? */
-  /* width: 100%; */
 }
 
 
@@ -94,8 +74,6 @@
   background-color: rgba(255, 255, 255, 1);
   color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
-  height: 48px;
-  line-height: 48px;
 }
 
 .Tangelo__Table__Row--body:hover:not(.Tangelo__Table__Row--highlight-disabled) {

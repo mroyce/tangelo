@@ -34,6 +34,17 @@ class TableRow extends React.Component {
     this._constructCells(nextProps);
   }
 
+  get rowStyle() {
+    const {
+      rowHeight,
+    } = this.props;
+
+    return {
+      height: rowHeight,
+      lineHeight: `${rowHeight}px`
+    }
+  }
+
   handleChildCellMouseOver() {
     this.setState({ isChildCellHighlighted: true });
   }
@@ -89,6 +100,7 @@ class TableRow extends React.Component {
   render() {
     const {
       className,
+      rowHeight,
       rowIndex,
     } = this.props;
 
@@ -104,6 +116,7 @@ class TableRow extends React.Component {
     return (
       <div
         className={constructedClassName}
+        style={this.rowStyle}
         {...getEventHandlerProps(this, { rowIndex })}
       >
         {Object.values(this._cellCache)}

@@ -160,8 +160,10 @@ class DemoApp extends React.Component {
       >
         <Table
           getRowProps={this.getRowProps}
+          headerHeight={32}
           rowClassName={this.rowClassName}
           rowCount={this.state.numRows}
+          rowHeight={36}
           shouldRowUpdate={this.shouldRowUpdate}
         >
           <TableColumn
@@ -199,7 +201,7 @@ class DemoApp extends React.Component {
             key="email"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
-            icons={[<MailIcon />, <MailIcon />]}
+            icons={[<MailIcon />]}
             sortBy="person.email"
             width={40}
             widthType="%"

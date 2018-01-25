@@ -1,8 +1,7 @@
-const SortDirection = {
+/**
+ *
+ */
+export const SortDirection = {
   ASC: 'ASC',
   DESC: 'DESC',
-};
-
-export {
-  SortDirection,
 };

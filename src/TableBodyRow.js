@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TableRow from './TableRow';
+import { pickProps } from './utils';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
@@ -17,22 +18,19 @@ class TableBodyRow extends React.Component {
   */
 
   render() {
-    const {
-      className,
-      columns,
-      rowIndex,
-    } = this.props;
-
     // TODO use classNames package
     let constructedClassName = 'Tangelo__Table__Row--body';
-    constructedClassName += className ? ` ${className}` : '';
+    constructedClassName += this.props.className ? ` ${this.props.className}` : '';
 
     return (
       <TableRow
-        key={`Table__Row__${rowIndex}`}
+        key={`Table__Row__${this.props.rowIndex}`}
+        {...pickProps(this.props, [
+          'columns',
+          'rowHeight',
+          'rowIndex',
+        ])}
         className={constructedClassName}
-        columns={columns}
-        rowIndex={rowIndex}
       />
     );
   }
@@ -98,6 +96,11 @@ TableBodyRow.propTypes = {
    *
    */
   onRightClick: PropTypes.func,
+
+  /**
+   *
+   */
+  rowHeight: PropTypes.number.isRequired,
 
   /**
    *
