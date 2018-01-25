@@ -189,6 +189,11 @@ TableRow.propTypes = {
   /**
    *
    */
+  rowHeight: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
   rowIndex: PropTypes.number.isRequired,
 };
 

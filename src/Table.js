@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
 import TableHeaderRow from './TableHeaderRow';
-import { RowDensity, SortDirection } from './constants';
+import { SortDirection } from './constants';
 import {
   getFlexStyle,
   noop,
@@ -76,10 +76,12 @@ class Table extends React.Component {
 
     return (
       <TableHeaderRow
+        {...pickProps(this.props, [
+          'headerHeight',
+        ])}
         className={this.props.headerClassName}
         columns={columns}
         handleHeaderSortClick={this.handleHeaderSortClick}
-        headerHeight={this.props.headerHeight}
         sortDirection={this.state.sortDirection}
         sortingCriteria={this.state.sortingCriteria}
       />
@@ -185,6 +187,11 @@ Table.propTypes = {
 
   /**
    *
+   */
+  headerHeight: PropTypes.number,
+
+  /**
+   *
    * {
    *   rowIndex,
    * }
@@ -242,9 +249,7 @@ Table.propTypes = {
   /**
    *
    */
-  rowHeight: PropTypes.oneOfType([
-    PropTypes.number,
-  ]),
+  rowHeight: PropTypes.number,
 
   /**
    * {
