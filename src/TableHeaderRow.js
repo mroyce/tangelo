@@ -20,6 +20,13 @@ class TableHeaderRow extends React.Component {
     });
   }
 
+  get headerSpaceStyle() {
+    return {
+      // 2px for border top/bottom
+      height: this.props.headerHeight + 2,
+    };
+  }
+
   render() {
     // TODO use classNames package
     let constructedClassName = 'Tangelo__Table__Row--header';
@@ -30,12 +37,13 @@ class TableHeaderRow extends React.Component {
         key="Table__Table__Row--header"
         className={constructedClassName}
         columns={this.columns}
+        rowHeight={this.props.headerHeight}
         rowIndex={-1}
       />,
 
       <div
         key="header-space"
-        className="Tangelo__Table__Header-Row-Space"
+        style={this.headerSpaceStyle}
       />,
     ];
   }
@@ -90,6 +98,11 @@ TableHeaderRow.propTypes = {
   /**
    *
    */
+  headerHeight: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
   sortDirection: PropTypes.oneOf([
     SortDirection.ASC,
     SortDirection.DESC,
@@ -106,7 +119,7 @@ TableHeaderRow.propTypes = {
 
 TableHeaderRow.defaultProps = {
   className: '',
-  sortDirectio: null,
+  sortDirection: null,
   sortingCriteria: null,
 };
 

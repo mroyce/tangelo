@@ -76,6 +76,9 @@ class Table extends React.Component {
 
     return (
       <TableHeaderRow
+        {...pickProps(this.props, [
+          'headerHeight',
+        ])}
         className={this.props.headerClassName}
         columns={columns}
         handleHeaderSortClick={this.handleHeaderSortClick}
@@ -115,6 +118,7 @@ class Table extends React.Component {
           'onRowRightClick',
           'rowClassName',
           'rowCount',
+          'rowHeight',
           'shouldRowUpdate',
         ])}
         columns={columns}
@@ -183,6 +187,11 @@ Table.propTypes = {
 
   /**
    *
+   */
+  headerHeight: PropTypes.number,
+
+  /**
+   *
    * {
    *   rowIndex,
    * }
@@ -238,6 +247,11 @@ Table.propTypes = {
   rowCount: PropTypes.number.isRequired,
 
   /**
+   *
+   */
+  rowHeight: PropTypes.number,
+
+  /**
    * {
    *   rowProps,
    *   nextRowProps,
@@ -253,12 +267,14 @@ Table.defaultProps = {
   emptyTableRenderer: null,
   getRowProps: () => null,
   headerClassName: '',
+  headerHeight: 40,
   onRowClick: noop,
   onRowDoubleClick: noop,
   onRowMouseOut: noop,
   onRowMouseOver: noop,
   onRowRightClick: noop,
   rowClassName: '',
+  rowHeight: 48,
   shouldRowUpdate: () => true,
 };
 
