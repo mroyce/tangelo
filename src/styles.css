@@ -58,11 +58,6 @@
  * TableBody *
  *************/
 .Tangelo__Table__Body {
-  /*
-   * TODO this should be calc(100% - Npx)
-   * but setting the height inline isn't working
-   */
-  height: 100%;
   overflow-y: auto;
 }
 

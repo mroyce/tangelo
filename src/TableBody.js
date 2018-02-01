@@ -20,6 +20,16 @@ class TableBody extends React.Component {
     this._rowCache = {};
   }
 
+  get tableBodyStyle() {
+    const {
+      rowHeight,
+    } = this.props;
+
+    return {
+      height: `calc(100% - ${rowHeight}px)`,
+    };
+  }
+
   get tableStyle() {
     const {
       rowCount,
@@ -68,7 +78,7 @@ class TableBody extends React.Component {
 
   render() {
     return (
-      <div className="Tangelo__Table__Body">
+      <div className="Tangelo__Table__Body" style={this.tableBodyStyle}>
         <div style={this.tableStyle}>
           <RowSorterWrapper
             getRowProps={this.props.getRowProps}

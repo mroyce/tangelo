@@ -61,7 +61,6 @@ class Table extends React.Component {
           'align',
           'columnClassName',
           'hideRightBorder',
-          'icons',
           'onCellClick',
           'onCellDoubleClick',
           'onCellMouseOut',
