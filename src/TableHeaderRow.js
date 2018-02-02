@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import HeaderSortArrow from './HeaderSortArrow';
+import HeaderSortArrow from './HeaderSortArrow';
 import TableRow from './TableRow';
 import { SortDirection } from './constants';
 import { pipe } from './utils';
@@ -14,7 +14,9 @@ class TableHeaderRow extends React.Component {
         column.onCellClick = pipe(column.onCellClick, () => this.props.handleHeaderSortClick(column.sortBy));
       }
 
-      // TODO include <SortArrow /> once we have icon slots
+      if (column.sortBy === this.props.sortingCriteria) {
+        column.icons = [<HeaderSortArrow sortDirection={this.props.sortDirection} />];
+      }
 
       return column;
     });

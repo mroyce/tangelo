@@ -46,18 +46,6 @@ class TableCell extends React.Component {
     return this.content.scrollWidth > this.content.clientWidth;
   }
 
-  get icons() {
-    return isEmpty(this.props.icons) ? null : (
-      <div className="Tangelo__Table__Cell__Icons-Section">
-        {this.props.icons.map((icon, idx) => (
-          <div key={idx} className="Tangelo__Table__Cell__Icon-Wrapper">
-            {icon}
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   render() {
     const {
       children,
@@ -65,6 +53,7 @@ class TableCell extends React.Component {
       columnIndex,
       flexStyle,
       hideRightBorder,
+      icons,
       rowIndex,
     } = this.props;
 
@@ -103,7 +92,15 @@ class TableCell extends React.Component {
           ref={ref => {this.content = ref; }}
         >
           {children}
-          {this.icons}
+          {isEmpty(icons) || (
+            <div className="Tangelo__Table__Cell__Icons-Section">
+              {icons.map((icon, idx) => (
+                <div key={idx} className="Tangelo__Table__Cell__Icon-Wrapper">
+                  {icon}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         {this.state.isTooltipVisible && (
           <div className="Tangelo__Table__Cell__Tooltip">
