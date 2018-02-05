@@ -51,81 +51,40 @@ class Table extends React.Component {
     });
   }
 
-  get header() {
-    if (this.props.disableHeader) {
-      return null;
-    }
-
-    const columns = this.columns.map(column => {
-      return {
-        ...pickProps(column, [
-          'align',
-          'columnClassName',
-          'hideRightBorder',
-          'onCellClick',
-          'onCellDoubleClick',
-          'onCellMouseOut',
-          'onCellMouseOver',
-          'onCellRightClick',
-          'sortBy',
-        ]),
-        cellRenderer: column.props.headerCellRenderer,
-        flexStyle: getFlexStyle(column.props.width, column.props.widthType),
-      };
-    });
-
-    return (
-      <TableHeaderRow
-        {...pickProps(this.props, [
-          'headerHeight',
-        ])}
-        className={this.props.headerClassName}
-        columns={columns}
-        handleHeaderSortClick={this.handleHeaderSortClick}
-        sortDirection={this.state.sortDirection}
-        sortingCriteria={this.state.sortingCriteria}
-      />
-    );
+  get headerColumns() {
+    return this.columns.map(column => ({
+      ...pickProps(column, [
+        'align',
+        'columnClassName',
+        'hideRightBorder',
+        'onCellClick',
+        'onCellDoubleClick',
+        'onCellMouseOut',
+        'onCellMouseOver',
+        'onCellRightClick',
+        'sortBy',
+      ]),
+      cellRenderer: column.props.headerCellRenderer,
+      flexStyle: getFlexStyle(column.props.width, column.props.widthType),
+    }));
   }
 
-  get body() {
-    const columns = this.columns.map(column => {
-      return {
-        ...pickProps(column, [
-          'align',
-          'columnClassName',
-          'hideRightBorder',
-          'icons',
-          'onCellClick',
-          'onCellDoubleClick',
-          'onCellMouseOut',
-          'onCellMouseOver',
-          'onCellRightClick',
-        ]),
-        cellRenderer: column.props.bodyCellRenderer,
-        flexStyle: getFlexStyle(column.props.width, column.props.widthType),
-      };
-    });
-
-    return (
-      <TableBody
-        {...pickProps(this.props, [
-          'getRowProps',
-          'onRowClick',
-          'onRowDoubleClick',
-          'onRowMouseOut',
-          'onRowMouseOver',
-          'onRowRightClick',
-          'rowClassName',
-          'rowCount',
-          'rowHeight',
-          'shouldRowUpdate',
-        ])}
-        columns={columns}
-        sortDirection={this.state.sortDirection}
-        sortingCriteria={this.state.sortingCriteria}
-      />
-    );
+  get bodyColumns() {
+    return this.columns.map(column => ({
+      ...pickProps(column, [
+        'align',
+        'columnClassName',
+        'hideRightBorder',
+        'icons',
+        'onCellClick',
+        'onCellDoubleClick',
+        'onCellMouseOut',
+        'onCellMouseOver',
+        'onCellRightClick',
+      ]),
+      cellRenderer: column.props.bodyCellRenderer,
+      flexStyle: getFlexStyle(column.props.width, column.props.widthType),
+    }));
   }
 
   get columns() {
@@ -135,8 +94,35 @@ class Table extends React.Component {
   render() {
     return (
       <div className={classNames('Tangelo__Table', this.props.className)}>
-        {this.header}
-        {this.body}
+        {this.props.disableHeader || (
+          <TableHeaderRow
+            {...pickProps(this.props, [
+              'headerHeight',
+            ])}
+            className={this.props.headerClassName}
+            columns={this.headerColumns}
+            handleHeaderSortClick={this.handleHeaderSortClick}
+            sortDirection={this.state.sortDirection}
+            sortingCriteria={this.state.sortingCriteria}
+          />
+        )}
+        <TableBody
+          {...pickProps(this.props, [
+            'getRowProps',
+            'onRowClick',
+            'onRowDoubleClick',
+            'onRowMouseOut',
+            'onRowMouseOver',
+            'onRowRightClick',
+            'rowClassName',
+            'rowCount',
+            'rowHeight',
+            'shouldRowUpdate',
+          ])}
+          columns={this.bodyColumns}
+          sortDirection={this.state.sortDirection}
+          sortingCriteria={this.state.sortingCriteria}
+        />
       </div>
     );
   }

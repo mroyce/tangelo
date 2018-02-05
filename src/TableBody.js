@@ -79,7 +79,7 @@ class TableBody extends React.Component {
   render() {
     return (
       <div
-        className="Tangelo__Table__Body",
+        className="Tangelo__Table__Body"
         style={this.tableBodyStyle}
       >
         <div style={this.tableStyle}>
