@@ -12,10 +12,12 @@ import {
   pickProps,
 } from './utils';
 
+import styles from './styles.css';
+
 
 class Table extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     this.state = {
       sortDirection: null,
@@ -93,7 +95,12 @@ class Table extends React.Component {
 
   render() {
     return (
-      <div className={classNames('Tangelo__Table', this.props.className)}>
+      <div
+        className={classNames(
+          styles.Table,
+          this.props.className
+        )}
+      >
         {this.props.disableHeader || (
           <TableHeaderRow
             {...pickProps(this.props, [

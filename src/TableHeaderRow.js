@@ -7,6 +7,8 @@ import TableRow from './TableRow';
 import { SortDirection } from './constants';
 import { pipe } from './utils';
 
+import styles from './styles.css';
+
 
 class TableHeaderRow extends React.Component {
   get columns() {
@@ -25,7 +27,8 @@ class TableHeaderRow extends React.Component {
 
   get headerSpaceStyle() {
     return {
-      // 2px for border top/bottom
+      // 1px border top
+      // 1px border bottom
       height: this.props.headerHeight + 2,
     };
   }
@@ -35,7 +38,7 @@ class TableHeaderRow extends React.Component {
       <TableRow
         key="Table__Table__Row--header"
         className={classNames(
-          'Tangelo__Table__Row--header',
+          styles['TableRow--header'],
           this.props.className
         )}
         columns={this.columns}
@@ -55,7 +58,7 @@ TableHeaderRow.propTypes = {
   /**
    *
    */
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
 
   /**
    *
@@ -120,7 +123,6 @@ TableHeaderRow.propTypes = {
 };
 
 TableHeaderRow.defaultProps = {
-  className: '',
   sortDirection: null,
   sortingCriteria: null,
 };

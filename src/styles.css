@@ -1,7 +1,7 @@
 /*********
  * Table *
  *********/
-.Tangelo__Table {
+.Table {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
   position: relative;
@@ -12,7 +12,7 @@
 /************
  * TableRow *
  ************/
-.Tangelo__Table__Row {
+.TableRow {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
@@ -29,27 +29,25 @@
 /******************
  * TableHeaderRow *
  ******************/
-.Tangelo__Table__Row--header {
+.TableRow--header {
   background-color: rgba(0, 0, 0, 0.05);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
   text-transform: uppercase;
 
-  /*
-   * Fixed Header
-   */
+  /* Fixed Header */
   position: absolute;
   right: 0;
   top: 0;
   width: 100%;
 }
 
-.Tangelo__Table__Row--header:hover:not(.Tangelo__Table__Row--highlight-disabled) {
+.TableRow--header:hover:not(.TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.Tangelo__Table__Row--header:active:not(.Tangelo__Table__Row--highlight-disabled) {
+.TableRow--header:active:not(.TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -57,7 +55,7 @@
 /*************
  * TableBody *
  *************/
-.Tangelo__Table__Body {
+.TableBody {
   overflow-y: auto;
 }
 
@@ -65,25 +63,25 @@
 /****************
  * TableBodyRow *
  ****************/
-.Tangelo__Table__Row--body {
+.TableRow--body {
   background-color: rgba(255, 255, 255, 1);
   color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
 }
 
-.Tangelo__Table__Row--body:hover:not(.Tangelo__Table__Row--highlight-disabled) {
+.TableRow--body:hover:not(.TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.Tangelo__Table__Row--body:active:not(.Tangelo__Table__Row--highlight-disabled) {
+.TableRow--body:active:not(.TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* TODO not implemented yet */
 /*
-.Tangelo__Table__Row--body.Tangelo__Table__Row--selected {
+.TableRow--selected {
   background-color: rgba(0, 0, 0, 0.8);
-  font-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 */
 
@@ -91,55 +89,48 @@
 /*************
  * TableCell *
  *************/
-.Tangelo__Table__Cell {
+.TableCell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   min-width: 0; /* for flex-basis % */
   padding: 0 16px;
   position: relative;
 }
 
-.Tangelo__Table__Cell * {
+.TableCell * {
   vertical-align: middle;
 }
 
-.Tangelo__Table__Cell__Content {
-  /*
-   * Text Ellipsis
-   */
+.TableCell--highlightable:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.TableCell--highlightable:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.TableCell--empty,
+.TableCell--hide-right-border {
+  border-right: none;
+  margin-right: 1px;
+}
+
+.TableCell__Content {
+  /* Text Ellipsis */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.Tangelo__Table__Cell--highlightable:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-}
-
-.Tangelo__Table__Cell--highlightable:active {
-  background-color: rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.Tangelo__Table__Cell--empty,
-.Tangelo__Table__Cell--hide-right-border {
-  border-right: none;
-  margin-right: 1px;
-}
-
-.Tangelo__Table__Cell__Icons-Section {
+.TableCell__IconsSection {
   bottom: 4px;
   height: 16px;
   position: absolute;
   right: 4px;
 }
 
-.Tangelo__Table__Cell__Icon-Wrapper {
-  /*
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  */
-
+.TableCell__IconWrapper {
   display: inline-block;
   height: 16px;
   line-height: 16px;
@@ -147,7 +138,7 @@
   width: 16px;
 }
 
-.Tangelo__Table__Cell__Tooltip {
+.TableCell__Tooltip {
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
   bottom: calc(100% + 8px);

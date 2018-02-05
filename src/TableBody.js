@@ -6,10 +6,12 @@ import TableBodyRow from './TableBodyRow';
 import { SortDirection } from './constants';
 import { pickProps } from './utils';
 
+import styles from './styles.css';
+
 
 class TableBody extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     /*
      * Key: rowIndex
@@ -18,6 +20,31 @@ class TableBody extends React.Component {
      * @type {Object<number, React.Element>}
      */
     this._rowCache = {};
+  }
+
+  componentWillMount() {
+    // TODO optimize so we only render rows that are in view
+    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
+      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    // TODO only check rows that are in view
+    for (let rowIndex = 0; rowIndex < nextProps.rowCount; rowIndex++) {
+      const row = this._rowCache[rowIndex];
+
+      if (row) {
+        const rowIndex = row.props.rowIndex;
+        const currentRowProps = row.props.rowProps;
+        const nextRowProps = nextProps.getRowProps({ rowIndex });
+        if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
+          this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
+        }
+      } else {
+        this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
+      }
+    }
   }
 
   get tableBodyStyle() {
@@ -37,15 +64,9 @@ class TableBody extends React.Component {
     } = this.props;
 
     return {
+      // 1px border bottom
       height: `${rowCount * (rowHeight + 1)}px`,
     };
-  }
-
-  componentWillMount() {
-    // TODO optimize so we only render rows that are in view
-    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
-      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
-    }
   }
 
   _constructRow(rowIndex, props) {
@@ -78,20 +99,21 @@ class TableBody extends React.Component {
 
   render() {
     return (
-      <div
-        className="Tangelo__Table__Body"
-        style={this.tableBodyStyle}
-      >
-        <div style={this.tableStyle}>
-          <RowSorterWrapper
-            getRowProps={this.props.getRowProps}
-            sortDirection={this.props.sortDirection}
-            sortingCriteria={this.props.sortingCriteria}
+      <RowSorterWrapper
+        rows={Object.values(this._rowCache)}
+        sortDirection={this.props.sortDirection}
+        sortingCriteria={this.props.sortingCriteria}
+        render={sortedRows => (
+          <div
+            className={styles.TableBody}
+            style={this.tableBodyStyle}
           >
-            {Object.values(this._rowCache)}
-          </RowSorterWrapper>
-        </div>
-      </div>
+            <div style={this.tableStyle}>
+              {sortedRows}
+            </div>
+          </div>
+        )}
+      />
     );
   }
 };
