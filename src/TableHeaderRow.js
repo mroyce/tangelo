@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import HeaderSortArrow from './HeaderSortArrow';
 import TableRow from './TableRow';
@@ -30,14 +31,13 @@ class TableHeaderRow extends React.Component {
   }
 
   render() {
-    // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__Row--header';
-    constructedClassName += this.props.className ? ` ${this.props.className}` : '';
-
     return [
       <TableRow
         key="Table__Table__Row--header"
-        className={constructedClassName}
+        className={classNames(
+          'Tangelo__Table__Row--header',
+          this.props.className
+        )}
         columns={this.columns}
         rowHeight={this.props.headerHeight}
         rowIndex={-1}
