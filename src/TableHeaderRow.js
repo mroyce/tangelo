@@ -34,7 +34,10 @@ class TableHeaderRow extends React.Component {
     return [
       <TableRow
         key="Table__Table__Row--header"
-        className={classNames('Tangelo__Table__Row--header', this.props.className)}
+        className={classNames(
+          'Tangelo__Table__Row--header',
+          this.props.className
+        )}
         columns={this.columns}
         rowHeight={this.props.headerHeight}
         rowIndex={-1}
