@@ -107,7 +107,8 @@ class TableRow extends React.Component {
       <div
         className={classNames(
           'Tangelo__Table__Row',
-          this.props.className, {
+          this.props.className,
+          {
             'Tangelo__Table__Row--highlight-disabled' : this.state.isChildCellHighlighted,
           }
         )}
