@@ -10,16 +10,6 @@ import styles from './styles.css';
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableBodyRow extends React.Component {
-  /*
-  shouldComponentUpdate(nextProps) {
-    return nextProps.shouldRowUpdate({
-      currentRowProps: this.props.rowProps,
-      nextRowProps: nextProps.rowProps,
-      rowIndex: this.props.rowIndex,
-    });
-  }
-  */
-
   render() {
     return (
       <TableRow

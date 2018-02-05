@@ -13,8 +13,8 @@ import styles from './styles.css';
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableRow extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     // <number: columnIndex, Element: <TableCell />>
     this._cellCache = {};

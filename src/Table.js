@@ -16,8 +16,8 @@ import styles from './styles.css';
 
 
 class Table extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     this.state = {
       sortDirection: null,

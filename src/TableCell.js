@@ -14,8 +14,8 @@ import styles from './styles.css';
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableCell extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     this.state = {
       isTooltipVisible: false,
@@ -57,6 +57,7 @@ class TableCell extends React.Component {
 
     // Handle highlighting individual cells
     const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
+    const highlightable = !isEmpty(eventHandlerProps);
     if (!isEmpty(eventHandlerProps)) {
       eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
       eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
@@ -74,7 +75,7 @@ class TableCell extends React.Component {
           {
             [styles['TableCell--hide-right-border']]: this.props.hideRightBorder,
             [styles['TableCell--empty']]: Array.isArray(children) ? !children.some(c => c) : !children,
-            [styles['TableCell--highlightable']]: !isEmpty(eventHandlerProps),
+            [styles['TableCell--highlightable']]: highlightable,
           }
         )}
         style={this.props.flexStyle}

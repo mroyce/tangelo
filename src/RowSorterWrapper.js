@@ -9,39 +9,18 @@ import { getNestedValue } from './utils';
 /**
  * Wrapper responsible for sorting rows in <TableBody />.
  * Rows are sorted based on `sortingCriteria` and `sortDirection`.
- * 
- * `sortingCriteria` can be either a `function` or a `string`.
- *
- * TODO incorporate this logic into <TableBody /> and remove this component?
- * Is there a better way of modularizing this so `props.rows` is available
- * for different contexts? (e.g. only rendering rows that are in the viewport)
  */
 class RowSorterWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-
-    /*
-     * Key: <TableRow /> key
-     * Value: corresponding <TableRow /> element
-     *
-     * @type {Object<string, React.Element>}
-     */
-    this._unorderedRowsMap = {};
+  constructor(...args) {
+    super(...args);
 
     /*
      * Key: sortingCriteria string
-     * Value: array of <TableRow /> keys in sorted order
+     * Value: array of <TableRow /> in sorted order
      *
-     * @type {Object<string, string[]>}
+     * @type {Object<string, <TableRow />[]}
      */
     this._orderedRowsMap = {};
-  }
-
-  componentWillMount() {
-    for (let rowIndex = 0; rowIndex < this.props.rows.length; rowIndex++) {
-      const row = this.props.rows[rowIndex];
-      this._unorderedRowsMap[row.key] = row;
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,23 +32,24 @@ class RowSorterWrapper extends React.Component {
   }
 
   _constructSortedRows(sortingCriteria) {
-    // Check if we have already sorted this array
+    let sorted;
     const sortingCriteriaKey = this._getSortingCriteriaKey(sortingCriteria);
+
+    /*
+    // Check if we have already sorted this array
     if (this._orderedRowsMap[sortingCriteriaKey]) {
       // TODO check if array has to be resorted (new rowProp values, additions, deletions)
       return;
     }
+    */
 
     // Otherwise sort the array and cache the result
-    const unorderedRows = Object.values(this._unorderedRowsMap);
-    let sorted;
-
     switch(typeof sortingCriteria) {
       case 'function':
-        sorted = unorderedRows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
+        this._orderedRowsMap[sortingCriteriaKey] = this.props.rows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
         break;
       case 'string':
-        sorted = unorderedRows.sort((a, b) => {
+        this._orderedRowsMap[sortingCriteriaKey] = this.props.rows.sort((a, b) => {
           const aVal = getNestedValue(a.props.rowProps, sortingCriteria);
           const bVal = getNestedValue(b.props.rowProps, sortingCriteria);
 
@@ -89,8 +69,6 @@ class RowSorterWrapper extends React.Component {
           `received a ${typeof sortingCriteria}`
         );
     }
-
-    this._orderedRowsMap[sortingCriteriaKey] = sorted.map(row => row.key);
   }
 
   _getSortingCriteriaKey(sortingCriteria) {
@@ -110,7 +88,7 @@ class RowSorterWrapper extends React.Component {
 
   _getOrderedRowsBySortingCriteria(sortingCriteria) {
     const sortingCriteriaKey = this._getSortingCriteriaKey(sortingCriteria);
-    return this._orderedRowsMap[sortingCriteriaKey].map(rowKey => this._unorderedRowsMap[rowKey]);
+    return this._orderedRowsMap[sortingCriteriaKey];
   }
 
   render() {
@@ -120,7 +98,7 @@ class RowSorterWrapper extends React.Component {
       case SortDirection.DESC:
         return this.props.render(this._getOrderedRowsBySortingCriteria(this.props.sortingCriteria).reverse());
       default:
-        return this.props.render(Object.values(this._unorderedRowsMap));
+        return this.props.render(this.props.rows);
     }
   }
 }

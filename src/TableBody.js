@@ -10,8 +10,8 @@ import styles from './styles.css';
 
 
 class TableBody extends React.Component {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
 
     /*
      * Key: rowIndex
@@ -22,22 +22,30 @@ class TableBody extends React.Component {
     this._rowCache = {};
   }
 
-  /*
+  componentWillMount() {
+    // TODO optimize so we only render rows that are in view
+    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
+      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
+    }
+  }
+
   componentWillUpdate(nextProps) {
     // TODO only check rows that are in view
-    for (const rowKey in this._unorderedRowsMap) {
-      const row = this._unorderedRowsMap[rowKey];
-      const rowIndex = row.props.rowIndex;
-      const currentRowProps = row.props.rowProps;
-      const nextRowProps = nextProps.getRowProps({ rowIndex });
+    for (let rowIndex = 0; rowIndex < nextProps.rowCount; rowIndex++) {
+      const row = this._rowCache[rowIndex];
 
-      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
-        // TODO we need the `_constructRow` function from <TableBody />
-        this._unorderedRowsMap[rowKey] = this._constructRow(rowIndex, nextProps);
+      if (row) {
+        const rowIndex = row.props.rowIndex;
+        const currentRowProps = row.props.rowProps;
+        const nextRowProps = nextProps.getRowProps({ rowIndex });
+        if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
+          this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
+        }
+      } else {
+        this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
     }
   }
-  */
 
   get tableBodyStyle() {
     const {
@@ -59,13 +67,6 @@ class TableBody extends React.Component {
       // 1px border bottom
       height: `${rowCount * (rowHeight + 1)}px`,
     };
-  }
-
-  componentWillMount() {
-    // TODO optimize so we only render rows that are in view
-    for (let rowIndex = 0; rowIndex < this.props.rowCount; rowIndex++) {
-      this._rowCache[rowIndex] = this._constructRow(rowIndex, this.props);
-    }
   }
 
   _constructRow(rowIndex, props) {
