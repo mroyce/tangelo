@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import TableRow from './TableRow';
 import { pickProps } from './utils';
@@ -18,10 +19,6 @@ class TableBodyRow extends React.Component {
   */
 
   render() {
-    // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__Row--body';
-    constructedClassName += this.props.className ? ` ${this.props.className}` : '';
-
     return (
       <TableRow
         key={`Table__Row__${this.props.rowIndex}`}
@@ -30,7 +27,10 @@ class TableBodyRow extends React.Component {
           'rowHeight',
           'rowIndex',
         ])}
-        className={constructedClassName}
+        className={classNames(
+          'Tangelo__Table__Row--body',
+          this.props.className
+        )}
       />
     );
   }

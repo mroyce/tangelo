@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {
   getEventHandlerProps,
@@ -49,30 +49,13 @@ class TableCell extends React.Component {
   render() {
     const {
       children,
-      className,
       columnIndex,
-      flexStyle,
-      hideRightBorder,
-      icons,
       rowIndex,
     } = this.props;
-
-    // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__Cell';
-    constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += hideRightBorder ? ' Tangelo__Table__Cell--hide-right-border' : '';
-
-    // TODO find better way of checking if cell is empty
-    if (Array.isArray(children)) {
-      constructedClassName += children.some(c => c) ? '' : ' Tangelo__Table__Cell--empty';
-    } else {
-      constructedClassName += children ? '' : ' Tangelo__Table__Cell--empty';
-    }
 
     // Handle highlighting individual cells
     const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
     if (!isEmpty(eventHandlerProps)) {
-      constructedClassName += ' Tangelo__Table__Cell--highlightable';
       eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
       eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
     }
@@ -83,8 +66,16 @@ class TableCell extends React.Component {
 
     return (
       <div
-        className={constructedClassName}
-        style={flexStyle}
+        className={classNames(
+          'Tangelo__Table__Cell',
+          this.props.className,
+          {
+            'Tangelo__Table__Cell--hide-right-border': this.props.hideRightBorder,
+            'Tangelo__Table__Cell--empty': Array.isArray(children) ? !children.some(c => c) : !children,
+            'Tangelo__Table__Cell--highlightable': !isEmpty(eventHandlerProps),
+          }
+        )}
+        style={this.props.flexStyle}
         {...eventHandlerProps}
       >
         <div
@@ -92,9 +83,9 @@ class TableCell extends React.Component {
           ref={ref => {this.content = ref; }}
         >
           {children}
-          {isEmpty(icons) || (
+          {isEmpty(this.props.icons) || (
             <div className="Tangelo__Table__Cell__Icons-Section">
-              {icons.map((icon, idx) => (
+              {this.props.icons.map((icon, idx) => (
                 <div key={idx} className="Tangelo__Table__Cell__Icon-Wrapper">
                   {icon}
                 </div>

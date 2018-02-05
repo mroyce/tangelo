@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
@@ -133,7 +134,7 @@ class Table extends React.Component {
 
   render() {
     return (
-      <div className={`Tangelo__Table ${this.props.className}`}>
+      <div className={classNames('Tangelo__Table', this.props.className)}>
         {this.header}
         {this.body}
       </div>

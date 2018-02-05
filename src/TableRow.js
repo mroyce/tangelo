@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import TableCell from './TableCell';
 import {
@@ -99,23 +100,17 @@ class TableRow extends React.Component {
 
   render() {
     const {
-      className,
-      rowHeight,
       rowIndex,
     } = this.props;
 
-    const {
-      isChildCellHighlighted,
-    } = this.state;
-
-    // TODO use classNames package
-    let constructedClassName = 'Tangelo__Table__Row';
-    constructedClassName += className ? ` ${className}` : '';
-    constructedClassName += isChildCellHighlighted ? ' Tangelo__Table__Row--highlight-disabled' : '';
-
     return (
       <div
-        className={constructedClassName}
+        className={classNames(
+          'Tangelo__Table__Row',
+          this.props.className, {
+            'Tangelo__Table__Row--highlight-disabled' : this.state.isChildCellHighlighted,
+          }
+        )}
         style={this.rowStyle}
         {...getEventHandlerProps(this, { rowIndex })}
       >
