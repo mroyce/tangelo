@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import RowSorterWrapper from './RowSorterWrapper';
 import TableBodyRow from './TableBodyRow';
@@ -80,7 +79,7 @@ class TableBody extends React.Component {
   render() {
     return (
       <div
-        className={classNames('Tangelo__Table__Body')}
+        className="Tangelo__Table__Body",
         style={this.tableBodyStyle}
       >
         <div style={this.tableStyle}>
