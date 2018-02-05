@@ -6,6 +6,8 @@ import TableBodyRow from './TableBodyRow';
 import { SortDirection } from './constants';
 import { pickProps } from './utils';
 
+import styles from './styles.css';
+
 
 class TableBody extends React.Component {
   constructor() {
@@ -19,6 +21,23 @@ class TableBody extends React.Component {
      */
     this._rowCache = {};
   }
+
+  /*
+  componentWillUpdate(nextProps) {
+    // TODO only check rows that are in view
+    for (const rowKey in this._unorderedRowsMap) {
+      const row = this._unorderedRowsMap[rowKey];
+      const rowIndex = row.props.rowIndex;
+      const currentRowProps = row.props.rowProps;
+      const nextRowProps = nextProps.getRowProps({ rowIndex });
+
+      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
+        // TODO we need the `_constructRow` function from <TableBody />
+        this._unorderedRowsMap[rowKey] = this._constructRow(rowIndex, nextProps);
+      }
+    }
+  }
+  */
 
   get tableBodyStyle() {
     const {
@@ -37,6 +56,7 @@ class TableBody extends React.Component {
     } = this.props;
 
     return {
+      // 1px border bottom
       height: `${rowCount * (rowHeight + 1)}px`,
     };
   }
@@ -78,20 +98,21 @@ class TableBody extends React.Component {
 
   render() {
     return (
-      <div
-        className="Tangelo__Table__Body"
-        style={this.tableBodyStyle}
-      >
-        <div style={this.tableStyle}>
-          <RowSorterWrapper
-            getRowProps={this.props.getRowProps}
-            sortDirection={this.props.sortDirection}
-            sortingCriteria={this.props.sortingCriteria}
+      <RowSorterWrapper
+        rows={Object.values(this._rowCache)}
+        sortDirection={this.props.sortDirection}
+        sortingCriteria={this.props.sortingCriteria}
+        render={sortedRows => (
+          <div
+            className={styles.TableBody}
+            style={this.tableBodyStyle}
           >
-            {Object.values(this._rowCache)}
-          </RowSorterWrapper>
-        </div>
-      </div>
+            <div style={this.tableStyle}>
+              {sortedRows}
+            </div>
+          </div>
+        )}
+      />
     );
   }
 };

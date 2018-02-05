@@ -13,7 +13,7 @@ import { getNestedValue } from './utils';
  * `sortingCriteria` can be either a `function` or a `string`.
  *
  * TODO incorporate this logic into <TableBody /> and remove this component?
- * Is there a better way of modularizing this so `props.children` is available
+ * Is there a better way of modularizing this so `props.rows` is available
  * for different contexts? (e.g. only rendering rows that are in the viewport)
  */
 class RowSorterWrapper extends React.Component {
@@ -38,9 +38,8 @@ class RowSorterWrapper extends React.Component {
   }
 
   componentWillMount() {
-    const rows = React.Children.toArray(this.props.children);
-    for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-      const row = rows[rowIndex];
+    for (let rowIndex = 0; rowIndex < this.props.rows.length; rowIndex++) {
+      const row = this.props.rows[rowIndex];
       this._unorderedRowsMap[row.key] = row;
     }
   }
@@ -52,23 +51,6 @@ class RowSorterWrapper extends React.Component {
       this._constructSortedRows(nextProps.sortingCriteria);
     }
   }
-
-  /*
-  componentWillUpdate(nextProps) {
-    // TODO only check rows that are in view
-    for (const rowKey in this._unorderedRowsMap) {
-      const row = this._unorderedRowsMap[rowKey];
-      const rowIndex = row.props.rowIndex;
-      const currentRowProps = row.props.rowProps;
-      const nextRowProps = nextProps.getRowProps({ rowIndex });
-
-      if (nextProps.shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex })) {
-        // TODO we need the `_constructRow` function from <TableBody />
-        this._unorderedRowsMap[rowKey] = this._constructRow(rowIndex, nextProps);
-      }
-    }
-  }
-  */
 
   _constructSortedRows(sortingCriteria) {
     // Check if we have already sorted this array
@@ -134,21 +116,26 @@ class RowSorterWrapper extends React.Component {
   render() {
     switch(this.props.sortDirection) {
       case SortDirection.ASC:
-        return this._getOrderedRowsBySortingCriteria(this.props.sortingCriteria);
+        return this.props.render(this._getOrderedRowsBySortingCriteria(this.props.sortingCriteria));
       case SortDirection.DESC:
-        return this._getOrderedRowsBySortingCriteria(this.props.sortingCriteria).reverse();
+        return this.props.render(this._getOrderedRowsBySortingCriteria(this.props.sortingCriteria).reverse());
       default:
-        return Object.values(this._unorderedRowsMap);
+        return this.props.render(Object.values(this._unorderedRowsMap));
     }
   }
 }
 
 RowSorterWrapper.propTypes = {
   /**
-   * Children of `<RowSorterWrapper />` should be `<TableRow />`.
+   *
    */
-  children: props => {
-    React.Children.toArray(props.children).forEach(child => {
+  render: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  rows: props => {
+    React.Children.toArray(props.rows).forEach(child => {
       if (child.type !== TableRow) {
         return new Error('`RowSorterWrapper` only accepts children of type `TableRow`');
       }
