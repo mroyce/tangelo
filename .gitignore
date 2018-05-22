@@ -1,6 +1,8 @@
 node_modules/
 lib/
 dist/
+tangelo.css
+
 .DS_STORE
 *.log
 *.sw*
