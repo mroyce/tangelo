@@ -9,8 +9,6 @@ import {
   pipe,
 } from './utils';
 
-import styles from './styles.css';
-
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableCell extends React.Component {
@@ -70,26 +68,26 @@ class TableCell extends React.Component {
     return (
       <div
         className={classNames(
-          styles.TableCell,
+          "Tangelo__TableCell",
           this.props.className,
           {
-            [styles['TableCell--hide-right-border']]: this.props.hideRightBorder,
-            [styles['TableCell--empty']]: Array.isArray(children) ? !children.some(c => c) : !children,
-            [styles['TableCell--highlightable']]: highlightable,
+            'Tangelo__TableCell--hide-right-border': this.props.hideRightBorder,
+            'Tangelo__TableCell--empty': Array.isArray(children) ? !children.some(c => c) : !children,
+            'Tangelo__TableCell--highlightable': highlightable,
           }
         )}
         style={this.props.flexStyle}
         {...eventHandlerProps}
       >
         <div
-          className={styles.TableCell__Content}
+          className="Tangelo__TableCell__Content"
           ref={ref => {this.content = ref; }}
         >
           {children}
           {isEmpty(this.props.icons) || (
-            <div className={styles.TableCell__IconsSection}>
+            <div className="Tangelo__TableCell__IconsSection">
               {this.props.icons.map((icon, idx) => (
-                <div key={idx} className={styles.TableCell__IconWrapper}>
+                <div key={idx} className="Tangelo__TableCell__IconWrapper">
                   {icon}
                 </div>
               ))}
@@ -97,7 +95,7 @@ class TableCell extends React.Component {
           )}
         </div>
         {this.state.isTooltipVisible && (
-          <div className={styles.TableCell__Tooltip}>
+          <div className="Tangelo__TableCell__Tooltip">
             {this.state.tooltipText}
           </div>
         )}

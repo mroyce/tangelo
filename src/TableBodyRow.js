@@ -5,8 +5,6 @@ import classNames from 'classnames';
 import TableRow from './TableRow';
 import { pickProps } from './utils';
 
-import styles from './styles.css';
-
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableBodyRow extends React.Component {
@@ -20,7 +18,7 @@ class TableBodyRow extends React.Component {
           'rowIndex',
         ])}
         className={classNames(
-          styles['TableRow--body'],
+          "Tangelo__TableRow--body",
           this.props.className
         )}
       />

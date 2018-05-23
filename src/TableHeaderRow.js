@@ -7,8 +7,6 @@ import TableRow from './TableRow';
 import { SortDirection } from './constants';
 import { pipe } from './utils';
 
-import styles from './styles.css';
-
 
 class TableHeaderRow extends React.Component {
   get columns() {
@@ -38,7 +36,7 @@ class TableHeaderRow extends React.Component {
       <TableRow
         key="Table__Table__Row--header"
         className={classNames(
-          styles['TableRow--header'],
+          "Tangelo__TableRow--header",
           this.props.className
         )}
         columns={this.columns}

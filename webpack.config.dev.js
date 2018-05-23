@@ -21,7 +21,7 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader?modules&localIdentName=Tangelo__[local]__[hash:base64:5]'
+          use: 'css-loader',
         }),
       },
     ]

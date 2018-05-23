@@ -8,8 +8,6 @@ import {
   pickProps,
 } from './utils';
 
-import styles from './styles.css';
-
 
 // TODO possibly convert this to a function like react-virtualized-table
 class TableRow extends React.Component {
@@ -108,10 +106,10 @@ class TableRow extends React.Component {
     return (
       <div
         className={classNames(
-          styles.TableRow,
+          "Tangelo__TableRow",
           this.props.className,
           {
-            [styles['TableRow--highlight-disabled']]: this.state.isChildCellHighlighted,
+            "Tangelo__TableRow--highlight-disabled": this.state.isChildCellHighlighted,
           }
         )}
         style={this.rowStyle}

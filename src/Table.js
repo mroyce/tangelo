@@ -12,8 +12,6 @@ import {
   pickProps,
 } from './utils';
 
-import styles from './styles.css';
-
 
 class Table extends React.Component {
   constructor(...args) {
@@ -97,7 +95,7 @@ class Table extends React.Component {
     return (
       <div
         className={classNames(
-          styles.Table,
+          "Tangelo__Table",
           this.props.className
         )}
       >

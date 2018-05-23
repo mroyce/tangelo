@@ -6,8 +6,6 @@ import TableBodyRow from './TableBodyRow';
 import { SortDirection } from './constants';
 import { pickProps } from './utils';
 
-import styles from './styles.css';
-
 
 class TableBody extends React.Component {
   constructor(...args) {
@@ -105,7 +103,7 @@ class TableBody extends React.Component {
         sortingCriteria={this.props.sortingCriteria}
         render={sortedRows => (
           <div
-            className={styles.TableBody}
+            className="Tangelo__TableBody"
             style={this.tableBodyStyle}
           >
             <div style={this.tableStyle}>
