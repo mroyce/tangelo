@@ -13,7 +13,7 @@
     "table",
     "component"
   ],
-  "main": "dist/index.js",
+  "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "files": [
     "dist/",
