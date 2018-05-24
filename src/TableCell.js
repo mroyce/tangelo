@@ -193,7 +193,7 @@ TableCell.defaultProps = {
   onRightClick: null,
 };
 
-TableCell.displayName = 'TanegloTableCell';
+TableCell.displayName = 'TangeloTableCell';
 
 
 export default TableCell;
