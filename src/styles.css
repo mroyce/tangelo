@@ -43,11 +43,11 @@
   width: 100%;
 }
 
-.Tangelo__TableRow--header:hover:not(.TableRow--highlight-disabled) {
+.Tangelo__TableRow--header:hover:not(.Tangelo__TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.Tangelo__TableRow--header:active:not(.TableRow--highlight-disabled) {
+.Tangelo__TableRow--header:active:not(.Tangelo__TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
