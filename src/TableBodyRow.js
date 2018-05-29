@@ -14,6 +14,11 @@ class TableBodyRow extends React.Component {
         key={`Table__Row__${this.props.rowIndex}`}
         {...pickProps(this.props, [
           'columns',
+          'onClick',
+          'onDoubleClick',
+          'onMouseOut',
+          'onMouseOver',
+          'onRightClick',
           'rowHeight',
           'rowIndex',
         ])}
