@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import HeaderSortArrow from './HeaderSortArrow';
 import TableRow from './TableRow';
 import { SortDirection } from './constants';
-import { pipe } from './utils';
+import { pickProps, pipe } from './utils';
 
 
 class TableHeaderRow extends React.Component {
@@ -42,6 +42,13 @@ class TableHeaderRow extends React.Component {
         columns={this.columns}
         rowHeight={this.props.headerHeight}
         rowIndex={-1}
+        {...pickProps(this.props, [
+          'onClick',
+          'onDoubleClick',
+          'onMouseOut',
+          'onMouseOver',
+          'onRightClick',
+        ])}
       />,
 
       <div
@@ -102,6 +109,31 @@ TableHeaderRow.propTypes = {
    *
    */
   headerHeight: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  onClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onDoubleClick: PropTypes.func,
+
+  /**
+   *
+   */
+  onMouseOut: PropTypes.func,
+
+  /**
+   *
+   */
+  onMouseOver: PropTypes.func,
+
+  /**
+   *
+   */
+  onRightClick: PropTypes.func,
 
   /**
    *
