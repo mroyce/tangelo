@@ -13,7 +13,6 @@ class TableBodyRow extends React.Component {
       <TableRow
         key={`Table__Row__${this.props.rowIndex}`}
         {...pickProps(this.props, [
-          'colorTheme',
           'columns',
           'onClick',
           'onDoubleClick',
