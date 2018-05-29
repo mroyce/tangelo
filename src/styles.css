@@ -130,6 +130,11 @@
   right: 4px;
 }
 
+.Tangelo__TableCell__IconsSection--left {
+  right: initial;
+  left: 4px;
+}
+
 .Tangelo__TableCell__IconWrapper {
   display: inline-block;
   height: 16px;

@@ -98,7 +98,14 @@ class TableCell extends React.Component {
         >
           {children}
           {isEmpty(this.props.icons) || (
-            <div className="Tangelo__TableCell__IconsSection">
+            <div
+              className={classNames(
+                "Tangelo__TableCell__IconsSection",
+                {
+                  'Tangelo__TableCell__IconsSection--left': align === "right",
+                }
+              )}
+            >
               {this.props.icons.map((icon, idx) => (
                 <div key={idx} className="Tangelo__TableCell__IconWrapper">
                   {icon}
