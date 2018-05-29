@@ -72,6 +72,11 @@ class TableRow extends React.Component {
         column.cellRenderer({ columnIndex, rowIndex }) :
         column.cellRenderer;
 
+      const icons =
+        typeof column.icons === 'function' ?
+         column.icons({ columnIndex, rowIndex }) :
+         column.icons;
+
       this._cellCache[columnIndex] = (
         <TableCell
           {...pickProps(column, [
@@ -84,7 +89,7 @@ class TableRow extends React.Component {
           columnIndex={columnIndex}
           handleChildCellMouseOver={this.handleChildCellMouseOver}
           handleChildCellMouseOut={this.handleChildCellMouseOut}
-          icons={column.icons}
+          icons={icons}
           onClick={column.onCellClick}
           onDoubleClick={column.onCellDoubleClick}
           onMouseOut={column.onCellMouseOut}
@@ -153,7 +158,10 @@ TableRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]).isRequired,
-      icons: PropTypes.arrayOf(PropTypes.element),
+      icons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
     })
   ).isRequired,
 

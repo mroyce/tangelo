@@ -63,7 +63,10 @@ TableBodyRow.propTypes = {
           flex: PropTypes.string,
         }),
       ]).isRequired,
-      icons: PropTypes.arrayOf(PropTypes.element),
+      icons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
     })
   ).isRequired,
 

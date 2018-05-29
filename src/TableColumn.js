@@ -72,10 +72,19 @@ TableColumn.propTypes = {
   hideRightBorder: PropTypes.bool,
 
   /**
-   * An array of SVG elements which will be displayed in the bottom-right-hand corner
-   * of the cell. All SVGs will be scaled to 16x16 pixels.
+   * An array of SVG elements or a function that returns an array of SVG elements
+   * which will be displayed in the bottom-right-hand corner of the cell.
+   * All SVGs will be scaled to 16x16 pixels.
+   *
+   * Accepts the following parameters:
+   * {
+   *   rowIndex,
+   * }
    */
-  icons: PropTypes.arrayOf(PropTypes.element),
+  icons: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.func,
+  ]),
 
   /**
    * For resizable columns (i.e. those using '%' width), provide a minimum width
