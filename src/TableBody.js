@@ -78,7 +78,6 @@ class TableBody extends React.Component {
     return (
       <TableBodyRow
         {...pickProps(props, [
-          'colorTheme',
           'columns',
           'rowHeight',
           'shouldRowUpdate',
