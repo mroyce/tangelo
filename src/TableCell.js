@@ -46,8 +46,21 @@ class TableCell extends React.Component {
     return this.content.scrollWidth > this.content.clientWidth;
   }
 
+  get style() {
+    const {
+      align,
+      flexStyle,
+    } = this.props;
+
+    return {
+      ...flexStyle,
+      textAlign: align,
+    };
+  }
+
   render() {
     const {
+      align,
       children,
       columnIndex,
       rowIndex,
@@ -76,7 +89,7 @@ class TableCell extends React.Component {
             'Tangelo__TableCell--highlightable': highlightable,
           }
         )}
-        style={this.props.flexStyle}
+        style={this.style}
         {...eventHandlerProps}
       >
         <div

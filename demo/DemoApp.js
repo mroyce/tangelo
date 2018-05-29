@@ -182,6 +182,7 @@ class DemoApp extends React.Component {
           />
           <TableColumn
             key="address"
+            align="right"
             bodyCellRenderer={this.addressCellRenderer}
             headerCellRenderer="Address"
             width={30}
@@ -189,6 +190,7 @@ class DemoApp extends React.Component {
           />
           <TableColumn
             key="email"
+            align="right"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
             icons={[<MailIcon />]}
@@ -198,6 +200,7 @@ class DemoApp extends React.Component {
           />
           <TableColumn
             key="birth date"
+            align="center"
             bodyCellRenderer={this.birthDateCellRenderer}
             headerCellRenderer="Birth Date"
             sortBy={this.sortByBirthDate}
