@@ -78,6 +78,7 @@ class TableBody extends React.Component {
     return (
       <TableBodyRow
         {...pickProps(props, [
+          'colorTheme',
           'columns',
           'rowHeight',
           'shouldRowUpdate',
@@ -143,7 +144,10 @@ TableBody.propTypes = {
           flex: PropTypes.string,
         }),
       ]),
-      icons: PropTypes.arrayOf(PropTypes.element),
+      icons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
     })
   ).isRequired,
 

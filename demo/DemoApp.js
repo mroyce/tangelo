@@ -193,7 +193,11 @@ class DemoApp extends React.Component {
             align="right"
             bodyCellRenderer={this.emailCellRenderer}
             headerCellRenderer="Email"
-            icons={[<MailIcon />]}
+            icons={({ rowIndex }) =>
+              this.state.data[rowIndex].email.includes('gmail') ?
+              [<MailIcon />] :
+              null
+            }
             sortBy="person.email"
             width={40}
             widthType="%"
