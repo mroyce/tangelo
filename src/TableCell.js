@@ -125,7 +125,7 @@ class TableCell extends React.Component {
             </div>
           )}
         </div>
-        {(this.state.isTooltipVisible this.state.tooltipContent) && (
+        {(this.state.isTooltipVisible && this.state.tooltipContent) && (
           <div className="Tangelo__TableCell__Tooltip">
             {this.state.tooltipContent}
           </div>
