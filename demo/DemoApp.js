@@ -185,6 +185,11 @@ class DemoApp extends React.Component {
             align="right"
             bodyCellRenderer={this.addressCellRenderer}
             headerCellRenderer="Address"
+            tooltip={({ rowIndex }) => (
+              <span>
+                Address is {this.state.data[rowIndex].address}
+              </span>
+            )}
             width={30}
             widthType="%"
           />

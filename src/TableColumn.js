@@ -151,10 +151,22 @@ TableColumn.propTypes = {
    * The sorting criteria for this column. Can either be a string or a function.
    * If the criteria is a string, we use the string as the key for the property
    * in ``rowProps`` and compare against that value.
+   *
    * If the criteria is a function, the function will be used as a comparator
-   * and will receive ``rowProps`` as a parameter.
+   * and will receive the following parameters: 
+   * {
+   *   rowIndex,
+   * }
    */
   sortBy: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+
+  /**
+   *
+   */
+  tooltip: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
   ]),
@@ -187,6 +199,7 @@ TableColumn.defaultProps = {
   onCellMouseOver: noop,
   onCellRightClick: noop,
   sortBy: null,
+  tooltip: null,
   widthType: '%',
 };
 
