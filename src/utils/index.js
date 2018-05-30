@@ -1,5 +1,6 @@
 export { default as getDisplayName } from './getDisplayName';
 export { default as getEventHandlerProps } from './getEventHandlerProps';
+export { default as getIsClickable } from './getIsClickable';
 export { default as getFlexStyle } from './getFlexStyle';
 export { default as getNestedValue } from './getNestedValue';
 export { default as invariant } from './invariant';

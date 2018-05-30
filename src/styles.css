@@ -18,12 +18,9 @@
   flex-direction: row;
 }
 
-/*
-.Tangelo__Table__row:hover:not(.Tangelo__Table__row--highlight-disabled),
-.Tangelo__Table__row:active:not(.Tangelo__Table__row--highlight-disabled) {
+.Tangelo__TableRow--clickable:not(.Tangelo__TableRow--highlight-disabled) {
   cursor: pointer;
 }
-*/
 
 
 /******************
@@ -49,6 +46,19 @@
 
 .Tangelo__TableRow--header:active:not(.Tangelo__TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Sort Arrow */
+.Tangelo__HeaderSortArrow {
+  opacity: 0.6;
+}
+
+.Tangelo__TableCell--highlightable:hover .Tangelo__HeaderSortArrow {
+  opacity: 0.8;
+}
+
+.Tangelo__TableCell--highlightable:active .Tangelo__HeaderSortArrow {
+  opacity: 1;
 }
 
 
@@ -102,11 +112,13 @@
 
 .Tangelo__TableCell--highlightable:hover {
   background-color: rgba(0, 0, 0, 0.05);
-  cursor: pointer;
 }
 
 .Tangelo__TableCell--highlightable:active {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__TableCell--clickable {
   cursor: pointer;
 }
 

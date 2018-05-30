@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import TableCell from './TableCell';
 import {
   getEventHandlerProps,
+  getIsClickable,
   pickProps,
 } from './utils';
 
@@ -121,6 +122,7 @@ class TableRow extends React.Component {
           this.props.className,
           {
             "Tangelo__TableRow--highlight-disabled": this.state.isChildCellHighlighted,
+            "Tangelo__TableRow--clickable": getIsClickable(this),
           }
         )}
         style={this.rowStyle}

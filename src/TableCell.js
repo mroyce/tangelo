@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import {
   getEventHandlerProps,
+  getIsClickable,
   isEmpty,
   noop,
   pipe,
@@ -98,6 +99,7 @@ class TableCell extends React.Component {
             'Tangelo__TableCell--hide-right-border': this.props.hideRightBorder,
             'Tangelo__TableCell--empty': Array.isArray(children) ? !children.some(c => c) : !children,
             'Tangelo__TableCell--highlightable': highlightable,
+            'Tangelo__TableCell--clickable': getIsClickable(this),
           }
         )}
         style={this.style}
