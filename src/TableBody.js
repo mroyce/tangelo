@@ -96,9 +96,11 @@ class TableBody extends React.Component {
   }
 
   render() {
+    const rowsArray = Object.values(this._rowCache);
+    const visibleRows = rowsArray.slice(0, this.props.rowCount);
     return (
       <RowSorterWrapper
-        rows={Object.values(this._rowCache)}
+        rows={visibleRows}
         sortDirection={this.props.sortDirection}
         sortingCriteria={this.props.sortingCriteria}
         render={sortedRows => (
