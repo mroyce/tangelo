@@ -77,6 +77,11 @@ class TableRow extends React.Component {
          column.icons({ columnIndex, rowIndex }) :
          column.icons;
 
+      const tooltip =
+        typeof column.tooltip === 'function' ?
+          column.tooltip({ columnIndex, rowIndex }) :
+          column.tooltip;
+
       this._cellCache[columnIndex] = (
         <TableCell
           {...pickProps(column, [
@@ -96,6 +101,7 @@ class TableRow extends React.Component {
           onMouseOver={column.onCellMouseOver}
           onRightClick={column.onCellRightClick}
           rowIndex={rowIndex}
+          tooltip={tooltip}
         >
           {cellContent}
         </TableCell>

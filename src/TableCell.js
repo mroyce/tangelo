@@ -17,7 +17,7 @@ class TableCell extends React.Component {
 
     this.state = {
       isTooltipVisible: false,
-      tooltipText: '',
+      tooltipContent: null,
     };
 
     this.handleShowTooltip = this.handleShowTooltip.bind(this);
@@ -25,11 +25,21 @@ class TableCell extends React.Component {
   }
 
   handleShowTooltip() {
-    if (!this.state.isTooltipVisible && this.isContentTruncated) {
-      this.setState({
-        isTooltipVisible: true,
-        tooltipText: this.content.innerText,
-      });
+    if (!this.state.isTooltipVisible) {
+      if (this.props.tooltip) {
+        this.setState({
+          isTooltipVisible: true,
+          tooltipContent: this.props.tooltip,
+        });
+        return;
+      }
+
+      if (this.isContentTruncated) {
+        this.setState({
+          isTooltipVisible: true,
+          tooltipContent: this.content.innerText,
+        });
+      }
     }
   }
 
@@ -37,7 +47,7 @@ class TableCell extends React.Component {
     if (this.state.isTooltipVisible) {
       this.setState({
         isTooltipVisible: false,
-        tooltipText: '',
+        tooltipContent: null,
       });
     }
   }
@@ -64,6 +74,7 @@ class TableCell extends React.Component {
       children,
       columnIndex,
       rowIndex,
+      tooltip,
     } = this.props;
 
     // Handle highlighting individual cells
@@ -116,7 +127,7 @@ class TableCell extends React.Component {
         </div>
         {this.state.isTooltipVisible && (
           <div className="Tangelo__TableCell__Tooltip">
-            {this.state.tooltipText}
+            {this.state.tooltipContent}
           </div>
         )}
       </div>
