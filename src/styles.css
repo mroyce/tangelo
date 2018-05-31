@@ -109,7 +109,7 @@
   position: relative;
 }
 
-.Tangelo__TableCell:not(:last-child) {
+.Tangelo__TableCell {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -130,7 +130,8 @@
 }
 
 .Tangelo__TableCell--empty,
-.Tangelo__TableCell--hide-right-border {
+.Tangelo__TableCell--hide-right-border,
+.Tangelo__TableCell:last-child {
   border-right: none;
   margin-right: 1px;
 }
