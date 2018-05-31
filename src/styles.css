@@ -2,7 +2,7 @@
  * Table *
  *********/
 .Tangelo__Table {
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   height: 100%;
   position: relative;
   width: 100%;
@@ -22,13 +22,17 @@
   cursor: pointer;
 }
 
+.Tangelo__TableRow:last-child,
+.Tangelo__TableRow--hide-border-bottom {
+  border-bottom: none;
+}
+
 
 /******************
  * TableHeaderRow *
  ******************/
 .Tangelo__TableRow--header {
   background-color: rgba(0, 0, 0, 0.05);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
   text-transform: uppercase;
@@ -106,6 +110,10 @@
   position: relative;
 }
 
+.Tangelo__TableCell:last-child {
+  border-right: none;
+}
+
 .Tangelo__TableCell * {
   vertical-align: middle;
 }
@@ -162,8 +170,8 @@
   color: rgba(255, 255, 255, 1);
   font-size: 12px;
   font-weight: 500;
-  line-height: 12px;
   left: 50%;
+  line-height: 12px;
   padding: 12px 8px;
   position: absolute;
   text-align: center;

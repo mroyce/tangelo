@@ -47,23 +47,27 @@ class TableBody extends React.Component {
 
   get tableBodyStyle() {
     const {
-      rowHeight,
+      headerHeight,
     } = this.props;
 
+    const headerBorderHeight = 1;
+
     return {
-      height: `calc(100% - ${rowHeight}px)`,
+      height: `calc(100% - ${headerHeight + headerBorderHeight}px)`,
     };
   }
 
   get tableStyle() {
     const {
+      hideBorderBottom,
       rowCount,
       rowHeight,
     } = this.props;
 
+    const borderHeight = hideBorderBottom ? 0 : 1;
+
     return {
-      // 1px border bottom
-      height: `${rowCount * (rowHeight + 1)}px`,
+      height: rowCount * (rowHeight + borderHeight),
     };
   }
 
@@ -79,6 +83,7 @@ class TableBody extends React.Component {
       <TableBodyRow
         {...pickProps(props, [
           'columns',
+          'hideBorderBottom',
           'rowHeight',
           'shouldRowUpdate',
         ])}
@@ -98,6 +103,7 @@ class TableBody extends React.Component {
   render() {
     const rowsArray = Object.values(this._rowCache);
     const visibleRows = rowsArray.slice(0, this.props.rowCount);
+
     return (
       <RowSorterWrapper
         rows={visibleRows}

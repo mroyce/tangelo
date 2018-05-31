@@ -24,10 +24,9 @@ class TableHeaderRow extends React.Component {
   }
 
   get headerSpaceStyle() {
+    const borderHeight = 1;
     return {
-      // 1px border top
-      // 1px border bottom
-      height: this.props.headerHeight + 2,
+      height: this.props.headerHeight + borderHeight,
     };
   }
 
