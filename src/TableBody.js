@@ -30,6 +30,10 @@ class TableBody extends React.Component {
   componentWillUpdate(nextProps) {
     // TODO only check rows that are in view
     for (let rowIndex = 0; rowIndex < nextProps.rowCount; rowIndex++) {
+      this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
+
+      // TODO intelligently update rows that need to be updated instead of all rows
+      /*
       const row = this._rowCache[rowIndex];
 
       if (row) {
@@ -42,6 +46,7 @@ class TableBody extends React.Component {
       } else {
         this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
       }
+      */
     }
   }
 

@@ -24,14 +24,18 @@ class RowSorterWrapper extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.sortingCriteria &&
-        this.props.sortingCriteria !== nextProps.sortingCriteria) {
-      // If there was a sortingCriteria change, construct the set of ordered rows to be used
-      this._constructSortedRows(nextProps.sortingCriteria);
+    if (nextProps.sortingCriteria) {
+      // TODO only sort if there was a sorting criteria change
+      this._constructSortedRows(nextProps);
     }
   }
 
-  _constructSortedRows(sortingCriteria) {
+  _constructSortedRows(nextProps) {
+    const {
+      sortingCriteria,
+      rows,
+    } = nextProps;
+
     let sorted;
     const sortingCriteriaKey = this._getSortingCriteriaKey(sortingCriteria);
 
@@ -46,10 +50,10 @@ class RowSorterWrapper extends React.Component {
     // Otherwise sort the array and cache the result
     switch(typeof sortingCriteria) {
       case 'function':
-        this._orderedRowsMap[sortingCriteriaKey] = this.props.rows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
+        this._orderedRowsMap[sortingCriteriaKey] = rows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
         break;
       case 'string':
-        this._orderedRowsMap[sortingCriteriaKey] = this.props.rows.sort((a, b) => {
+        this._orderedRowsMap[sortingCriteriaKey] = rows.sort((a, b) => {
           const aVal = getNestedValue(a.props.rowProps, sortingCriteria);
           const bVal = getNestedValue(b.props.rowProps, sortingCriteria);
 

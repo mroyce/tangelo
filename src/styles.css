@@ -104,14 +104,13 @@
  * TableCell *
  *************/
 .Tangelo__TableCell {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
   min-width: 0; /* for flex-basis % */
   padding: 0 16px;
   position: relative;
 }
 
-.Tangelo__TableCell:last-child {
-  border-right: none;
+.Tangelo__TableCell:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .Tangelo__TableCell * {
