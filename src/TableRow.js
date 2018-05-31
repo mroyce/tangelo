@@ -177,7 +177,7 @@ TableRow.propTypes = {
   /**
    *
    */
-  hideBorderBottom: PropTypes.bool.isRequired,
+  hideBorderBottom: PropTypes.bool,
 
   /**
    *
@@ -217,6 +217,7 @@ TableRow.propTypes = {
 
 TableRow.defaultProps = {
   className: '',
+  hideBorderBottom: false,
   onClick: null,
   onDoubleClick: null,
   onMouseOut: null,
