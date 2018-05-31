@@ -14,6 +14,7 @@ class TableBodyRow extends React.Component {
         key={`Table__Row__${this.props.rowIndex}`}
         {...pickProps(this.props, [
           'columns',
+          'hideBorderBottom',
           'onClick',
           'onDoubleClick',
           'onMouseOut',
@@ -69,6 +70,11 @@ TableBodyRow.propTypes = {
       ]),
     })
   ).isRequired,
+
+  /**
+   *
+   */
+  hideBorderBottom: PropTypes.bool.isRequired,
 
   /**
    *

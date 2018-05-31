@@ -115,6 +115,8 @@ class Table extends React.Component {
         <TableBody
           {...pickProps(this.props, [
             'getRowProps',
+            'headerHeight',
+            'hideBorderBottom',
             'onRowClick',
             'onRowDoubleClick',
             'onRowMouseOut',
@@ -181,6 +183,11 @@ Table.propTypes = {
    *
    */
   headerHeight: PropTypes.number,
+
+  /**
+   *
+   */
+  hideBorderBottom: PropTypes.bool,
 
   /**
    *
@@ -260,6 +267,7 @@ Table.defaultProps = {
   getRowProps: () => null,
   headerClassName: '',
   headerHeight: 40,
+  hideBorderBottom: false,
   onRowClick: noop,
   onRowDoubleClick: noop,
   onRowMouseOut: noop,

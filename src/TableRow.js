@@ -121,8 +121,9 @@ class TableRow extends React.Component {
           "Tangelo__TableRow",
           this.props.className,
           {
-            "Tangelo__TableRow--highlight-disabled": this.state.isChildCellHighlighted,
-            "Tangelo__TableRow--clickable": getIsClickable(this),
+            'Tangelo__TableRow--highlight-disabled': this.state.isChildCellHighlighted,
+            'Tangelo__TableRow--clickable': getIsClickable(this),
+            'Tangelo__TableRow--hide-border-bottom': this.props.hideBorderBottom,
           }
         )}
         style={this.rowStyle}
@@ -172,6 +173,11 @@ TableRow.propTypes = {
       ]),
     })
   ).isRequired,
+
+  /**
+   *
+   */
+  hideBorderBottom: PropTypes.bool.isRequired,
 
   /**
    *
