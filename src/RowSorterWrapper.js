@@ -7,6 +7,30 @@ import { getNestedValue } from './utils';
 
 
 /**
+ * Stable sorting algorithm.
+ * https://medium.com/@fsufitch/is-javascript-array-sort-stable-46b90822543f
+ */
+Array.prototype.stableSort = function(cmp) {
+  cmp = !!cmp ? cmp : (a, b) => {
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+  };
+  let stabilizedThis = this.map((el, index) => [el, index]);
+  let stableCmp = (a, b) => {
+    let order = cmp(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  };
+  stabilizedThis.sort(stableCmp);
+  for (let i = 0; i < this.length; i ++) {
+    this[i] = stabilizedThis[i][0];
+  };
+  return this;
+};
+
+
+/**
  * Wrapper responsible for sorting rows in <TableBody />.
  * Rows are sorted based on `sortingCriteria` and `sortDirection`.
  */
@@ -50,10 +74,10 @@ class RowSorterWrapper extends React.Component {
     // Otherwise sort the array and cache the result
     switch(typeof sortingCriteria) {
       case 'function':
-        this._orderedRowsMap[sortingCriteriaKey] = rows.sort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
+        this._orderedRowsMap[sortingCriteriaKey] = rows.stableSort((a, b) => sortingCriteria(a.props.rowProps, b.props.rowProps));
         break;
       case 'string':
-        this._orderedRowsMap[sortingCriteriaKey] = rows.sort((a, b) => {
+        this._orderedRowsMap[sortingCriteriaKey] = rows.stableSort((a, b) => {
           const aVal = getNestedValue(a.props.rowProps, sortingCriteria);
           const bVal = getNestedValue(b.props.rowProps, sortingCriteria);
 
