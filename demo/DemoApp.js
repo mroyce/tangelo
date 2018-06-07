@@ -150,6 +150,13 @@ class DemoApp extends React.Component {
         className="table-container"
       >
         <Table
+          emptyTablePlaceholder={(
+            <div>
+              No People Found
+              <br />
+              Please Increase the Number of Rows in the Table
+            </div>
+          )}
           getRowProps={this.getRowProps}
           headerHeight={32}
           rowCount={this.state.numRows}
