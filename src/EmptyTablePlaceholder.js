@@ -25,7 +25,9 @@ class EmptyTablePlaceholder extends React.Component {
 
     return (
       <div className="Tangelo__EmptyTablePlaceholder" style={this.style}>
-        {emptyTableContent}
+        <div className="Tangelo__EmptyTablePlaceholder__Content">
+          {emptyTableContent}
+        </div>
       </div>
     );
   }

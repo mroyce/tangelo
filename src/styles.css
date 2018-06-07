@@ -78,16 +78,16 @@
  * EmptyTablePlaceholder *
  *************************/
 .Tangelo__EmptyTablePlaceholder {
+  align-items: center;
   background-color: rgba(255, 255, 255, 1);
-  display: table;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.Tangelo__EmptyTablePlaceholder * {
-  display: table-cell;
-  vertical-align: middle;
+.Tangelo__EmptyTablePlaceholder__Content {
+  font-size: 18px;
+  padding: 16px;
+  word-wrap: break-word;
 }
 
 
