@@ -74,6 +74,23 @@
 }
 
 
+/*************************
+ * EmptyTablePlaceholder *
+ *************************/
+.Tangelo__EmptyTablePlaceholder {
+  background-color: rgba(255, 255, 255, 1);
+  display: table;
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+.Tangelo__EmptyTablePlaceholder * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
 /****************
  * TableBodyRow *
  ****************/

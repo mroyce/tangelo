@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import EmptyTablePlaceholder from './EmptyTablePlaceholder';
 import TableBody from './TableBody';
 import TableColumn from './TableColumn';
 import TableHeaderRow from './TableHeaderRow';
@@ -112,25 +113,34 @@ class Table extends React.Component {
             sortingCriteria={this.state.sortingCriteria}
           />
         )}
-        <TableBody
-          {...pickProps(this.props, [
-            'getRowProps',
-            'headerHeight',
-            'hideBorderBottom',
-            'onRowClick',
-            'onRowDoubleClick',
-            'onRowMouseOut',
-            'onRowMouseOver',
-            'onRowRightClick',
-            'rowClassName',
-            'rowCount',
-            'rowHeight',
-            'shouldRowUpdate',
-          ])}
-          columns={this.bodyColumns}
-          sortDirection={this.state.sortDirection}
-          sortingCriteria={this.state.sortingCriteria}
-        />
+        {this.props.rowCount ? (
+          <TableBody
+            {...pickProps(this.props, [
+              'getRowProps',
+              'headerHeight',
+              'hideBorderBottom',
+              'onRowClick',
+              'onRowDoubleClick',
+              'onRowMouseOut',
+              'onRowMouseOver',
+              'onRowRightClick',
+              'rowClassName',
+              'rowCount',
+              'rowHeight',
+              'shouldRowUpdate',
+            ])}
+            columns={this.bodyColumns}
+            sortDirection={this.state.sortDirection}
+            sortingCriteria={this.state.sortingCriteria}
+          />
+        ) : (
+          <EmptyTablePlaceholder
+            {...pickProps(this.props, [
+              'emptyTablePlaceholder',
+              'rowHeight',
+            ])}
+          />
+        )}
       </div>
     );
   }
@@ -161,7 +171,7 @@ Table.propTypes = {
   /**
    *
    */
-  emptyTableRenderer: PropTypes.oneOfType([
+  emptyTablePlaceholder: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.func,
   ]),
@@ -263,7 +273,7 @@ Table.propTypes = {
 Table.defaultProps = {
   className: '',
   disableHeader: false,
-  emptyTableRenderer: null,
+  emptyTablePlaceholder: null,
   getRowProps: () => null,
   headerClassName: '',
   headerHeight: 40,
