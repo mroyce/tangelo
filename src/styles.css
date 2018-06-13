@@ -71,7 +71,15 @@
  * TableBody *
  *************/
 .Tangelo__TableBody {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.Tangelo__TableBody__ScrollableContent {
+  margin-right: -30px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 30px;
 }
 
 
@@ -162,15 +170,15 @@
 }
 
 .Tangelo__TableCell__IconsSection {
-  bottom: 4px;
+  bottom: 8px;
   height: 16px;
   position: absolute;
-  right: 4px;
+  right: 8px;
 }
 
 .Tangelo__TableCell__IconsSection--left {
   right: initial;
-  left: 4px;
+  left: 8px;
 }
 
 .Tangelo__TableCell__IconWrapper {
