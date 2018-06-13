@@ -81,6 +81,17 @@ class RowSorterWrapper extends React.Component {
           const aVal = getNestedValue(a.props.rowProps, sortingCriteria);
           const bVal = getNestedValue(b.props.rowProps, sortingCriteria);
 
+          // Check existence
+          if (!aVal) {
+            if (!bVal) {
+              return 0;
+            }
+            return -1;
+          } else if (!bVal) {
+            return 1;
+          }
+
+          // Compare
           if (aVal > bVal) {
             return 1;
           }
