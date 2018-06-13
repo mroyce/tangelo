@@ -1,3 +1,4 @@
+export { default as debounce } from './debounce';
 export { default as getDisplayName } from './getDisplayName';
 export { default as getEventHandlerProps } from './getEventHandlerProps';
 export { default as getIsClickable } from './getIsClickable';

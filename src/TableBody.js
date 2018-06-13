@@ -18,6 +18,17 @@ class TableBody extends React.Component {
      * @type {Object<number, React.Element>}
      */
     this._rowCache = {};
+
+    this.state = {
+      /**
+       * Scrollbar takes up space so we have to grab the width from the
+       * non-scrollable element and manually set the width to accommodate
+       * for the hidden scrollbar
+       */
+      bodyWidth: 0,
+    };
+
+    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentWillMount() {
@@ -27,12 +38,21 @@ class TableBody extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidMount() {
+    this.handleWindowResize();
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
     // TODO only check rows that are in view
+    // TODO intelligently update rows that need to be updated instead of all rows
+    if (this.state.bodyWidth !== nextState.bodyWidth) {
+      return;
+    }
+
     for (let rowIndex = 0; rowIndex < nextProps.rowCount; rowIndex++) {
       this._rowCache[rowIndex] = this._constructRow(rowIndex, nextProps);
 
-      // TODO intelligently update rows that need to be updated instead of all rows
       /*
       const row = this._rowCache[rowIndex];
 
@@ -50,29 +70,35 @@ class TableBody extends React.Component {
     }
   }
 
-  get tableBodyStyle() {
-    const {
-      headerHeight,
-    } = this.props;
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
 
+  /**
+   * Scrollbar takes up space so we have to grab the width from the
+   * non-scrollable element and manually set the width to accommodate
+   * for the hidden scrollbar.
+   */
+  handleWindowResize() {
+    const tableBody = document.getElementById('Tangelo__TableBody');
+    const bodyWidth = tableBody.getBoundingClientRect().width;
+    this.setState({ bodyWidth });
+  }
+
+  get tableBodyStyle() {
     const headerBorderHeight = 1;
 
     return {
-      height: `calc(100% - ${headerHeight + headerBorderHeight}px)`,
+      height: `calc(100% - ${this.props.headerHeight + headerBorderHeight}px)`,
     };
   }
 
   get tableStyle() {
-    const {
-      hideBorderBottom,
-      rowCount,
-      rowHeight,
-    } = this.props;
-
-    const borderHeight = hideBorderBottom ? 0 : 1;
+    const borderHeight = this.props.hideBorderBottom ? 0 : 1;
 
     return {
-      height: rowCount * (rowHeight + borderHeight),
+      height: this.props.rowCount * (this.props.rowHeight + borderHeight),
+      width: this.state.bodyWidth || '100%',
     };
   }
 
@@ -117,10 +143,15 @@ class TableBody extends React.Component {
         render={sortedRows => (
           <div
             className="Tangelo__TableBody"
-            style={this.tableBodyStyle}
+            id="Tangelo__TableBody"
           >
-            <div style={this.tableStyle}>
-              {sortedRows}
+            <div
+              className="Tangelo__TableBody__ScrollableContent"
+              style={this.tableBodyStyle}
+            >
+              <div style={this.tableStyle}>
+                {sortedRows}
+              </div>
             </div>
           </div>
         )}
