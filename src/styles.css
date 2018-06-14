@@ -76,6 +76,7 @@
 }
 
 .Tangelo__TableBody__ScrollableContent {
+  height: 100%;
   margin-right: -30px;
   overflow-y: auto;
   overscroll-behavior: contain;
