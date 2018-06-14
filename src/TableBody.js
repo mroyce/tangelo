@@ -144,11 +144,9 @@ class TableBody extends React.Component {
           <div
             className="Tangelo__TableBody"
             id="Tangelo__TableBody"
+            style={this.tableBodyStyle}
           >
-            <div
-              className="Tangelo__TableBody__ScrollableContent"
-              style={this.tableBodyStyle}
-            >
+            <div className="Tangelo__TableBody__ScrollableContent">
               <div style={this.tableStyle}>
                 {sortedRows}
               </div>
