@@ -5,13 +5,18 @@ import { SortDirection } from './constants';
 
 
 const Arrow = ({ direction }) => {
-  const transformFlipVertically = direction === 'up' ? 'scale(1, -1)' : '';
+  const SIZE = 14;
+  const transformFlipVertically = direction === 'up' ? `scale(1, -1) translate(0, -${SIZE})` : '';
+  const viewBox = `0 0 ${SIZE} ${SIZE}`;
 
+  // Safari doesn't support transforms on <svg> so we add a nested <g> element
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" transform={transformFlipVertically} className="Tangelo__HeaderSortArrow">
-      <g fill="#000" fillRule="evenodd">
-        <rect width="14" height="14" fillOpacity=".2" rx="2"/>
-        <path fillOpacity=".6" d="M8 8.414l1.828-1.828L11.243 8l-2.829 2.828L7 12.243 2.757 8l1.415-1.414L6 8.414V2h2v6.414z"/>
+    <svg width={SIZE} height={SIZE} viewBox={viewBox} className="Tangelo__HeaderSortArrow">
+      <g transform={transformFlipVertically}>
+        <g fill="#000" fillRule="evenodd">
+          <rect width={SIZE} height={SIZE} fillOpacity=".2" rx="2"/>
+          <path fillOpacity=".6" d="M8 8.414l1.828-1.828L11.243 8l-2.829 2.828L7 12.243 2.757 8l1.415-1.414L6 8.414V2h2v6.414z"/>
+        </g>
       </g>
     </svg>
   );
