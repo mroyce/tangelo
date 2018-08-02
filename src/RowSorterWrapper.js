@@ -45,6 +45,10 @@ class RowSorterWrapper extends React.Component {
      * @type {Object<string, <TableRow />[]}
      */
     this._orderedRowsMap = {};
+
+    if (this.props.sortingCriteria) {
+      this._constructSortedRows(this.props);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
