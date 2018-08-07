@@ -19,10 +19,6 @@
   flex-direction: row;
 }
 
-.Tangelo__TableRow--clickable:not(.Tangelo__TableRow--highlight-disabled) {
-  cursor: pointer;
-}
-
 .Tangelo__TableRow:last-child,
 .Tangelo__TableRow--hide-border-bottom {
   border-bottom: none;
@@ -45,24 +41,16 @@
   width: 100%;
 }
 
-.Tangelo__TableRow--header:hover:not(.Tangelo__TableRow--highlight-disabled) {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.Tangelo__TableRow--header:active:not(.Tangelo__TableRow--highlight-disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
-}
-
 /* Sort Arrow */
 .Tangelo__HeaderSortArrow {
   opacity: 0.6;
 }
 
-.Tangelo__TableCell--highlightable:hover .Tangelo__HeaderSortArrow {
+.Tangelo__TableCell:hover .Tangelo__HeaderSortArrow {
   opacity: 0.8;
 }
 
-.Tangelo__TableCell--highlightable:active .Tangelo__HeaderSortArrow {
+.Tangelo__TableCell:active .Tangelo__HeaderSortArrow {
   opacity: 1;
 }
 
@@ -109,14 +97,6 @@
   font-size: 16px;
 }
 
-.Tangelo__TableRow--body:hover:not(.TableRow--highlight-disabled) {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.Tangelo__TableRow--body:active:not(.TableRow--highlight-disabled) {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
 /* TODO not implemented yet */
 /*
 .Tangelo__TableRow--selected {
@@ -141,18 +121,6 @@
 
 .Tangelo__TableCell * {
   vertical-align: middle;
-}
-
-.Tangelo__TableCell--highlightable:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.Tangelo__TableCell--highlightable:active {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.Tangelo__TableCell--clickable {
-  cursor: pointer;
 }
 
 .Tangelo__TableCell--empty,
@@ -203,4 +171,20 @@
   text-align: center;
   transform: translateX(-50%);
   white-space: nowrap;
+}
+
+
+/*******************************
+ * withEventHandlers modifiers *
+ *******************************/
+.--clickable {
+  cursor: pointer;
+}
+
+.--clickable:not(.--clickable--disable-highlight):hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.--clickable:not(.--clickable--disable-highlight):active {
+  background-color: rgba(0, 0, 0, 0.15);
 }
