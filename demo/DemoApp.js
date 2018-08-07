@@ -24,7 +24,6 @@ class DemoApp extends React.Component {
     // <Table /> props
     this.getRowProps = this.getRowProps.bind(this);
     this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
-    this.onRowClick = this.onRowClick.bind(this);
 
     // Cell Renderers
     this.thumbnailCellRenderer = this.thumbnailCellRenderer.bind(this);
@@ -62,10 +61,6 @@ class DemoApp extends React.Component {
   shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
     // TODO rows don't update when `data` changes
     return currentRowProps.firstNameColor !== nextRowProps.firstNameColor;
-  }
-
-  onRowClick({ rowIndex }) {
-    console.log(rowIndex);
   }
 
   /*****************************
@@ -164,7 +159,6 @@ class DemoApp extends React.Component {
           )}
           getRowProps={this.getRowProps}
           headerHeight={32}
-          onRowClick={this.onRowClick}
           rowCount={this.state.numRows}
           rowHeight={36}
           shouldRowUpdate={this.shouldRowUpdate}

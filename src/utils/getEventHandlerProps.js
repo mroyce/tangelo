@@ -2,7 +2,7 @@ import noop from './noop';
 
 /**
  * Passes in additional contextual parameters to event handlers.
- * Used by <TableRow /> and <TableCell /> to pass in `rowIndex` and `columnIndex` as params.
+ * Used by `withEventHandlers` to pass in `rowIndex` and `columnIndex` as params to the handlers.
  *
  * @param {Object} props
  * @param {Object} [parameters={}]

@@ -75,20 +75,14 @@ class TableCell extends React.Component {
 
   get eventHandlerProps() {
     const { eventHandlerProps } = this.props;
+
     eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.handleShowTooltip);
     eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.handleHideTooltip);
+
     return eventHandlerProps;
   }
 
   render() {
-    // Handle highlighting individual cells
-    /*
-    if (!isEmpty(eventHandlerProps)) {
-      eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
-      eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
-    }
-    */
-
     return (
       <div
         className={classNames(

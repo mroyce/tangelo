@@ -5,11 +5,17 @@ import classNames from 'classnames';
 import {
   getEventHandlerProps,
   getIsClickable,
+  noop,
 } from './utils';
 
 
 /**
+ * Passes in event handler props and clickable modifier classNames to components
+ * with event handler props.
  *
+ * @param {React.Component} ComposedComponent
+ * @param {Function} parameters
+ * @returns {React.Component}
  */
 export default (ComposedComponent, parameters) => {
   class withEventHandlers extends React.Component {
@@ -27,12 +33,10 @@ export default (ComposedComponent, parameters) => {
 
     handleClickableChildMouseOver() {
       this.setState({ isClickableChildHighlighted: true });
-      console.log('MUDDA OVER');
     }
 
     handleClickableChildMouseOut() {
       this.setState({ isClickableChildHighlighted: false });
-      console.log('MUDDA OUT');
     }
 
     render() {
@@ -44,9 +48,6 @@ export default (ComposedComponent, parameters) => {
           '--clickable--disable-highlight': this.state.isClickableChildHighlighted,
         }
       );
-
-      console.log(this.state);
-      console.log(className);
 
       return (
         <ComposedComponent
@@ -90,6 +91,15 @@ export default (ComposedComponent, parameters) => {
      *
      */
     onRightClick: PropTypes.func,
+  };
+
+  withEventHandlers.defaultProps = {
+    className: '',
+    onClick: noop,
+    onDoubleClick: noop,
+    onMouseOut: noop,
+    onMouseOver: noop,
+    onRightClick: noop,
   };
 
   return withEventHandlers;

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import withEventHandlers from './withEventHandlers';
 import TableCell from './TableCell';
 import {
-  getEventHandlerProps,
   getIsClickable,
   pickProps,
   pipe,
