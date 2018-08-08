@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import withEventHandlers from './hocs/withEventHandlers';
+import ColumnProps from './prop-types/ColumnProps';
 import TableCell from './TableCell';
 import {
   getIsClickable,
@@ -21,12 +22,12 @@ class TableRow extends React.Component {
   }
 
   componentWillMount() {
-    this._constructCells(this.props);
+    this._constructCells(this.props.rowIndex, this.props.columns);
   }
 
   componentWillUpdate(nextProps) {
     // TODO consider only updating some cells like we do for rows in `TableBody`
-    this._constructCells(nextProps);
+    this._constructCells(nextProps.rowIndex, nextProps.columns);
   }
 
   get rowStyle() {
@@ -40,13 +41,9 @@ class TableRow extends React.Component {
     }
   }
 
-  _constructCells(props) {
-    const {
-      rowIndex,
-    } = props;
-
+  _constructCells(rowIndex, columns) {
     // TODO optimize so we only render cells that are in view
-    this.props.columns.forEach((column, columnIndex) => {
+    columns.forEach((column, columnIndex) => {
       const className = 
         typeof column.columnClassName === 'function' ?
         column.columnClassName({ columnIndex, rowIndex }) :
@@ -132,35 +129,7 @@ TableRow.propTypes = {
   /**
    *
    */
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      align: PropTypes.oneOf([
-        'left',
-        'right',
-        'center',
-      ]),
-      columnClassName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func,
-      ]),
-      cellRenderer: PropTypes.oneOfType([
-        PropTypes.node,
-        PropTypes.func,
-      ]),
-      flexStyle: PropTypes.oneOfType([
-        PropTypes.shape({
-          flexBasis: PropTypes.string,
-        }),
-        PropTypes.shape({
-          flex: PropTypes.string,
-        }),
-      ]).isRequired,
-      icons: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.element),
-        PropTypes.func,
-      ]),
-    })
-  ).isRequired,
+  columns: PropTypes.arrayOf(ColumnProps).isRequired,
 
   /**
    * from `withEventHandlers`

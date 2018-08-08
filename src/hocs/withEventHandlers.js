@@ -6,7 +6,7 @@ import {
   getEventHandlerProps,
   getIsClickable,
   noop,
-} from './utils';
+} from '../utils';
 
 
 /**
