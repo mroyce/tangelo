@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import ColumnProps from './prop-types/ColumnProps';
 import HeaderSortArrow from './HeaderSortArrow';
 import TableRow from './TableRow';
 import { SortDirection } from './constants';
@@ -66,38 +67,8 @@ TableHeaderRow.propTypes = {
 
   /**
    *
-   * TODO create types for columns
    */
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      align: PropTypes.oneOf([
-        'left',
-        'right',
-        'center',
-      ]),
-      columnClassName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func,
-      ]),
-      cellRenderer: PropTypes.oneOfType([
-        PropTypes.node,
-        PropTypes.func,
-      ]),
-      flexStyle: PropTypes.oneOfType([
-        PropTypes.shape({
-          flexBasis: PropTypes.string,
-        }),
-        PropTypes.shape({
-          flex: PropTypes.string,
-        }),
-      ]),
-      onCellClick: PropTypes.func,
-      onCellDoubleClick: PropTypes.func,
-      onCellMouseOut: PropTypes.func,
-      onCellMouseOver: PropTypes.func,
-      onCellRightClick: PropTypes.func,
-    })
-  ).isRequired,
+  columns: PropTypes.arrayOf(ColumnProps).isRequired,
 
   /**
    *
