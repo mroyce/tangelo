@@ -13,11 +13,11 @@ import {
  * Passes in event handler props and clickable modifier classNames to components
  * with event handler props.
  *
- * @param {React.Component} ComposedComponent
+ * @param {React.Component} WrappedComponent
  * @param {Function} parameters
  * @returns {React.Component}
  */
-export default (ComposedComponent, parameters) => {
+export default (WrappedComponent, parameters) => {
   class withEventHandlers extends React.Component {
     constructor(...args) {
       super(...args);
@@ -50,7 +50,7 @@ export default (ComposedComponent, parameters) => {
       );
 
       return (
-        <ComposedComponent
+        <WrappedComponent
           {...this.props}
           className={className}
           eventHandlerProps={eventHandlerProps}

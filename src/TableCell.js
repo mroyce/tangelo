@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import withEventHandlers from './withEventHandlers';
+import withEventHandlers from './hocs/withEventHandlers';
 import {
   isEmpty,
   pipe,
