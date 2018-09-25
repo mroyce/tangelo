@@ -100,6 +100,7 @@ class Table extends React.Component {
           "Tangelo__Table",
           this.props.className
         )}
+        ref={this.props.tableRef}
       >
         {this.props.disableHeader || (
           <TableHeaderRow
@@ -116,6 +117,7 @@ class Table extends React.Component {
         {this.props.rowCount ? (
           <TableBody
             {...pickProps(this.props, [
+              'bodyRef',
               'getRowProps',
               'headerHeight',
               'hideBorderBottom',
@@ -128,6 +130,7 @@ class Table extends React.Component {
               'rowCount',
               'rowHeight',
               'shouldRowUpdate',
+              'scrollRef',
             ])}
             columns={this.bodyColumns}
             sortDirection={this.state.sortDirection}
@@ -271,6 +274,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
+  // Props
   className: '',
   disableHeader: false,
   emptyTablePlaceholder: null,
@@ -286,6 +290,10 @@ Table.defaultProps = {
   rowClassName: '',
   rowHeight: 48,
   shouldRowUpdate: () => true,
+  // Refs
+  bodyRef: null,
+  scrollRef: null,
+  tableRef: null,
 };
 
 Table.displayName = 'TangeloTable';
