@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import withEventHandlers from './hocs/withEventHandlers';
 import {
-  getEventHandlerProps,
-  getIsClickable,
   isEmpty,
-  noop,
   pipe,
 } from './utils';
 
@@ -57,6 +55,12 @@ class TableCell extends React.Component {
     return this.content.scrollWidth > this.content.clientWidth;
   }
 
+  get isEmpty() {
+    return Array.isArray(this.props.children) ?
+      !this.props.children.some(c => c) :
+      !this.props.children;
+  }
+
   get style() {
     const {
       align,
@@ -69,27 +73,16 @@ class TableCell extends React.Component {
     };
   }
 
-  render() {
-    const {
-      align,
-      children,
-      columnIndex,
-      rowIndex,
-      tooltip,
-    } = this.props;
+  get eventHandlerProps() {
+    const { eventHandlerProps } = this.props;
 
-    // Handle highlighting individual cells
-    const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
-    const highlightable = !isEmpty(eventHandlerProps);
-    if (!isEmpty(eventHandlerProps)) {
-      eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
-      eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
-    }
-
-    // Handle showing/hiding tooltip
     eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.handleShowTooltip);
     eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.handleHideTooltip);
 
+    return eventHandlerProps;
+  }
+
+  render() {
     return (
       <div
         className={classNames(
@@ -97,25 +90,23 @@ class TableCell extends React.Component {
           this.props.className,
           {
             'Tangelo__TableCell--hide-right-border': this.props.hideRightBorder,
-            'Tangelo__TableCell--empty': Array.isArray(children) ? !children.some(c => c) : !children,
-            'Tangelo__TableCell--highlightable': highlightable,
-            'Tangelo__TableCell--clickable': getIsClickable(this),
+            'Tangelo__TableCell--empty': this.isEmpty,
           }
         )}
         style={this.style}
-        {...eventHandlerProps}
+        {...this.eventHandlerProps}
       >
         <div
           className="Tangelo__TableCell__Content"
           ref={ref => {this.content = ref; }}
         >
-          {children}
+          {this.props.children}
           {isEmpty(this.props.icons) || (
             <div
               className={classNames(
                 "Tangelo__TableCell__IconsSection",
                 {
-                  'Tangelo__TableCell__IconsSection--left': align === "right",
+                  'Tangelo__TableCell__IconsSection--left': this.props.align === "right",
                 }
               )}
             >
@@ -163,6 +154,17 @@ TableCell.propTypes = {
   columnIndex: PropTypes.number.isRequired,
 
   /**
+   * from `withEventHandlers`
+   */
+  eventHandlerProps: PropTypes.shape({
+    onClick: PropTypes.func,
+    onDoubleClick: PropTypes.func,
+    onMouseOut: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onRightClick: PropTypes.func,
+  }).isRequired,
+
+  /**
    *
    */
   flexStyle: PropTypes.oneOfType([
@@ -187,31 +189,6 @@ TableCell.propTypes = {
   /**
    *
    */
-  onClick: PropTypes.func,
-
-  /**
-   *
-   */
-  onDoubleClick: PropTypes.func,
-
-  /**
-   *
-   */
-  onMouseOut: PropTypes.func,
-
-  /**
-   *
-   */
-  onMouseOver: PropTypes.func,
-
-  /**
-   *
-   */
-  onRightClick: PropTypes.func,
-
-  /**
-   *
-   */
   rowIndex: PropTypes.number.isRequired,
 };
 
@@ -219,14 +196,12 @@ TableCell.defaultProps = {
   children: null,
   className: '',
   hideRightBorder: false,
-  onClick: null,
-  onDoubleClick: null,
-  onMouseOut: null,
-  onMouseOver: null,
-  onRightClick: null,
 };
 
 TableCell.displayName = 'TangeloTableCell';
 
 
-export default TableCell;
+export default withEventHandlers(TableCell, ownProps => ({
+  columnIndex: ownProps.columnIndex,
+  rowIndex: ownProps.rowIndex,
+}));

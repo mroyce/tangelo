@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import withEventHandlers from './hocs/withEventHandlers';
 import TableCell from './TableCell';
 import {
-  getEventHandlerProps,
   getIsClickable,
   pickProps,
+  pipe,
 } from './utils';
 
 
@@ -17,14 +18,6 @@ class TableRow extends React.Component {
 
     // <number: columnIndex, Element: <TableCell />>
     this._cellCache = {};
-
-    this.state = {
-      // If a child cell is highlighted, we shouldn't highlight the row
-      isChildCellHighlighted: false,
-    };
-
-    this.handleChildCellMouseOver = this.handleChildCellMouseOver.bind(this);
-    this.handleChildCellMouseOut = this.handleChildCellMouseOut.bind(this);
   }
 
   componentWillMount() {
@@ -47,22 +40,13 @@ class TableRow extends React.Component {
     }
   }
 
-  handleChildCellMouseOver() {
-    this.setState({ isChildCellHighlighted: true });
-  }
-
-  handleChildCellMouseOut() {
-    this.setState({ isChildCellHighlighted: false });
-  }
-
   _constructCells(props) {
     const {
-      columns,
       rowIndex,
     } = props;
 
     // TODO optimize so we only render cells that are in view
-    columns.forEach((column, columnIndex) => {
+    this.props.columns.forEach((column, columnIndex) => {
       const className = 
         typeof column.columnClassName === 'function' ?
         column.columnClassName({ columnIndex, rowIndex }) :
@@ -83,6 +67,16 @@ class TableRow extends React.Component {
           column.tooltip({ columnIndex, rowIndex }) :
           column.tooltip;
 
+      const onMouseOver =
+        getIsClickable(column) ?
+        pipe(column.onCellMouseOver, this.props.handleClickableChildMouseOver) :
+        column.onCellMouseOver;
+
+      const onMouseOut =
+        getIsClickable(column) ?
+        pipe(column.onCellMouseOut, this.props.handleClickableChildMouseOut) :
+        column.onCellMouseOut;
+
       this._cellCache[columnIndex] = (
         <TableCell
           {...pickProps(column, [
@@ -98,8 +92,8 @@ class TableRow extends React.Component {
           icons={icons}
           onClick={column.onCellClick}
           onDoubleClick={column.onCellDoubleClick}
-          onMouseOut={column.onCellMouseOut}
-          onMouseOver={column.onCellMouseOver}
+          onMouseOut={onMouseOut}
+          onMouseOver={onMouseOver}
           onRightClick={column.onCellRightClick}
           rowIndex={rowIndex}
           tooltip={tooltip}
@@ -111,23 +105,17 @@ class TableRow extends React.Component {
   }
 
   render() {
-    const {
-      rowIndex,
-    } = this.props;
-
     return (
       <div
         className={classNames(
           "Tangelo__TableRow",
           this.props.className,
           {
-            'Tangelo__TableRow--highlight-disabled': this.state.isChildCellHighlighted,
-            'Tangelo__TableRow--clickable': getIsClickable(this),
             'Tangelo__TableRow--hide-border-bottom': this.props.hideBorderBottom,
           }
         )}
         style={this.rowStyle}
-        {...getEventHandlerProps(this, { rowIndex })}
+        {...this.props.eventHandlerProps}
       >
         {Object.values(this._cellCache)}
       </div>
@@ -175,34 +163,20 @@ TableRow.propTypes = {
   ).isRequired,
 
   /**
+   * from `withEventHandlers`
+   */
+  eventHandlerProps: PropTypes.shape({
+    onClick: PropTypes.func,
+    onDoubleClick: PropTypes.func,
+    onMouseOut: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onRightClick: PropTypes.func,
+  }).isRequired,
+
+  /**
    *
    */
   hideBorderBottom: PropTypes.bool,
-
-  /**
-   *
-   */
-  onClick: PropTypes.func,
-
-  /**
-   *
-   */
-  onDoubleClick: PropTypes.func,
-
-  /**
-   *
-   */
-  onMouseOut: PropTypes.func,
-
-  /**
-   *
-   */
-  onMouseOver: PropTypes.func,
-
-  /**
-   *
-   */
-  onRightClick: PropTypes.func,
 
   /**
    *
@@ -218,15 +192,10 @@ TableRow.propTypes = {
 TableRow.defaultProps = {
   className: '',
   hideBorderBottom: false,
-  onClick: null,
-  onDoubleClick: null,
-  onMouseOut: null,
-  onMouseOver: null,
-  onRightClick: null,
   selected: false,
 };
 
 TableRow.displayName = 'TangeloTableRow';
 
 
-export default TableRow;
+export default withEventHandlers(TableRow, ownProps => ({ rowIndex: ownProps.rowIndex }));
