@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Table, TableColumn } from '../src';
+import { debounce } from '../src/utils';
 import FakeDataObjectListCreator from './utils/FakeDataObjectListCreator';
 import { MailIcon } from './SVGs';
 
@@ -17,6 +18,7 @@ class DemoApp extends React.Component {
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
       firstNameColor: {},
       numRows: DEFAULT_NUM_ROWS,
+      scrollTop: 0,
     };
 
     this.handleNumRowsChange = this.handleNumRowsChange.bind(this);
@@ -38,6 +40,23 @@ class DemoApp extends React.Component {
 
     // Action Handlers
     this.onFirstNameCellClick = this.onFirstNameCellClick.bind(this);
+
+    // Refs
+    this.bodyRef = React.createRef();
+    this.scrollRef = React.createRef();
+    this.tableRef = React.createRef();
+
+    // Event Handlers
+    this.onScroll = this.onScroll.bind(this);
+    this.onScrollDebounce = debounce(this.onScroll, 100);
+  }
+
+  componentDidMount() {
+    this.scrollRef.current.addEventListener('scroll', this.onScrollDebounce);
+  }
+
+  componentWillUnmount() {
+    this.scrollRef.current.removeEventListener('scroll', this.onScrollDebounce);
   }
 
   handleNumRowsChange(event) {
@@ -133,99 +152,116 @@ class DemoApp extends React.Component {
     });
   }
 
-  render() {
-    return ([
-      <div
-        key="config"
-        className="config-container"
-      >
-        <div>
-          <label>Num Rows:</label>
-          <input type="text" value={this.state.numRows} onChange={this.handleNumRowsChange} />
-        </div>
-      </div>,
+  /******************
+   * Event Handlers *
+   ******************/
+  onScroll() {
+    this.setState({
+      scrollTop: this.scrollRef.current.scrollTop,
+    });
+  }
 
-      <div
-        key="table"
-        className="table-container"
-      >
-        <Table
-          emptyTablePlaceholder={(
-            <div>
-              No People Found
-              <br />
-              Please Increase the Number of Rows in the Table
-            </div>
-          )}
-          getRowProps={this.getRowProps}
-          headerHeight={32}
-          rowCount={this.state.numRows}
-          rowHeight={36}
-          shouldRowUpdate={this.shouldRowUpdate}
+  render() {
+    return (
+      <React.Fragment>
+        <div
+          key="config"
+          className="config-container"
         >
-          <TableColumn
-            key="thumbnail"
-            bodyCellRenderer={this.thumbnailCellRenderer}
-            hideRightBorder
-            width={24}
-            widthType="px"
-          />
-          <TableColumn
-            key="first name"
-            bodyCellRenderer={this.firstNameCellRenderer}
-            headerCellRenderer="First Name"
-            onCellClick={this.onFirstNameCellClick}
-            sortBy="person.firstName"
-            width={120}
-            widthType="px"
-          />
-          <TableColumn
-            key="last name"
-            bodyCellRenderer={this.lastNameCellRenderer}
-            headerCellRenderer="Last Name"
-            sortBy="person.lastName"
-            width={120}
-            widthType="px"
-          />
-          <TableColumn
-            key="address"
-            align="right"
-            bodyCellRenderer={this.addressCellRenderer}
-            headerCellRenderer="Address"
-            tooltip={({ rowIndex }) => (
-              <span>
-                Address is {this.state.data[rowIndex].address}
-              </span>
+          <div>
+            <label>Num Rows:</label>
+            <input type="text" value={this.state.numRows} onChange={this.handleNumRowsChange} />
+          </div>
+          <div>
+            <label>Scroll Top:</label>
+            <span>{this.state.scrollTop}</span>
+          </div>
+        </div>
+        <div
+          key="table"
+          className="table-container"
+        >
+          <Table
+            bodyRef={this.bodyRef}
+            emptyTablePlaceholder={(
+              <div>
+                No People Found
+                <br />
+                Please Increase the Number of Rows in the Table
+              </div>
             )}
-            width={30}
-            widthType="%"
-          />
-          <TableColumn
-            key="email"
-            align="right"
-            bodyCellRenderer={this.emailCellRenderer}
-            headerCellRenderer="Email"
-            icons={({ rowIndex }) =>
-              this.state.data[rowIndex].email.includes('gmail') ?
-              [<MailIcon />] :
-              null
-            }
-            sortBy="person.email"
-            width={40}
-            widthType="%"
-          />
-          <TableColumn
-            key="birth date"
-            align="center"
-            bodyCellRenderer={this.birthDateCellRenderer}
-            headerCellRenderer="Birth Date"
-            sortBy={this.sortByBirthDate}
-            width={30}
-            widthType="%"
-          />
-        </Table>
-      </div>,
-    ]);
+            getRowProps={this.getRowProps}
+            headerHeight={32}
+            rowCount={this.state.numRows}
+            rowHeight={36}
+            scrollRef={this.scrollRef}
+            shouldRowUpdate={this.shouldRowUpdate}
+            tableRef={this.tableRef}
+          >
+            <TableColumn
+              key="thumbnail"
+              bodyCellRenderer={this.thumbnailCellRenderer}
+              hideRightBorder
+              width={24}
+              widthType="px"
+            />
+            <TableColumn
+              key="first name"
+              bodyCellRenderer={this.firstNameCellRenderer}
+              headerCellRenderer="First Name"
+              onCellClick={this.onFirstNameCellClick}
+              sortBy="person.firstName"
+              width={120}
+              widthType="px"
+            />
+            <TableColumn
+              key="last name"
+              bodyCellRenderer={this.lastNameCellRenderer}
+              headerCellRenderer="Last Name"
+              sortBy="person.lastName"
+              width={120}
+              widthType="px"
+            />
+            <TableColumn
+              key="address"
+              align="right"
+              bodyCellRenderer={this.addressCellRenderer}
+              headerCellRenderer="Address"
+              tooltip={({ rowIndex }) => (
+                <span>
+                  Address is {this.state.data[rowIndex].address}
+                </span>
+              )}
+              width={30}
+              widthType="%"
+            />
+            <TableColumn
+              key="email"
+              align="right"
+              bodyCellRenderer={this.emailCellRenderer}
+              headerCellRenderer="Email"
+              icons={({ rowIndex }) =>
+                this.state.data[rowIndex].email.includes('gmail') ?
+                [<MailIcon />] :
+                null
+              }
+              sortBy="person.email"
+              width={40}
+              widthType="%"
+            />
+            <TableColumn
+              key="birth date"
+              align="center"
+              bodyCellRenderer={this.birthDateCellRenderer}
+              headerCellRenderer="Birth Date"
+              sortBy={this.sortByBirthDate}
+              width={30}
+              widthType="%"
+            />
+          </Table>
+        </div>
+      </React.Fragment>
+    );
   }
 };
 

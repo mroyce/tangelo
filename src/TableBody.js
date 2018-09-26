@@ -29,8 +29,9 @@ class TableBody extends React.Component {
     };
 
     // Refs
-    this._tableBody = null;
+    this._bodyRef = this.props.bodyRef || React.createRef();
 
+    // Handlers
     this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
@@ -83,8 +84,8 @@ class TableBody extends React.Component {
    * for the hidden scrollbar.
    */
   handleWindowResize() {
-    if (this._tableBody) {
-      const bodyWidth = this._tableBody.getBoundingClientRect().width;
+    if (this._bodyRef) {
+      const bodyWidth = this._bodyRef.current.getBoundingClientRect().width;
       this.setState({ bodyWidth });
     }
   }
@@ -147,10 +148,13 @@ class TableBody extends React.Component {
         render={sortedRows => (
           <div
             className="Tangelo__TableBody"
-            ref={ref => { this._tableBody = ref; }}
+            ref={this._bodyRef}
             style={this.tableBodyStyle}
           >
-            <div className="Tangelo__TableBody__ScrollableContent">
+            <div
+              className="Tangelo__TableBody__ScrollableContent"
+              ref={this.props.scrollRef}
+            >
               <div style={this.tableStyle}>
                 {sortedRows}
               </div>
@@ -163,6 +167,11 @@ class TableBody extends React.Component {
 };
 
 TableBody.propTypes = {
+  /*
+   *
+   */
+  bodyRef: PropTypes.func,
+
   /**
    *
    */
@@ -248,6 +257,11 @@ TableBody.propTypes = {
   rowHeight: PropTypes.oneOfType([
     PropTypes.number,
   ]),
+
+  /**
+   *
+   */
+  scrollRef: PropTypes.func,
 
   /**
    *
