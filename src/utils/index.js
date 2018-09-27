@@ -1,5 +1,6 @@
 export { default as debounce } from './debounce';
 export { default as getDisplayName } from './getDisplayName';
+export { default as getElementScrollInfo } from './getElementScrollInfo';
 export { default as getEventHandlerProps } from './getEventHandlerProps';
 export { default as getIsClickable } from './getIsClickable';
 export { default as getFlexStyle } from './getFlexStyle';
