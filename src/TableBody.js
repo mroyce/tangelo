@@ -52,9 +52,7 @@ class TableBody extends React.Component {
   componentDidMount() {
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
-    if (this.props.paginationFunc) {
-      this._scrollRef.current.addEventListener('scroll', this.handleTableScrollDebounce);
-    }
+    this._scrollRef.current.addEventListener('scroll', this.handleTableScrollDebounce);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -84,19 +82,9 @@ class TableBody extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.paginationFunc && !this.props.paginationFunc) {
-      this._scrollRef.current.removeEventListener('scroll', this.handleTableScrollDebounce);
-    } else if (this.props.paginationFunc) {
-      this._scrollRef.current.addEventListener('scroll', this.handleTableScrollDebounce);
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
-    if (this.props.paginationFunc) {
-      this._scrollRef.current.removeEventListener('scroll', this.handleTableScrollDebounce);
-    }
+    this._scrollRef.current.removeEventListener('scroll', this.handleTableScrollDebounce);
   }
 
   /**
@@ -115,7 +103,7 @@ class TableBody extends React.Component {
    * When scrolling to the bottom of the table, call `paginationFunc`.
    */
   handleTableScroll() {
-    if (!this.props.paginationLoading) {
+    if (!this.props.paginationLoading && this.props.paginationFunc) {
 	  const {
         distanceFromBottom,
       } = getElementScrollInfo(this._scrollRef.current);
