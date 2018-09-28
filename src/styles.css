@@ -82,6 +82,52 @@
   padding-right: 30px;
 }
 
+.Tangelo__TableBody__ScrollableContent__Loader {
+  background-color: rgba(255, 255, 255, 1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  height: 40px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.LoaderRect {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  height: 100%;
+  width: 4px;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.LoaderRect--2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+  margin-left: 2px;
+}
+
+.LoaderRect--3 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  margin-left: 2px;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  } 20% { 
+    transform: scaleY(0.9);
+    -webkit-transform: scaleY(0.9);
+  }
+}
+
 
 /*************************
  * EmptyTablePlaceholder *

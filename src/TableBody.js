@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import RowSorterWrapper from './RowSorterWrapper';
 import TableBodyRow from './TableBodyRow';
 import { SortDirection } from './constants';
-import { pickProps } from './utils';
+import {
+  debounce,
+  getElementScrollInfo,
+  pickProps,
+} from './utils';
 
 
 class TableBody extends React.Component {
@@ -30,9 +34,12 @@ class TableBody extends React.Component {
 
     // Refs
     this._bodyRef = this.props.bodyRef || React.createRef();
+    this._scrollRef = this.props.scrollRef || React.createRef();
 
     // Handlers
     this.handleWindowResize = this.handleWindowResize.bind(this);
+    this.handleTableScroll = this.handleTableScroll.bind(this);
+    this.handleTableScrollDebounce = debounce(this.handleTableScroll, 100);
   }
 
   componentWillMount() {
@@ -45,6 +52,9 @@ class TableBody extends React.Component {
   componentDidMount() {
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
+    if (this.props.paginationFunc) {
+      this._scrollRef.current.addEventListener('scroll', this.handleTableScrollDebounce);
+    }
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -74,8 +84,19 @@ class TableBody extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.paginationFunc && !this.props.paginationFunc) {
+      this._scrollRef.current.removeEventListener('scroll', this.handleTableScrollDebounce);
+    } else if (this.props.paginationFunc) {
+      this._scrollRef.current.addEventListener('scroll', this.handleTableScrollDebounce);
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
+    if (this.props.paginationFunc) {
+      this._scrollRef.current.removeEventListener('scroll', this.handleTableScrollDebounce);
+    }
   }
 
   /**
@@ -87,6 +108,22 @@ class TableBody extends React.Component {
     if (this._bodyRef) {
       const bodyWidth = this._bodyRef.current.getBoundingClientRect().width;
       this.setState({ bodyWidth });
+    }
+  }
+
+  /**
+   * When scrolling to the bottom of the table, call `paginationFunc`.
+   */
+  handleTableScroll() {
+    if (!this.props.paginationLoading) {
+	  const {
+        distanceFromBottom,
+      } = getElementScrollInfo(this._scrollRef.current);
+      const paginationDistanceBuffer = this.props.rowHeight * this.props.paginationRowCountBuffer;
+
+      if (distanceFromBottom <= paginationDistanceBuffer) {
+        this.props.paginationFunc();
+      }
     }
   }
 
@@ -153,11 +190,22 @@ class TableBody extends React.Component {
           >
             <div
               className="Tangelo__TableBody__ScrollableContent"
-              ref={this.props.scrollRef}
+              ref={this._scrollRef}
             >
               <div style={this.tableStyle}>
                 {sortedRows}
               </div>
+              {this.props.paginationFunc && (
+                <div className="Tangelo__TableBody__ScrollableContent__Loader">
+                  {this.props.paginationLoading && (
+                    <React.Fragment>
+                      <div className="LoaderRect LoaderRect--1" />
+                      <div className="LoaderRect LoaderRect--2" />
+                      <div className="LoaderRect LoaderRect--3" />
+                    </React.Fragment>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -170,7 +218,7 @@ TableBody.propTypes = {
   /*
    *
    */
-  bodyRef: PropTypes.func,
+  bodyRef: PropTypes.object,
 
   /**
    *
@@ -241,6 +289,21 @@ TableBody.propTypes = {
   /**
    *
    */
+  paginationLoading: PropTypes.bool,
+
+  /**
+   *
+   */
+  paginationFunc: PropTypes.func,
+
+  /**
+   *
+   */
+  paginationRowCountBuffer: PropTypes.number,
+
+  /**
+   *
+   */
   rowClassName: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
@@ -261,7 +324,7 @@ TableBody.propTypes = {
   /**
    *
    */
-  scrollRef: PropTypes.func,
+  scrollRef: PropTypes.object,
 
   /**
    *
@@ -286,6 +349,11 @@ TableBody.propTypes = {
 };
 
 TableBody.defaultProps = {
+  bodyRef: null,
+  painationInProgress: false,
+  paginationFunc: null,
+  paginationRowCountBuffer: 0,
+  scrollRef: null,
   sortDirection: null,
   sortingCriteria: null,
 };

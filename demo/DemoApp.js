@@ -18,6 +18,7 @@ class DemoApp extends React.Component {
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
       firstNameColor: {},
       numRows: DEFAULT_NUM_ROWS,
+      paginationLoading: false,
       scrollTop: 0,
     };
 
@@ -49,6 +50,9 @@ class DemoApp extends React.Component {
     // Event Handlers
     this.onScroll = this.onScroll.bind(this);
     this.onScrollDebounce = debounce(this.onScroll, 100);
+
+    // Pagination
+    this.paginationFunc = this.paginationFunc.bind(this);
   }
 
   componentDidMount() {
@@ -156,9 +160,26 @@ class DemoApp extends React.Component {
    * Event Handlers *
    ******************/
   onScroll() {
+    /*
     this.setState({
       scrollTop: this.scrollRef.current.scrollTop,
     });
+    */
+  }
+
+  /**************
+   * Pagination *
+   **************/
+  paginationFunc() {
+    this.setState({ paginationLoading: true });
+    setTimeout(() => {
+      const NUM_NEW_ROWS = 50;
+      this.setState(prevState => ({
+        numRows: prevState.numRows + NUM_NEW_ROWS,
+        data: prevState.data.concat(FakeDataObjectListCreator.createFakePeopleList(NUM_NEW_ROWS)),
+        paginationLoading: false,
+      }));
+    }, 1000);
   }
 
   render() {
@@ -192,6 +213,9 @@ class DemoApp extends React.Component {
             )}
             getRowProps={this.getRowProps}
             headerHeight={32}
+            paginationFunc={this.paginationFunc}
+            paginationLoading={this.state.paginationLoading}
+            paginationRowCountBuffer={20}
             rowCount={this.state.numRows}
             rowHeight={36}
             scrollRef={this.scrollRef}

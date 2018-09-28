@@ -126,6 +126,9 @@ class Table extends React.Component {
               'onRowMouseOut',
               'onRowMouseOver',
               'onRowRightClick',
+              'paginationFunc',
+              'paginationLoading',
+              'paginationRowCountBuffer',
               'rowClassName',
               'rowCount',
               'rowHeight',
@@ -150,6 +153,11 @@ class Table extends React.Component {
 };
 
 Table.propTypes = {
+  /**
+   *
+   */
+  bodyRef: PropTypes.object,
+
   /**
    * Children of `<Table />` should be `<TableColumn />`.
    */
@@ -244,6 +252,21 @@ Table.propTypes = {
 
   /**
    *
+   */
+  paginationFunc: PropTypes.func,
+
+  /**
+   *
+   */
+  paginationLoading: PropTypes.bool,
+
+  /**
+   *
+   */
+  paginationRowCountBuffer: PropTypes.number,
+
+  /**
+   *
    * {
    *   rowIndex,
    * }
@@ -264,6 +287,11 @@ Table.propTypes = {
   rowHeight: PropTypes.number,
 
   /**
+   *
+   */
+  scrollRef: PropTypes.object,
+
+  /**
    * {
    *   rowProps,
    *   nextRowProps,
@@ -271,6 +299,11 @@ Table.propTypes = {
    * }
    */
   shouldRowUpdate: PropTypes.func,
+
+  /**
+   *
+   */
+  tableRef: PropTypes.object,
 };
 
 Table.defaultProps = {
@@ -287,6 +320,9 @@ Table.defaultProps = {
   onRowMouseOut: noop,
   onRowMouseOver: noop,
   onRowRightClick: noop,
+  paginationFunc: null,
+  paginationLoading: false,
+  paginationRowCountBuffer: 0,
   rowClassName: '',
   rowHeight: 48,
   shouldRowUpdate: () => true,
