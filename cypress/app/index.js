@@ -1,13 +1,12 @@
-import '../src/styles.css';
-import './styles.css';
+import '../../src/styles.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import DemoApp from './DemoApp';
+import TestApp from './TestApp';
 
 
 ReactDOM.render(
-  <DemoApp />,
+  <TestApp />,
   document.getElementById('react-root')
 );

@@ -1,0 +1,252 @@
+/*********
+ * Table *
+ *********/
+.Tangelo__Table {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+
+/************
+ * TableRow *
+ ************/
+.Tangelo__TableRow {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+}
+
+.Tangelo__TableRow--clickable:not(.Tangelo__TableRow--highlight-disabled) {
+  cursor: pointer;
+}
+
+.Tangelo__TableRow:last-child,
+.Tangelo__TableRow--hide-border-bottom {
+  border-bottom: none;
+}
+
+
+/******************
+ * TableHeaderRow *
+ ******************/
+.Tangelo__TableRow--header {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  text-transform: uppercase;
+
+  /* Fixed Header */
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+.Tangelo__TableRow--header:hover:not(.Tangelo__TableRow--highlight-disabled) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__TableRow--header:active:not(.Tangelo__TableRow--highlight-disabled) {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Sort Arrow */
+.Tangelo__HeaderSortArrow {
+  opacity: 0.6;
+}
+
+.Tangelo__TableCell--highlightable:hover .Tangelo__HeaderSortArrow {
+  opacity: 0.8;
+}
+
+.Tangelo__TableCell--highlightable:active .Tangelo__HeaderSortArrow {
+  opacity: 1;
+}
+
+
+/*************
+ * TableBody *
+ *************/
+.Tangelo__TableBody {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.Tangelo__TableBody__ScrollableContent {
+  height: 100%;
+  margin-right: -30px;
+  overflow-y: auto;
+  padding-right: 30px;
+}
+
+.Tangelo__TableBody__ScrollableContent__Loader {
+  background-color: rgba(255, 255, 255, 1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  height: 40px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.LoaderRect {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  height: 100%;
+  width: 4px;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.LoaderRect--2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+  margin-left: 2px;
+}
+
+.LoaderRect--3 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  margin-left: 2px;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  } 20% { 
+    transform: scaleY(0.9);
+    -webkit-transform: scaleY(0.9);
+  }
+}
+
+
+/*************************
+ * EmptyTablePlaceholder *
+ *************************/
+.Tangelo__EmptyTablePlaceholder {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+}
+
+.Tangelo__EmptyTablePlaceholder__Content {
+  font-size: 18px;
+  padding: 16px;
+  word-wrap: break-word;
+}
+
+
+/****************
+ * TableBodyRow *
+ ****************/
+.Tangelo__TableRow--body {
+  background-color: rgba(255, 255, 255, 1);
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 16px;
+}
+
+.Tangelo__TableRow--body:hover:not(.TableRow--highlight-disabled) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.Tangelo__TableRow--body:active:not(.TableRow--highlight-disabled) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* TODO not implemented yet */
+/*
+.Tangelo__TableRow--selected {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+}
+*/
+
+
+/*************
+ * TableCell *
+ *************/
+.Tangelo__TableCell {
+  min-width: 0; /* for flex-basis % */
+  padding: 0 16px;
+  position: relative;
+}
+
+.Tangelo__TableCell {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__TableCell * {
+  vertical-align: middle;
+}
+
+.Tangelo__TableCell--highlightable:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.Tangelo__TableCell--highlightable:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.Tangelo__TableCell--clickable {
+  cursor: pointer;
+}
+
+.Tangelo__TableCell--empty,
+.Tangelo__TableCell--hide-right-border,
+.Tangelo__TableCell:last-child {
+  border-right: none;
+  margin-right: 1px;
+}
+
+.Tangelo__TableCell__Content {
+  /* Text Ellipsis */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.Tangelo__TableCell__IconsSection {
+  bottom: 8px;
+  height: 16px;
+  position: absolute;
+  right: 8px;
+}
+
+.Tangelo__TableCell__IconsSection--left {
+  right: initial;
+  left: 8px;
+}
+
+.Tangelo__TableCell__IconWrapper {
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: top;
+  width: 16px;
+}
+
+.Tangelo__TableCell__Tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  bottom: calc(100% + 8px);
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  font-weight: 500;
+  left: 50%;
+  line-height: 12px;
+  padding: 12px 8px;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
