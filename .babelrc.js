@@ -6,6 +6,12 @@ if (env === 'commonjs' || env === 'es') {
   };
 }
 
+if (env === 'test') {
+  module.exports = {
+    presets: ['env', 'react', 'stage-1'],
+  };
+}
+
 if (env === 'development') {
   module.exports = {
     presets: ['env', 'react', 'stage-1'],

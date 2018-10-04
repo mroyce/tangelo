@@ -1,6 +1,8 @@
 node_modules/
 dist/
 tangelo.css
+cypress/snapshots/
+cypress/app/static/
 
 .DS_STORE
 *.log
