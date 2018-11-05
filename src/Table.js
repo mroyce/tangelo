@@ -19,37 +19,41 @@ class Table extends React.Component {
     super(...args);
 
     this.state = {
-      sortDirection: null,
-      sortingCriteria: null,
+      sort: {
+        criteria: null,
+        direction: null,
+      },
     };
 
     this.handleHeaderSortClick = this.handleHeaderSortClick.bind(this);
   }
 
   handleHeaderSortClick(sortingCriteria) {
-    this.setState((prevState) => {
-      let newSortDirection = prevState.sortDirection;
-      let newSortingCriteria = sortingCriteria;
+    this.setState(({ sort: prevSort }) => {
+      let newDirection = prevSort.direction;
+      let newCriteria = sortingCriteria;
 
-      if (prevState.sortingCriteria === sortingCriteria) {
-        if (prevState.sortDirection === SortDirection.ASC) {
+      if (prevSort.criteria === sortingCriteria) {
+        if (prevSort.direction === SortDirection.ASC) {
           // ASC -> DESC
-          newSortDirection = SortDirection.DESC;
-        } else if (prevState.sortDirection === SortDirection.DESC) {
+          newDirection = SortDirection.DESC;
+        } else if (prevSort.direction === SortDirection.DESC) {
           // DESC -> None
-          newSortDirection = null;
-          newSortingCriteria = null;
+          newDirection = null;
+          newCriteria = null;
         }
       } else {
         // None -> ASC
-        newSortDirection = SortDirection.ASC;
+        newDirection = SortDirection.ASC;
       }
 
       return {
-        sortDirection: newSortDirection,
-        sortingCriteria: newSortingCriteria,
+        sort: {
+          criteria: newCriteria,
+          direction: newDirection,
+        },
       };
-    });
+    }, () => this.props.onSort(this.state.sort));
   }
 
   get headerColumns() {
@@ -110,8 +114,8 @@ class Table extends React.Component {
             className={this.props.headerClassName}
             columns={this.headerColumns}
             handleHeaderSortClick={this.handleHeaderSortClick}
-            sortDirection={this.state.sortDirection}
-            sortingCriteria={this.state.sortingCriteria}
+            sortDirection={this.state.sort.direction}
+            sortingCriteria={this.state.sort.criteria}
           />
         )}
         {this.props.rowCount ? (
@@ -136,8 +140,8 @@ class Table extends React.Component {
               'scrollRef',
             ])}
             columns={this.bodyColumns}
-            sortDirection={this.state.sortDirection}
-            sortingCriteria={this.state.sortingCriteria}
+            sortDirection={this.state.sort.direction}
+            sortingCriteria={this.state.sort.criteria}
           />
         ) : (
           <EmptyTablePlaceholder
@@ -252,6 +256,15 @@ Table.propTypes = {
 
   /**
    *
+   * {
+   *   criteria,
+   *   direction,
+   * }
+   */
+  onSort: PropTypes.func,
+
+  /**
+   *
    */
   paginationFunc: PropTypes.func,
 
@@ -320,6 +333,7 @@ Table.defaultProps = {
   onRowMouseOut: noop,
   onRowMouseOver: noop,
   onRowRightClick: noop,
+  onSort: noop,
   paginationFunc: null,
   paginationLoading: false,
   paginationRowCountBuffer: 0,

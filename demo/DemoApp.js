@@ -15,6 +15,10 @@ class DemoApp extends React.Component {
     super();
 
     this.state = {
+      currentSort: {
+        critera: null,
+        direction: null,
+      },
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
       firstNameColor: {},
       numRows: DEFAULT_NUM_ROWS,
@@ -50,6 +54,7 @@ class DemoApp extends React.Component {
     // Event Handlers
     this.onScroll = this.onScroll.bind(this);
     this.onScrollDebounce = debounce(this.onScroll, 100);
+    this.onSort = this.onSort.bind(this);
 
     // Pagination
     this.paginationFunc = this.paginationFunc.bind(this);
@@ -167,6 +172,10 @@ class DemoApp extends React.Component {
     */
   }
 
+  onSort(sort) {
+    this.setState({ currentSort: sort });
+  }
+
   /**************
    * Pagination *
    **************/
@@ -180,6 +189,42 @@ class DemoApp extends React.Component {
         paginationLoading: false,
       }));
     }, 1000);
+  }
+
+  get currentSortDisplay() {
+    const { criteria, direction } = this.state.currentSort;
+
+    let criteriaString;
+    switch (criteria) {
+      case 'person.firstName':
+        criteriaString = 'First Name';
+        break;
+      case 'person.lastName':
+        criteriaString = 'Last Name';
+        break;
+      case 'person.email':
+        criteriaString = 'Email';
+        break;
+      case this.sortByBirthDate:
+        criteriaString = 'Birthday';
+        break;
+      default:
+        criteriaString = '';
+    }
+
+    let directionString;
+    switch (direction) {
+      case 'ASC':
+        directionString = 'Ascending';
+        break;
+      case 'DESC':
+        directionString = 'Descending';
+        break;
+      default:
+        directionString = '';
+    }
+
+    return criteriaString ? `${criteriaString} ${directionString}` : 'None';
   }
 
   render() {
@@ -197,6 +242,10 @@ class DemoApp extends React.Component {
             <label>Scroll Top:</label>
             <span>{this.state.scrollTop}</span>
           </div>
+          <div>
+            <label>Current Sort:</label>
+            <span>{this.currentSortDisplay}</span>
+          </div>
         </div>
         <div
           key="table"
@@ -213,6 +262,7 @@ class DemoApp extends React.Component {
             )}
             getRowProps={this.getRowProps}
             headerHeight={32}
+            onSort={this.onSort}
             paginationFunc={this.paginationFunc}
             paginationLoading={this.state.paginationLoading}
             paginationRowCountBuffer={20}
