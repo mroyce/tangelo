@@ -1,6 +1,6 @@
 {
   "name": "tangelo",
-  "version": "0.0.28",
+  "version": "0.0.30",
   "description": "A presentational table component built in React",
   "license": "MIT",
   "homepage": "https://github.com/mroyce/tangelo",

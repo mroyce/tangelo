@@ -33,6 +33,7 @@ class TableRow extends React.Component {
 
   componentWillUpdate(nextProps) {
     // TODO consider only updating some cells like we do for rows in `TableBody`
+    this._cellCache = {};
     this._constructCells(nextProps);
   }
 
