@@ -20,8 +20,8 @@ class Table extends React.Component {
 
     this.state = {
       sort: {
-        criteria: null,
-        direction: null,
+        criteria: this.props.initialSortState.criteria,
+        direction: this.props.initialSortState.direction,
       },
     };
 
@@ -344,6 +344,10 @@ Table.defaultProps = {
   bodyRef: null,
   scrollRef: null,
   tableRef: null,
+  initialSortState: {
+    criteria: null,
+    direction: null,
+  },
 };
 
 Table.displayName = 'TangeloTable';
