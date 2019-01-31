@@ -344,7 +344,10 @@ Table.defaultProps = {
   bodyRef: null,
   scrollRef: null,
   tableRef: null,
-  initialSortState: {},
+  initialSortState: {
+    criteria: null,
+    direction: null,
+  },
 };
 
 Table.displayName = 'TangeloTable';
