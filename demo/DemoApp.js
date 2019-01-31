@@ -16,7 +16,7 @@ class DemoApp extends React.Component {
 
     this.state = {
       currentSort: {
-        critera: null,
+        criteria: null,
         direction: null,
       },
       data: FakeDataObjectListCreator.createFakePeopleList(DEFAULT_NUM_ROWS),
@@ -271,6 +271,10 @@ class DemoApp extends React.Component {
             scrollRef={this.scrollRef}
             shouldRowUpdate={this.shouldRowUpdate}
             tableRef={this.tableRef}
+            initialSortState={{
+              criteria: 'person.firstName',
+              direction: 'ASC',
+            }}
           >
             <TableColumn
               key="thumbnail"
