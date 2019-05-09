@@ -65,7 +65,11 @@ class Popper extends React.Component {
 
 
 Popper.propTypes = {
+  /**
+   * The children to render in the popper.
+   */
   children: PropTypes.node.isRequired,
+
   /**
    * PopperJS placement.
    */
@@ -83,6 +87,7 @@ Popper.propTypes = {
     'top-start',
     'top',
   ]),
+
   /**
    * From popper.js documentation:
    *

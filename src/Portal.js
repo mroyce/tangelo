@@ -34,7 +34,11 @@ class Portal extends React.Component {
 
 
 Portal.propTypes = {
-  children: PropTypes.node,
+  /**
+   * The children to render in the portal.
+   */
+  children: PropTypes.node.isRequired,
+
   /**
    * Callback fired once the portal has rendered the children.
    */
@@ -42,7 +46,6 @@ Portal.propTypes = {
 };
 
 Portal.defaultProps = {
-  children: null,
   onRendered: noop,
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import useComponentSize from './hooks/useComponentSize';
 import {
   getEventHandlerProps,
   getIsClickable,
@@ -12,104 +13,85 @@ import {
 import Tooltip from './Tooltip';
 
 
-// TODO possibly convert this to a function like react-virtualized-table
-class TableCell extends React.Component {
-  constructor(...args) {
-    super(...args);
+/**
+ * Represents a single Cell in <TableRow />.
+ *
+ * @param {Object} props
+ * @returns {React.Element}
+ */
+const TableCell = props => {
+  const content = React.useRef(null);
+  const { columnIndex, rowIndex } = props;
 
-    this.state = {
-      tooltipContent: null,
-    };
+  const cellStyle = {
+    ...props.flexStyle,
+    textAlign: props.align,
+  };
 
-    this.content = React.createRef();
-  }
+  const eventHandlerProps = getEventHandlerProps(props, { columnIndex, rowIndex });
+  const highlightable = !isEmpty(eventHandlerProps);
+  const emptyChildren = Array.isArray(props.children) ? !props.children.some(c => c) : !props.children;
 
-  componentDidMount() {
-    const { current } = this.content;
-
-    if (this.props.tooltip) {
-      this.setState({
-        tooltipContent: this.props.tooltip,
-      });
-    }
-
-    if (current && current.scrollWidth > current.clientWidth) {
-      this.setState({
-        tooltipContent: current.innerText,
-      });
-    }
-  }
-
-  get style() {
-    const {
-      align,
-      flexStyle,
-    } = this.props;
-
-    return {
-      ...flexStyle,
-      textAlign: align,
-    };
-  }
-
-  render() {
-    const {
-      columnIndex,
-      rowIndex,
-    } = this.props;
-
-    const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
-    const highlightable = !isEmpty(eventHandlerProps);
-    const emptyChildren = Array.isArray(this.props.children) ?
-      !this.props.children.some(c => c) :
-      !this.props.children;
-
-    const cell = (
+  const cell = (
+    <div
+      className={classNames(
+        "Tangelo__TableCell",
+        props.className,
+        {
+          'Tangelo__TableCell--hide-right-border': props.hideRightBorder,
+          'Tangelo__TableCell--empty': emptyChildren,
+          'Tangelo__TableCell--highlightable': highlightable,
+          'Tangelo__TableCell--clickable': getIsClickable(props),
+        }
+      )}
+      style={cellStyle}
+      {...eventHandlerProps}
+    >
       <div
-        className={classNames(
-          "Tangelo__TableCell",
-          this.props.className,
-          {
-            'Tangelo__TableCell--hide-right-border': this.props.hideRightBorder,
-            'Tangelo__TableCell--empty': emptyChildren,
-            'Tangelo__TableCell--highlightable': highlightable,
-            'Tangelo__TableCell--clickable': getIsClickable(this),
-          }
-        )}
-        style={this.style}
-        {...eventHandlerProps}
+        className="Tangelo__TableCell__Content"
+        ref={content}
       >
-        <div
-          className="Tangelo__TableCell__Content"
-          ref={this.content}
-        >
-          {this.props.children}
-          {isEmpty(this.props.icons) || (
-            <div
-              className={classNames(
-                "Tangelo__TableCell__IconsSection",
-                {
-                  'Tangelo__TableCell__IconsSection--left': this.props.align === "right",
-                }
-              )}
-            >
-              {this.props.icons.map((icon, idx) => (
-                <div key={idx} className="Tangelo__TableCell__IconWrapper">
-                  {icon}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {props.children}
       </div>
-    );
+      {isEmpty(props.icons) || (
+        <div
+          className={classNames(
+            "Tangelo__TableCell__IconsSection",
+            {
+              'Tangelo__TableCell__IconsSection--left': props.align === "right",
+            }
+          )}
+        >
+          {props.icons.map((icon, idx) => (
+            <div
+              key={`table_icon_${rowIndex}_${columnIndex}_${idx}`}
+              className="Tangelo__TableCell__IconWrapper"
+            >
+              {icon}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
-    return this.state.tooltipContent ? (
-      <Tooltip title={this.state.tooltipContent}>
-        {cell}
-      </Tooltip>
-    ) : cell;
+  let tooltipContent;
+  if (props.tooltip) {
+    // use tooltip from props if provided
+    tooltipContent = props.tooltip;
+  } else {
+    // else check if content is truncated and display a tooltip with the full text
+    const size = useComponentSize(content);
+    if (content.current && content.current.scrollWidth > size.width) {
+      tooltipContent = content.current.innerText;
+    }
   }
+
+  return tooltipContent ? (
+    <Tooltip title={tooltipContent}>
+      {cell}
+    </Tooltip>
+  ) : cell;
 };
 
 TableCell.propTypes = {
@@ -188,6 +170,11 @@ TableCell.propTypes = {
    *
    */
   rowIndex: PropTypes.number.isRequired,
+
+  /**
+   *
+   */
+  tooltip: PropTypes.node,
 };
 
 TableCell.defaultProps = {
@@ -199,6 +186,7 @@ TableCell.defaultProps = {
   onMouseOut: null,
   onMouseOver: null,
   onRightClick: null,
+  tooltip: null,
 };
 
 TableCell.displayName = 'TangeloTableCell';

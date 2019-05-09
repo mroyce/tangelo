@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Popper from './Popper';
 import RootRef from './RootRef';
 
+
 /**
  * Largely inspired by material-ui Tooltip.
  */
@@ -63,10 +64,12 @@ Tooltip.propTypes = {
    * The wrapped node -- hovering over this will produce a Popper Tooltip.
    */
   children: PropTypes.node.isRequired,
+
   /**
-   * The text rendered in the Tooltip.
+   * The content rendered in the Tooltip.
+   * Falsy titles are not displayed.
    */
-  title: PropTypes.node.isRequired,
+  title: PropTypes.node,
 };
 
 

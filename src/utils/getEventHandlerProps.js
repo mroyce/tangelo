@@ -1,7 +1,7 @@
 import noop from './noop';
 
 /**
- * @param {React.Component} component
+ * @param {React.Component|Object} component
  * @param {Object} [parameters={}]
  * @returns {Object}
  */
@@ -17,7 +17,7 @@ export default (component, parameters = {}) => {
     onMouseOut,
     onMouseOver,
     onRightClick,
-  } = component.props;
+  } = typeof component === 'function' ? component.props : component;
 
   const eventHandlerProps = {};
 

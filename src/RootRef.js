@@ -74,6 +74,7 @@ RootRef.propTypes = {
    * The wrapped element.
    */
   children: PropTypes.element.isRequired,
+
   /**
    * Provide a way to access the DOM node of the wrapped element.
    * You can provide a callback ref or a `React.createRef()` ref.
