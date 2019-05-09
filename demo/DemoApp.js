@@ -7,7 +7,7 @@ import { MailIcon } from './SVGs';
 
 
 // TODO increase this to 10000 once we render rows in view
-const DEFAULT_NUM_ROWS = 200;
+const DEFAULT_NUM_ROWS = 100;
 
 
 class DemoApp extends React.Component {
@@ -289,6 +289,11 @@ class DemoApp extends React.Component {
               headerCellRenderer="First Name"
               onCellClick={this.onFirstNameCellClick}
               sortBy="person.firstName"
+              tooltip={({ rowIndex }) => (
+                <span>
+                  Name: {this.state.data[rowIndex].firstName} {this.state.data[rowIndex].lastName}
+                </span>
+              )}
               width={120}
               widthType="px"
             />

@@ -9,6 +9,7 @@ import {
   noop,
   pipe,
 } from './utils';
+import Tooltip from './Tooltip';
 
 
 // TODO possibly convert this to a function like react-virtualized-table
@@ -17,44 +18,26 @@ class TableCell extends React.Component {
     super(...args);
 
     this.state = {
-      isTooltipVisible: false,
       tooltipContent: null,
     };
 
-    this.handleShowTooltip = this.handleShowTooltip.bind(this);
-    this.handleHideTooltip = this.handleHideTooltip.bind(this);
+    this.content = React.createRef();
   }
 
-  handleShowTooltip() {
-    if (!this.state.isTooltipVisible) {
-      if (this.props.tooltip) {
-        this.setState({
-          isTooltipVisible: true,
-          tooltipContent: this.props.tooltip,
-        });
-        return;
-      }
+  componentDidMount() {
+    const { current } = this.content;
 
-      if (this.isContentTruncated) {
-        this.setState({
-          isTooltipVisible: true,
-          tooltipContent: this.content.innerText,
-        });
-      }
-    }
-  }
-
-  handleHideTooltip() {
-    if (this.state.isTooltipVisible) {
+    if (this.props.tooltip) {
       this.setState({
-        isTooltipVisible: false,
-        tooltipContent: null,
+        tooltipContent: this.props.tooltip,
       });
     }
-  }
 
-  get isContentTruncated() {
-    return this.content.scrollWidth > this.content.clientWidth;
+    if (current && current.scrollWidth > current.clientWidth) {
+      this.setState({
+        tooltipContent: current.innerText,
+      });
+    }
   }
 
   get style() {
@@ -71,33 +54,24 @@ class TableCell extends React.Component {
 
   render() {
     const {
-      align,
-      children,
       columnIndex,
       rowIndex,
-      tooltip,
     } = this.props;
 
-    // Handle highlighting individual cells
     const eventHandlerProps = getEventHandlerProps(this, { columnIndex, rowIndex });
     const highlightable = !isEmpty(eventHandlerProps);
-    if (!isEmpty(eventHandlerProps)) {
-      eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.props.handleChildCellMouseOver);
-      eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.props.handleChildCellMouseOut);
-    }
+    const emptyChildren = Array.isArray(this.props.children) ?
+      !this.props.children.some(c => c) :
+      !this.props.children;
 
-    // Handle showing/hiding tooltip
-    eventHandlerProps.onMouseOver = pipe(eventHandlerProps.onMouseOver, this.handleShowTooltip);
-    eventHandlerProps.onMouseOut = pipe(eventHandlerProps.onMouseOut, this.handleHideTooltip);
-
-    return (
+    const cell = (
       <div
         className={classNames(
           "Tangelo__TableCell",
           this.props.className,
           {
             'Tangelo__TableCell--hide-right-border': this.props.hideRightBorder,
-            'Tangelo__TableCell--empty': Array.isArray(children) ? !children.some(c => c) : !children,
+            'Tangelo__TableCell--empty': emptyChildren,
             'Tangelo__TableCell--highlightable': highlightable,
             'Tangelo__TableCell--clickable': getIsClickable(this),
           }
@@ -107,15 +81,15 @@ class TableCell extends React.Component {
       >
         <div
           className="Tangelo__TableCell__Content"
-          ref={ref => {this.content = ref; }}
+          ref={this.content}
         >
-          {children}
+          {this.props.children}
           {isEmpty(this.props.icons) || (
             <div
               className={classNames(
                 "Tangelo__TableCell__IconsSection",
                 {
-                  'Tangelo__TableCell__IconsSection--left': align === "right",
+                  'Tangelo__TableCell__IconsSection--left': this.props.align === "right",
                 }
               )}
             >
@@ -127,13 +101,14 @@ class TableCell extends React.Component {
             </div>
           )}
         </div>
-        {(this.state.isTooltipVisible && this.state.tooltipContent) && (
-          <div className="Tangelo__TableCell__Tooltip">
-            {this.state.tooltipContent}
-          </div>
-        )}
       </div>
     );
+
+    return this.state.tooltipContent ? (
+      <Tooltip title={this.state.tooltipContent}>
+        {cell}
+      </Tooltip>
+    ) : cell;
   }
 };
 
