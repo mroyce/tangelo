@@ -2,17 +2,17 @@ import noop from './noop';
 
 
 /**
- * Returns true if the component has any onClick, onDoubleClick, or onRightClick props.
+ * Returns true if the props contain any onClick, onDoubleClick, or onRightClick functions.
  *
- * @param {React.Component|Object} component
+ * @param {Object} props
  * @returns {Boolean}
  */
-export default component => {
+export default props => {
   const {
     onClick,
     onDoubleClick,
     onRightClick,
-  } = typeof component === 'function' ? component.props : component;
+  } = props;
 
   if (onClick && onClick !== noop) {
     return true;

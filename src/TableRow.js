@@ -38,13 +38,9 @@ class TableRow extends React.Component {
   }
 
   get rowStyle() {
-    const {
-      rowHeight,
-    } = this.props;
-
     return {
-      height: rowHeight,
-      lineHeight: `${rowHeight}px`
+      height: this.props.rowHeight,
+      lineHeight: `${this.props.rowHeight}px`
     }
   }
 
@@ -57,13 +53,10 @@ class TableRow extends React.Component {
   }
 
   _constructCells(props) {
-    const {
-      columns,
-      rowIndex,
-    } = props;
+    const { rowIndex } = props;
 
     // TODO optimize so we only render cells that are in view
-    columns.forEach((column, columnIndex) => {
+    this.props.columns.forEach((column, columnIndex) => {
       const className = 
         typeof column.columnClassName === 'function' ?
         column.columnClassName({ columnIndex, rowIndex }) :
@@ -112,9 +105,7 @@ class TableRow extends React.Component {
   }
 
   render() {
-    const {
-      rowIndex,
-    } = this.props;
+    const { rowIndex } = this.props;
 
     return (
       <div
@@ -123,12 +114,12 @@ class TableRow extends React.Component {
           this.props.className,
           {
             'Tangelo__TableRow--highlight-disabled': this.state.isChildCellHighlighted,
-            'Tangelo__TableRow--clickable': getIsClickable(this),
+            'Tangelo__TableRow--clickable': getIsClickable(this.props),
             'Tangelo__TableRow--hide-border-bottom': this.props.hideBorderBottom,
           }
         )}
         style={this.rowStyle}
-        {...getEventHandlerProps(this, { rowIndex })}
+        {...getEventHandlerProps(this.props, { rowIndex })}
       >
         {Object.values(this._cellCache)}
       </div>

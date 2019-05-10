@@ -21,6 +21,7 @@ import Tooltip from './Tooltip';
  */
 const TableCell = props => {
   const content = React.useRef(null);
+  const size = useComponentSize(content);
   const { columnIndex, rowIndex } = props;
 
   const cellStyle = {
@@ -77,11 +78,10 @@ const TableCell = props => {
 
   let tooltipContent;
   if (props.tooltip) {
-    // use tooltip from props if provided
+    // use props.tooltip if provided
     tooltipContent = props.tooltip;
   } else {
-    // else check if content is truncated and display a tooltip with the full text
-    const size = useComponentSize(content);
+    // else check if content is truncated - display tooltip with the innterText
     if (content.current && content.current.scrollWidth > size.width) {
       tooltipContent = content.current.innerText;
     }
