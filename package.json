@@ -1,6 +1,6 @@
 {
   "name": "tangelo",
-  "version": "0.0.32",
+  "version": "0.0.35",
   "description": "A presentational table component built in React",
   "license": "MIT",
   "homepage": "https://github.com/mroyce/tangelo",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "popper.js": "^1.15.0",
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {

@@ -316,7 +316,7 @@ Table.propTypes = {
   /**
    *
    */
-  tableRef: PropTypes.object,
+  tableRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 Table.defaultProps = {
@@ -328,6 +328,10 @@ Table.defaultProps = {
   headerClassName: '',
   headerHeight: 40,
   hideBorderBottom: false,
+  initialSortState: {
+    criteria: null,
+    direction: null,
+  },
   onRowClick: noop,
   onRowDoubleClick: noop,
   onRowMouseOut: noop,
@@ -344,10 +348,6 @@ Table.defaultProps = {
   bodyRef: null,
   scrollRef: null,
   tableRef: null,
-  initialSortState: {
-    criteria: null,
-    direction: null,
-  },
 };
 
 Table.displayName = 'TangeloTable';

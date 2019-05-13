@@ -1,11 +1,11 @@
 import noop from './noop';
 
 /**
- * @param {React.Component} component
+ * @param {Object} props
  * @param {Object} [parameters={}]
  * @returns {Object}
  */
-export default (component, parameters = {}) => {
+export default (props, parameters = {}) => {
   const createEventHandler = handler => event => {
     handler({ event, ...parameters });
     event.stopPropagation();
@@ -17,7 +17,7 @@ export default (component, parameters = {}) => {
     onMouseOut,
     onMouseOver,
     onRightClick,
-  } = component.props;
+  } = props;
 
   const eventHandlerProps = {};
 

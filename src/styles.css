@@ -235,18 +235,18 @@
   width: 16px;
 }
 
-.Tangelo__TableCell__Tooltip {
+/***********
+ * Tooltip *
+ ***********/
+.Tangelo__Tooltip {
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
-  bottom: calc(100% + 8px);
   color: rgba(255, 255, 255, 1);
   font-size: 12px;
   font-weight: 500;
-  left: 50%;
   line-height: 12px;
   padding: 12px 8px;
   position: absolute;
   text-align: center;
-  transform: translateX(-50%);
   white-space: nowrap;
 }
