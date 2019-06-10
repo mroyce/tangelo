@@ -15,9 +15,6 @@ class TableRow extends React.Component {
   constructor(...args) {
     super(...args);
 
-    // <number: columnIndex, Element: <TableCell />>
-    this._cellCache = {};
-
     this.state = {
       // If a child cell is highlighted, we shouldn't highlight the row
       isChildCellHighlighted: false,
@@ -25,16 +22,6 @@ class TableRow extends React.Component {
 
     this.handleChildCellMouseOver = this.handleChildCellMouseOver.bind(this);
     this.handleChildCellMouseOut = this.handleChildCellMouseOut.bind(this);
-  }
-
-  componentWillMount() {
-    this._constructCells(this.props);
-  }
-
-  componentWillUpdate(nextProps) {
-    // TODO consider only updating some cells like we do for rows in `TableBody`
-    this._cellCache = {};
-    this._constructCells(nextProps);
   }
 
   get rowStyle() {
@@ -50,58 +37,6 @@ class TableRow extends React.Component {
 
   handleChildCellMouseOut() {
     this.setState({ isChildCellHighlighted: false });
-  }
-
-  _constructCells(props) {
-    const { rowIndex } = props;
-
-    // TODO optimize so we only render cells that are in view
-    this.props.columns.forEach((column, columnIndex) => {
-      const className = 
-        typeof column.columnClassName === 'function' ?
-        column.columnClassName({ columnIndex, rowIndex }) :
-        column.columnClassName;
-
-      const cellContent =
-        typeof column.cellRenderer === 'function' ?
-        column.cellRenderer({ columnIndex, rowIndex }) :
-        column.cellRenderer;
-
-      const icons =
-        typeof column.icons === 'function' ?
-         column.icons({ columnIndex, rowIndex }) :
-         column.icons;
-
-      const tooltip =
-        typeof column.tooltip === 'function' ?
-          column.tooltip({ columnIndex, rowIndex }) :
-          column.tooltip;
-
-      this._cellCache[columnIndex] = (
-        <TableCell
-          {...pickProps(column, [
-            'align',
-            'flexStyle',
-            'hideRightBorder',
-          ])}
-          key={`table_cell_${rowIndex}_${columnIndex}`}
-          className={className}
-          columnIndex={columnIndex}
-          handleChildCellMouseOver={this.handleChildCellMouseOver}
-          handleChildCellMouseOut={this.handleChildCellMouseOut}
-          icons={icons}
-          onClick={column.onCellClick}
-          onDoubleClick={column.onCellDoubleClick}
-          onMouseOut={column.onCellMouseOut}
-          onMouseOver={column.onCellMouseOver}
-          onRightClick={column.onCellRightClick}
-          rowIndex={rowIndex}
-          tooltip={tooltip}
-        >
-          {cellContent}
-        </TableCell>
-      );
-    });
   }
 
   render() {
@@ -121,7 +56,52 @@ class TableRow extends React.Component {
         style={this.rowStyle}
         {...getEventHandlerProps(this.props, { rowIndex })}
       >
-        {Object.values(this._cellCache)}
+        {this.props.columns.map((column, columnIndex) => {
+          const className = 
+            typeof column.columnClassName === 'function' ?
+            column.columnClassName({ columnIndex, rowIndex }) :
+            column.columnClassName;
+    
+          const cellContent =
+            typeof column.cellRenderer === 'function' ?
+            column.cellRenderer({ columnIndex, rowIndex }) :
+            column.cellRenderer;
+    
+          const icons =
+            typeof column.icons === 'function' ?
+             column.icons({ columnIndex, rowIndex }) :
+             column.icons;
+    
+          const tooltip =
+            typeof column.tooltip === 'function' ?
+              column.tooltip({ columnIndex, rowIndex }) :
+              column.tooltip;
+    
+          return (
+            <TableCell
+              {...pickProps(column, [
+                'align',
+                'flexStyle',
+                'hideRightBorder',
+              ])}
+              key={`table_cell_${rowIndex}_${columnIndex}`}
+              className={className}
+              columnIndex={columnIndex}
+              handleChildCellMouseOver={this.handleChildCellMouseOver}
+              handleChildCellMouseOut={this.handleChildCellMouseOut}
+              icons={icons}
+              onClick={column.onCellClick}
+              onDoubleClick={column.onCellDoubleClick}
+              onMouseOut={column.onCellMouseOut}
+              onMouseOver={column.onCellMouseOver}
+              onRightClick={column.onCellRightClick}
+              rowIndex={rowIndex}
+              tooltip={tooltip}
+            >
+              {cellContent}
+            </TableCell>
+          );
+        })}
       </div>
     );
   }

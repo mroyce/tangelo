@@ -262,6 +262,10 @@ class DemoApp extends React.Component {
             )}
             getRowProps={this.getRowProps}
             headerHeight={32}
+            initialSortState={{
+              criteria: 'person.firstName',
+              direction: 'ASC',
+            }}
             onSort={this.onSort}
             paginationFunc={this.paginationFunc}
             paginationLoading={this.state.paginationLoading}
@@ -271,10 +275,6 @@ class DemoApp extends React.Component {
             scrollRef={this.scrollRef}
             shouldRowUpdate={this.shouldRowUpdate}
             tableRef={this.tableRef}
-            initialSortState={{
-              criteria: 'person.firstName',
-              direction: 'ASC',
-            }}
           >
             <TableColumn
               key="thumbnail"

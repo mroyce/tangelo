@@ -216,6 +216,20 @@ Table.propTypes = {
 
   /**
    *
+   */
+  initialSortState: PropTypes.shape({
+    criteria: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
+    ]),
+    direction: PropTypes.oneOf([
+      SortDirection.ASC,
+      SortDirection.DESC,
+    ]),
+  }),
+
+  /**
+   *
    * {
    *   rowIndex,
    * }
