@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popper from './Popper';
-import RootRef from './RootRef';
 
 
 /**
@@ -26,6 +25,7 @@ class Tooltip extends React.Component {
     return {
       onMouseOver: this.handleMouseOver,
       onMouseOut: this.handleMouseOut,
+      ref: this.childRef,
     };
   }
 
@@ -44,9 +44,7 @@ class Tooltip extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <RootRef rootRef={this.childRef}>
-          {React.cloneElement(this.props.children, this.childrenProps)}
-        </RootRef>
+        {React.cloneElement(this.props.children, this.childrenProps)}
         {(this.state.open && this.props.title) && (
           <Popper referenceObject={this.childRef}>
             <div className="Tangelo__Tooltip">
