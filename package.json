@@ -1,6 +1,6 @@
 {
   "name": "tangelo",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "A presentational table component built in React",
   "license": "MIT",
   "homepage": "https://github.com/mroyce/tangelo",
@@ -28,7 +28,7 @@
     "build:commonjs": "NODE_ENV=commonjs babel src --out-dir dist/commonjs --source-maps inline",
     "build:css": "postcss src/styles.css -o tangelo.css --use autoprefixer",
     "build:es": "NODE_ENV=es babel src --out-dir dist/es --source-maps inline",
-    "prepublish": "npm-run-all build:*",
+    "prepublishOnly": "npm-run-all build:*",
     "postpublish": "git push --tags",
     "start-dev": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.dev.js",
     "start:test": "NODE_ENV=test webpack --config webpack.config.test.js && http-server cypress/app/ -c-1 -p 3030",
