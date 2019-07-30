@@ -138,6 +138,7 @@ class Table extends React.Component {
               'rowHeight',
               'shouldRowUpdate',
               'scrollRef',
+              'shouldHighlightRow',
             ])}
             columns={this.bodyColumns}
             sortDirection={this.state.sort.direction}
@@ -330,6 +331,11 @@ Table.propTypes = {
   /**
    *
    */
+  shouldRowHighlight: PropTypes.bool,
+
+  /**
+   *
+   */
   tableRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
@@ -358,6 +364,7 @@ Table.defaultProps = {
   rowClassName: '',
   rowHeight: 48,
   shouldRowUpdate: () => true,
+  shouldHighlightRow: true,
   // Refs
   bodyRef: null,
   scrollRef: null,

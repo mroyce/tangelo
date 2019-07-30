@@ -22,6 +22,7 @@ class TableBodyRow extends React.Component {
           'onRightClick',
           'rowHeight',
           'rowIndex',
+          'shouldHighlightRow',
         ])}
         className={classNames(
           "Tangelo__TableRow--body",
