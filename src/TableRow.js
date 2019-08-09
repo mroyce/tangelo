@@ -40,15 +40,15 @@ class TableRow extends React.Component {
   }
 
   render() {
-    const { rowIndex } = this.props;
-
+    const { rowIndex, shouldHighlightRow } = this.props;
     return (
       <div
         className={classNames(
           "Tangelo__TableRow",
           this.props.className,
           {
-            'Tangelo__TableRow--highlight-disabled': this.state.isChildCellHighlighted,
+            'Tangelo__TableRow--highlight-disabled':
+            (!shouldHighlightRow || this.state.isChildCellHighlighted),
             'Tangelo__TableRow--clickable': getIsClickable(this.props),
             'Tangelo__TableRow--hide-border-bottom': this.props.hideBorderBottom,
           }
@@ -57,26 +57,26 @@ class TableRow extends React.Component {
         {...getEventHandlerProps(this.props, { rowIndex })}
       >
         {this.props.columns.map((column, columnIndex) => {
-          const className = 
+          const className =
             typeof column.columnClassName === 'function' ?
             column.columnClassName({ columnIndex, rowIndex }) :
             column.columnClassName;
-    
+
           const cellContent =
             typeof column.cellRenderer === 'function' ?
             column.cellRenderer({ columnIndex, rowIndex }) :
             column.cellRenderer;
-    
+
           const icons =
             typeof column.icons === 'function' ?
              column.icons({ columnIndex, rowIndex }) :
              column.icons;
-    
+
           const tooltip =
             typeof column.tooltip === 'function' ?
               column.tooltip({ columnIndex, rowIndex }) :
               column.tooltip;
-    
+
           return (
             <TableCell
               {...pickProps(column, [

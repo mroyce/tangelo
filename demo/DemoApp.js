@@ -274,6 +274,7 @@ class DemoApp extends React.Component {
             rowHeight={36}
             scrollRef={this.scrollRef}
             shouldRowUpdate={this.shouldRowUpdate}
+            shouldHighlightRow
             tableRef={this.tableRef}
           >
             <TableColumn

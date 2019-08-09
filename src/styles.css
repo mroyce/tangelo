@@ -114,15 +114,15 @@
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% { 
+  0%, 40%, 100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  } 20% { 
+  } 20% {
     transform: scaleY(0.9);
     -webkit-transform: scaleY(0.9);
   }
@@ -155,11 +155,11 @@
   font-size: 16px;
 }
 
-.Tangelo__TableRow--body:hover:not(.TableRow--highlight-disabled) {
+.Tangelo__TableRow--body:hover:not(.Tangelo__TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.Tangelo__TableRow--body:active:not(.TableRow--highlight-disabled) {
+.Tangelo__TableRow--body:active:not(.Tangelo__TableRow--highlight-disabled) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 

@@ -147,6 +147,7 @@ class TableBody extends React.Component {
           'hideBorderBottom',
           'rowHeight',
           'shouldRowUpdate',
+          'shouldHighlightRow',
         ])}
         key={`table_row_${rowIndex}`}
         className={className}
