@@ -87,6 +87,7 @@ class Table extends React.Component {
         'onCellMouseOver',
         'onCellRightClick',
         'tooltip',
+        'trailingIcons',
       ]),
       cellRenderer: column.props.bodyCellRenderer,
       flexStyle: getFlexStyle(column.props.width, column.props.widthType),

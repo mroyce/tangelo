@@ -305,6 +305,11 @@ class DemoApp extends React.Component {
               sortBy="person.lastName"
               width={120}
               widthType="px"
+              trailingIcons={({ rowIndex }) =>
+                this.state.data[rowIndex].email.includes('gmail') ?
+                [<MailIcon />] :
+                null
+              }
             />
             <TableColumn
               key="address"

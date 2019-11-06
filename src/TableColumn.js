@@ -171,6 +171,21 @@ TableColumn.propTypes = {
     PropTypes.func,
   ]),
 
+   /**
+   * An array of SVG elements or a function that returns an array of SVG elements
+   * which will be displayed beside the label in table cell
+   * All SVGs will be scaled to 16x16 pixels.
+   *
+   * Accepts the following parameters:
+   * {
+   *   rowIndex,
+   * }
+   */
+  trailingIcons: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.func,
+  ]),
+
   /**
    * The width of the cells in this column in pixels or percentage.
    */
@@ -200,6 +215,7 @@ TableColumn.defaultProps = {
   onCellRightClick: noop,
   sortBy: null,
   tooltip: null,
+  trailingIcons: [],
   widthType: '%',
 };
 

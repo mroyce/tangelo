@@ -76,6 +76,11 @@ class TableRow extends React.Component {
             typeof column.tooltip === 'function' ?
               column.tooltip({ columnIndex, rowIndex }) :
               column.tooltip;
+            
+          const trailingIcons =
+            typeof column.trailingIcons === 'function' ?
+              column.trailingIcons( { columnIndex, rowIndex }) :
+              column.trailingIcons;
 
           return (
             <TableCell
@@ -97,6 +102,7 @@ class TableRow extends React.Component {
               onRightClick={column.onCellRightClick}
               rowIndex={rowIndex}
               tooltip={tooltip}
+              trailingIcons={trailingIcons}
             >
               {cellContent}
             </TableCell>
@@ -140,6 +146,10 @@ TableRow.propTypes = {
         }),
       ]).isRequired,
       icons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
+      trailingIcons: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.element),
         PropTypes.func,
       ]),

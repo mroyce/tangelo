@@ -104,7 +104,7 @@ class TableBody extends React.Component {
    */
   handleTableScroll() {
     if (!this.props.paginationLoading && this.props.paginationFunc) {
-	  const {
+    const {
         distanceFromBottom,
       } = getElementScrollInfo(this._scrollRef.current);
       const paginationDistanceBuffer = this.props.rowHeight * this.props.paginationRowCountBuffer;
@@ -236,6 +236,10 @@ TableBody.propTypes = {
         }),
       ]),
       icons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
+      trailingIcons: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.element),
         PropTypes.func,
       ]),

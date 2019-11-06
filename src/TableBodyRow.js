@@ -69,6 +69,10 @@ TableBodyRow.propTypes = {
         PropTypes.arrayOf(PropTypes.element),
         PropTypes.func,
       ]),
+      trailingIcons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.func,
+      ]),
     })
   ).isRequired,
 
