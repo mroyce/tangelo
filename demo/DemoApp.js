@@ -86,6 +86,10 @@ class DemoApp extends React.Component {
     }
   }
 
+  getRowKey({ rowIndex }) {
+    return 'row_' + rowIndex + '_key_' + Math.floor(Math.random() * 10000000);
+  }
+
   shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
     // TODO rows don't update when `data` changes
     return currentRowProps.firstNameColor !== nextRowProps.firstNameColor;
@@ -261,6 +265,7 @@ class DemoApp extends React.Component {
               </div>
             )}
             getRowProps={this.getRowProps}
+            getRowKey={this.getRowKey}
             headerHeight={32}
             initialSortState={{
               criteria: 'person.firstName',
