@@ -350,7 +350,7 @@ Table.defaultProps = {
   className: '',
   disableHeader: false,
   emptyTablePlaceholder: null,
-  getRowKey: ({ rowIndex }) => 'table_row_${rowIndex}',
+  getRowKey: ({ rowIndex }) => `table_row_${rowIndex}`,
   getRowProps: () => null,
   headerClassName: '',
   headerHeight: 40,

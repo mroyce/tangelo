@@ -30,6 +30,7 @@ class DemoApp extends React.Component {
 
     // <Table /> props
     this.getRowProps = this.getRowProps.bind(this);
+    this.getRowKey = this.getRowKey.bind(this);
     this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
 
     // Cell Renderers
