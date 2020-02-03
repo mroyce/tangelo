@@ -151,7 +151,6 @@ class TableBody extends React.Component {
           'shouldHighlightRow',
         ])}
         key={rowKey}
-        // key={`table_row_${rowIndex}`}
         className={className}
         onClick={props.onRowClick}
         onDoubleClick={props.onRowDoubleClick}

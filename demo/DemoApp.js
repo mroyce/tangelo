@@ -87,7 +87,7 @@ class DemoApp extends React.Component {
   }
 
   getRowKey({ rowIndex }) {
-    return 'row_' + rowIndex + '_key_' + Math.floor(Math.random() * 10000000);
+    return `row_key_${this.state.data[rowIndex].id}`;
   }
 
   shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
