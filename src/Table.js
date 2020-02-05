@@ -122,6 +122,7 @@ class Table extends React.Component {
           <TableBody
             {...pickProps(this.props, [
               'bodyRef',
+              'getRowKey',
               'getRowProps',
               'headerHeight',
               'hideBorderBottom',
@@ -178,6 +179,11 @@ Table.propTypes = {
    *
    */
   className: PropTypes.string,
+
+  /**
+   *
+   */
+  getRowKey: PropTypes.func,
 
   /**
    *
@@ -344,6 +350,7 @@ Table.defaultProps = {
   className: '',
   disableHeader: false,
   emptyTablePlaceholder: null,
+  getRowKey: ({ rowIndex }) => `table_row_${rowIndex}`,
   getRowProps: () => null,
   headerClassName: '',
   headerHeight: 40,

@@ -30,6 +30,7 @@ class DemoApp extends React.Component {
 
     // <Table /> props
     this.getRowProps = this.getRowProps.bind(this);
+    this.getRowKey = this.getRowKey.bind(this);
     this.shouldRowUpdate = this.shouldRowUpdate.bind(this);
 
     // Cell Renderers
@@ -84,6 +85,10 @@ class DemoApp extends React.Component {
       person: this.state.data[rowIndex],
       firstNameColor: this.state.firstNameColor[rowIndex],
     }
+  }
+
+  getRowKey({ rowIndex }) {
+    return `row_key_${this.state.data[rowIndex].id}`;
   }
 
   shouldRowUpdate({ currentRowProps, nextRowProps, rowIndex }) {
@@ -261,6 +266,7 @@ class DemoApp extends React.Component {
               </div>
             )}
             getRowProps={this.getRowProps}
+            getRowKey={this.getRowKey}
             headerHeight={32}
             initialSortState={{
               criteria: 'person.firstName',

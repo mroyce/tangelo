@@ -139,6 +139,7 @@ class TableBody extends React.Component {
       props.rowClassName;
 
     const rowProps = props.getRowProps({ rowIndex });
+    const rowKey = props.getRowKey({ rowIndex });
 
     return (
       <TableBodyRow
@@ -149,7 +150,7 @@ class TableBody extends React.Component {
           'shouldRowUpdate',
           'shouldHighlightRow',
         ])}
-        key={`table_row_${rowIndex}`}
+        key={rowKey}
         className={className}
         onClick={props.onRowClick}
         onDoubleClick={props.onRowDoubleClick}
@@ -249,6 +250,11 @@ TableBody.propTypes = {
    * }
    */
   getRowProps: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  getRowKey: PropTypes.func.isRequired,
 
   /**
    *
