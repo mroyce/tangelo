@@ -6,6 +6,7 @@ import TableCell from './TableCell';
 import {
   getEventHandlerProps,
   getIsClickable,
+  noop,
   pickProps,
 } from './utils';
 
@@ -40,7 +41,8 @@ class TableRow extends React.Component {
   }
 
   render() {
-    const { rowIndex, shouldHighlightRow } = this.props;
+    const { rowIndex } = this.props;
+
     return (
       <div
         className={classNames(
@@ -48,7 +50,7 @@ class TableRow extends React.Component {
           this.props.className,
           {
             'Tangelo__TableRow--highlight-disabled':
-            (!shouldHighlightRow || this.state.isChildCellHighlighted),
+            (this.props.onClick === noop) || (!this.props.shouldHighlightRow || this.state.isChildCellHighlighted),
             'Tangelo__TableRow--clickable': getIsClickable(this.props),
             'Tangelo__TableRow--hide-border-bottom': this.props.hideBorderBottom,
           }
