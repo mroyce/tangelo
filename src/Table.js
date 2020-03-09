@@ -98,6 +98,48 @@ class Table extends React.Component {
   }
 
   render() {
+    let mainContent;
+
+    if (this.props.rowCount > 0) {
+      mainContent = (
+        <TableBody
+          {...pickProps(this.props, [
+            'bodyRef',
+            'getRowKey',
+            'getRowProps',
+            'headerHeight',
+            'hideBorderBottom',
+            'onRowClick',
+            'onRowDoubleClick',
+            'onRowMouseOut',
+            'onRowMouseOver',
+            'onRowRightClick',
+            'paginationFunc',
+            'paginationLoading',
+            'paginationRowCountBuffer',
+            'rowClassName',
+            'rowCount',
+            'rowHeight',
+            'shouldRowUpdate',
+            'scrollRef',
+            'shouldHighlightRow',
+          ])}
+          columns={this.bodyColumns}
+          sortDirection={this.state.sort.direction}
+          sortingCriteria={this.state.sort.criteria}
+        />
+      );
+    } else if (this.props.emptyTablePlaceholder) {
+      mainContent = (
+        <EmptyTablePlaceholder
+          {...pickProps(this.props, [
+            'emptyTablePlaceholder',
+            'rowHeight',
+          ])}
+        />
+      );
+    }
+
     return (
       <div
         className={classNames(
@@ -118,41 +160,7 @@ class Table extends React.Component {
             sortingCriteria={this.state.sort.criteria}
           />
         )}
-        {this.props.rowCount ? (
-          <TableBody
-            {...pickProps(this.props, [
-              'bodyRef',
-              'getRowKey',
-              'getRowProps',
-              'headerHeight',
-              'hideBorderBottom',
-              'onRowClick',
-              'onRowDoubleClick',
-              'onRowMouseOut',
-              'onRowMouseOver',
-              'onRowRightClick',
-              'paginationFunc',
-              'paginationLoading',
-              'paginationRowCountBuffer',
-              'rowClassName',
-              'rowCount',
-              'rowHeight',
-              'shouldRowUpdate',
-              'scrollRef',
-              'shouldHighlightRow',
-            ])}
-            columns={this.bodyColumns}
-            sortDirection={this.state.sort.direction}
-            sortingCriteria={this.state.sort.criteria}
-          />
-        ) : (
-          <EmptyTablePlaceholder
-            {...pickProps(this.props, [
-              'emptyTablePlaceholder',
-              'rowHeight',
-            ])}
-          />
-        )}
+        {mainContent}
       </div>
     );
   }

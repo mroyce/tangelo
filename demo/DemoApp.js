@@ -258,13 +258,6 @@ class DemoApp extends React.Component {
         >
           <Table
             bodyRef={this.bodyRef}
-            emptyTablePlaceholder={(
-              <div>
-                No People Found
-                <br />
-                Please Increase the Number of Rows in the Table
-              </div>
-            )}
             getRowProps={this.getRowProps}
             getRowKey={this.getRowKey}
             headerHeight={32}
