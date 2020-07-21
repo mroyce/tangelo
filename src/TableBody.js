@@ -104,7 +104,7 @@ class TableBody extends React.Component {
    */
   handleTableScroll() {
     if (!this.props.paginationLoading && this.props.paginationFunc) {
-	  const {
+      const {
         distanceFromBottom,
       } = getElementScrollInfo(this._scrollRef.current);
       const paginationDistanceBuffer = this.props.rowHeight * this.props.paginationRowCountBuffer;
@@ -128,7 +128,7 @@ class TableBody extends React.Component {
 
     return {
       height: this.props.rowCount * (this.props.rowHeight + borderHeight),
-      width: this.state.bodyWidth || '100%',
+      width: 'calc(100% + 15px)',
     };
   }
 
