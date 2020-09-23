@@ -128,7 +128,7 @@ class TableBody extends React.Component {
 
     return {
       height: this.props.rowCount * (this.props.rowHeight + borderHeight),
-      width: 'calc(100% + 15px)',
+      width: '100%',
     };
   }
 
