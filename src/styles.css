@@ -80,6 +80,12 @@
   margin-right: -30px;
   overflow-y: auto;
   padding-right: 30px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: none;  /* supported in FF 81 */
+}
+
+Tangelo__TableBody__ScrollableContent::-webkit-scrollbar {
+  display: none;  /* supported in Chrome 85 */
 }
 
 .Tangelo__TableBody__ScrollableContent__Loader {
