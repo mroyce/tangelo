@@ -52,7 +52,23 @@ const TableCell = props => {
         className="Tangelo__TableCell__Content"
         ref={content}
       >
-        {props.children}
+        {isEmpty(props.trailingIcons) || props.align !== 'right' || props.trailingIcons.map((icon, idx) => (
+          <div
+            className="Tangelo__TableCell__TrailingIconWrapper Tangelo__TableCell__TrailingIconWrapper--left"
+            key={`table_trailingicon_${rowIndex}_${columnIndex}_${idx}`}
+          >
+            {icon}
+          </div>
+        ))}
+        <span>{props.children}</span>
+        {isEmpty(props.trailingIcons) || props.align === 'right' || props.trailingIcons.map((icon, idx) => (
+          <div
+            className="Tangelo__TableCell__TrailingIconWrapper"
+            key={`table_trailingicon_${rowIndex}_${columnIndex}_${idx}`}
+          >
+            {icon}
+          </div>
+        ))}
       </div>
       {isEmpty(props.icons) || (
         <div
@@ -175,6 +191,11 @@ TableCell.propTypes = {
    *
    */
   tooltip: PropTypes.node,
+
+  /**
+   *
+   */
+  trailingIcons: PropTypes.arrayOf(PropTypes.element),
 };
 
 TableCell.defaultProps = {

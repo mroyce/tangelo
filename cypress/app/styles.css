@@ -250,3 +250,15 @@
   transform: translateX(-50%);
   white-space: nowrap;
 }
+
+.Tangelo__TableCell__TrailingIconWrapper--left {
+  margin-right: 12px;
+}
+
+.Tangelo__TableCell__TrailingIconWrapper {
+  display: inline-block;
+  margin-left: 12px;
+  height: 16px;
+  line-height: 16px;
+  width: 16px;
+}
