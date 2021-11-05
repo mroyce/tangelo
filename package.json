@@ -41,8 +41,7 @@
     "@mui/core": "^5.0.0-alpha.53",
     "@mui/material": "^5.0.6",
     "classnames": "^2.2.5",
-    "prop-types": "^15.6.0",
-    "tangelo": "^0.0.41"
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "^16.14.0",
