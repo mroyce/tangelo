@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Tooltip from '@mui/material/Tooltip';
 
 import useComponentSize from './hooks/useComponentSize';
 import {
@@ -10,7 +11,6 @@ import {
   noop,
   pipe,
 } from './utils';
-import Tooltip from './Tooltip';
 
 
 /**
