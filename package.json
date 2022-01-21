@@ -1,6 +1,6 @@
 {
   "name": "tangelo",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "description": "A presentational table component built in React",
   "license": "MIT",
   "homepage": "https://github.com/mroyce/tangelo",
@@ -38,8 +38,8 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@mui/core": "^5.0.0-alpha.53",
-    "@mui/material": "^5.0.6",
+    "@mui/core": "^5.0.0-alpha.54",
+    "@mui/material": "^5.2.1",
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0"
   },
