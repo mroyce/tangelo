@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { noop } from './utils';
-
-
 class TableColumn extends React.Component {
   render() {
     if (process.env.NODE_ENV !== 'production') {
@@ -193,11 +190,11 @@ TableColumn.defaultProps = {
   hideRightBorder: false,
   icons: [],
   minWidth: null,
-  onCellClick: noop,
-  onCellDoubleClick: noop,
-  onCellMouseOut: noop,
-  onCellMouseOver: noop,
-  onCellRightClick: noop,
+  onCellClick: null,
+  onCellDoubleClick: null,
+  onCellMouseOut: null,
+  onCellMouseOver: null,
+  onCellRightClick: null,
   sortBy: null,
   tooltip: null,
   widthType: '%',
